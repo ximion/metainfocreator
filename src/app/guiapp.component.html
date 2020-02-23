@@ -1,0 +1,166 @@
+
+
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li class="is-active"><a href="#" aria-current="page">GUI App Metadata</a></li>
+  </ul>
+</nav>
+
+<div class="content">
+<h1 class="title">
+  Create metadata for GUI Applications
+</h1>
+
+
+<p>Please fill out the form below to generate your MetaInfo file as well as auxiliary data.</p>
+
+<form [formGroup]="cptForm" novalidate>
+
+<div class="field">
+  <label class="label">Name of the application</label>
+  <div class="control">
+    <input class="input" formControlName="appName" type="text" placeholder="The human-readable name of your application">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Summary of the application</label>
+  <div class="control">
+    <input class="input" formControlName="appSummary" type="text" placeholder="A short text summarizing what the application does">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Homepage for the application</label>
+  <div class="control">
+    <input class="input" formControlName="appHomepage" type="text" placeholder="The website where this application is hosted.">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Description</label>
+  <div class="control">
+    <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software."></textarea>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Metadata License</label>
+  <div class="control">
+    <div class="select">
+      <select>
+        <option>Select dropdown</option>
+        <option>With options</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Software License</label>
+  <div class="control">
+    <div class="select">
+      <select>
+        <option>Select dropdown</option>
+        <option>With options</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Unique component ID</label>
+  <div class="control">
+    <input class="input" formControlName="cptId" type="text" value="{{ cid }}" placeholder="Reverse-DNS string uniquely identifying your application.">
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="field">
+  <label class="label">Username</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+    <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+  </div>
+  <p class="help is-success">This username is available</p>
+</div>
+
+<div class="field">
+  <label class="label">Email</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
+    <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+  </div>
+  <p class="help is-danger">This email is invalid</p>
+</div>
+
+<div class="field">
+  <label class="label">Subject</label>
+  <div class="control">
+    <div class="select">
+      <select>
+        <option>Select dropdown</option>
+        <option>With options</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="field">
+  <div class="control">
+    <label class="checkbox">
+      <input type="checkbox">
+      I agree to the <a href="#">terms and conditions</a>
+    </label>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <label class="radio">
+      <input type="radio" name="question">
+      Yes
+    </label>
+    <label class="radio">
+      <input type="radio" name="question">
+      No
+    </label>
+  </div>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link">Submit</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light">Cancel</button>
+  </div>
+</div>
+
+</form>
+
+<br />
+<p>Form value: {{ cptForm.value | json }}</p>
+<p>Form status: {{ cptForm.status | json }}</p>
+
+<p>VALUE: {{ cid }}</p>
+
+</div>

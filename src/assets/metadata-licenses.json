@@ -1,0 +1,30 @@
+[
+  {
+    "id": "FSFAP",
+    "name": "FSF All Permissive License"
+  },
+  {
+    "id": "MIT",
+    "name": "MIT License"
+  },
+  {
+    "id": "CC0-1.0",
+    "name": "Creative Commons Zero v1.0 Universal"
+  },
+  {
+    "id": "CC-BY-4.0",
+    "name": "Creative Commons Attribution 4.0 International"
+  },
+  {
+    "id": "CC-BY-SA-4.0",
+    "name": "Creative Commons Attribution Share Alike 4.0 International"
+  },
+  {
+    "id": "BSL-1.0",
+    "name": "Boost Software License 1.0"
+  },
+  {
+    "id": "FTL",
+    "name": "Freetype Project License"
+  }
+]

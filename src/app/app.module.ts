@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -21,6 +21,7 @@ const routes: Routes = [
   ],
   imports: [
       BrowserModule,
+      HttpClientModule,
       ReactiveFormsModule,
       RouterModule.forRoot(routes, { enableTracing: false }),
   ],

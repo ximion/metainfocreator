@@ -9,158 +9,185 @@
 
 <div class="content">
 <h1 class="title">
-  Create metadata for GUI Applications
+  Create metadata for GUI applications
 </h1>
 
+<p>
+  A GUI application (or desktop application) is an application which has a graphical user interface and is commonly used with mouse and keyboard.
+  It also ships a Freedesktop .desktop file to be visible in application menus.
+</p>
 
-<p>Please fill out the form below to generate your MetaInfo file as well as auxiliary data.</p>
+<p>Please fill out the form below to generate your MetaInfo file as well as (optionally) auxiliary data.</p>
 
 <form [formGroup]="cptForm" novalidate>
 
-<div class="field">
-  <label class="label">Name of the application</label>
-  <div class="control">
-    <input class="input" formControlName="appName" type="text" placeholder="The human-readable name of your application">
-  </div>
-</div>
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Basic Information
+      </p>
+    </header>
+    <div class="card-content content">
 
-<div class="field">
-  <label class="label">Summary of the application</label>
-  <div class="control">
-    <input class="input" formControlName="appSummary" type="text" placeholder="A short text summarizing what the application does">
-  </div>
-</div>
+        <div class="field">
+            <label class="label">Name of the application</label>
+            <div class="control">
+                <input class="input" formControlName="appName" type="text" placeholder="The human-readable name of your application">
+            </div>
+        </div>
 
-<div class="field">
-  <label class="label">Homepage for the application</label>
-  <div class="control">
-    <input class="input" formControlName="appHomepage" type="text" placeholder="The website where this application is hosted.">
-  </div>
-</div>
+        <div class="field">
+            <label class="label">Summary of the application</label>
+            <div class="control">
+                <input class="input" formControlName="appSummary" type="text" placeholder="A short text summarizing what the application does">
+            </div>
+        </div>
 
-<div class="field">
-  <label class="label">Description</label>
-  <div class="control">
-    <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software."></textarea>
-  </div>
-</div>
+        <div class="field">
+            <label class="label">Homepage of the application</label>
+            <div class="control">
+                <input class="input" formControlName="appHomepage" type="text" placeholder="The website where this application is hosted.">
+            </div>
+        </div>
 
-<div class="field">
-  <label class="label">Metadata License</label>
-  <div class="control">
-    <div class="select">
-      <select>
-        <option>Select dropdown</option>
-        <option>With options</option>
-      </select>
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software."></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Unique Software Identifier</label>
+            <div class="control">
+                <input class="input" formControlName="cptId" type="text" value="{{ cid }}" placeholder="Reverse-DNS string uniquely identifying your application.">
+            </div>
+            <p class="help">A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</p>
+        </div>
+
     </div>
-  </div>
 </div>
 
-<div class="field">
-  <label class="label">Software License</label>
-  <div class="control">
-    <div class="select">
-      <select>
-        <option>Select dropdown</option>
-        <option>With options</option>
-      </select>
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Licensing
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field">
+        <label class="label">Metadata License</label>
+        <div class="control">
+            <div class="select">
+                <select formControlName="metadataLicense">
+                    <option value="">Choose a metadata license</option>
+                    <option *ngFor="let license of metadataLicenses | async" value="{{license.id}}">{{license.name}}</option>
+                </select>
+            </div>
+            <p class="help">The license that applies to this particular metadata and linked assets (like screenshots and videos).</p>
+        </div>
+        </div>
+
+        <div class="field">
+        <label class="label">Software License</label>
+
+        <div class="control">
+            <label class="radio">
+            <input type="radio" checked="!useSPDXExpression" name="rbLicenseMode" (change)="licenseModeSimpleChange($event)">
+            Simple Single License
+            </label>
+            <label class="radio">
+            <input type="radio" name="rbLicenseMode" (change)="licenseModeSPDXExprChange($event)">
+            Custom SPDX Expression
+            </label>
+        </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+            <div class="select">
+                <select formControlName="simpleProjectLicense">
+                    <option value="">Choose a project license</option>
+                    <option *ngFor="let license of spdxLicenses | async" value="{{license.id}}">{{license.name}}</option>
+                </select>
+                </div>
+            </div>
+
+            <div *ngIf="complexProjectLicense.enabled" class="control is-expanded">
+                <input class="input" formControlName="complexProjectLicense" type="text" placeholder="A SPDX license expression, e.g. GPL-3.0-or-later and MPL-2.0">
+                <p class="help">A <a href="https://spdx.org/licenses/">SPDX</a> license expression string.</p>
+            </div>
+        </div>
+        <p class="help">The license that applies to the described software.</p>
+
     </div>
-  </div>
 </div>
 
-<div class="field">
-  <label class="label">Unique component ID</label>
-  <div class="control">
-    <input class="input" formControlName="cptId" type="text" value="{{ cid }}" placeholder="Reverse-DNS string uniquely identifying your application.">
-  </div>
-</div>
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Misc
+      </p>
+    </header>
+    <div class="card-content content">
 
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox">
+              Generate <a href="https://mesonbuild.com/">Meson</a> snippet for data validation.
+            </label>
+        </div>
+        </div>
 
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox">
+              Build desktop-entry file from MetaInfo data.
+            </label>
+        </div>
+        </div>
 
-
-
-
-
-<div class="field">
-  <label class="label">Username</label>
-  <div class="control has-icons-left has-icons-right">
-    <input class="input is-success" type="text" placeholder="Text input" value="bulma">
-    <span class="icon is-small is-left">
-      <i class="fas fa-user"></i>
-    </span>
-    <span class="icon is-small is-right">
-      <i class="fas fa-check"></i>
-    </span>
-  </div>
-  <p class="help is-success">This username is available</p>
-</div>
-
-<div class="field">
-  <label class="label">Email</label>
-  <div class="control has-icons-left has-icons-right">
-    <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-    <span class="icon is-small is-right">
-      <i class="fas fa-exclamation-triangle"></i>
-    </span>
-  </div>
-  <p class="help is-danger">This email is invalid</p>
-</div>
-
-<div class="field">
-  <label class="label">Subject</label>
-  <div class="control">
-    <div class="select">
-      <select>
-        <option>Select dropdown</option>
-        <option>With options</option>
-      </select>
     </div>
-  </div>
 </div>
 
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Generate Metadata
+      </p>
+    </header>
+    <div class="card-content content">
 
+        <div class="field is-grouped">
+            <div class="control">
+                <a class="button is-link" (click)="generate()">Create Metadata</a>
+            </div>
+        </div>
 
-<div class="field">
-  <div class="control">
-    <label class="checkbox">
-      <input type="checkbox">
-      I agree to the <a href="#">terms and conditions</a>
-    </label>
-  </div>
-</div>
-
-<div class="field">
-  <div class="control">
-    <label class="radio">
-      <input type="radio" name="question">
-      Yes
-    </label>
-    <label class="radio">
-      <input type="radio" name="question">
-      No
-    </label>
-  </div>
-</div>
-
-<div class="field is-grouped">
-  <div class="control">
-    <button class="button is-link">Submit</button>
-  </div>
-  <div class="control">
-    <button class="button is-link is-light">Cancel</button>
-  </div>
+    </div>
 </div>
 
 </form>
 
-<br />
-<p>Form value: {{ cptForm.value | json }}</p>
-<p>Form status: {{ cptForm.status | json }}</p>
+<br/>
+<!-- Output area -->
 
-<p>VALUE: {{ cid }}</p>
+<div *ngIf="dataGenerated" class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Result
+      </p>
+    </header>
+    <div class="card-content content">
 
+    <h2>MetaInfo file</h2>
+    <p>Install as <code>/usr/share/metainfo/{{cid}}.metainfo.xml</code></p>
+    <div class="control">
+        <textarea class="textarea is-primary" rows="24" readonly>{{dataMetainfo}}</textarea>
+    </div>
 </div>
+
+</div> <!-- End of content -->

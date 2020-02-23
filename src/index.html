@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>AppStream MetaInfo Generator</title>
+  <title>AppStream MetaInfo Creator</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,8 +12,42 @@
   <script defer src="https://use.fontawesome.com/releases/v5.12.1/js/all.js"></script>
 </head>
 <body>
-  <section class="section">
-    <app-root></app-root>
-  </section>
+
+    <nav class="navbar navbar-home" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="assets/appstream-logo.svg">
+            </a>
+            <div class="navbar-item">
+            <h1 class="title is-4">AppStream MetaInfo Creator</h1>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="section">
+        <app-root></app-root>
+    </section>
+
+    <footer class="footer has-text-centered">
+        <div class="container">
+            <div class="columns">
+
+            <div class="column is-8-desktop is-offset-2-desktop">
+                <p>
+                <strong class="has-text-weight-semibold">
+                    AppStream MetaInfo Creator
+                </strong>
+                </p>
+                <p>
+                <small>
+                    Check out the <a href="https://github.com/ximion/metainfocreator">source code</a>!
+                </small>
+                </p>
+            </div>
+
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

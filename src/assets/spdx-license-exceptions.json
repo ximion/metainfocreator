@@ -1,0 +1,154 @@
+[
+    {
+        "id": "389-exception",
+        "name": "389 Directory Server Exception"
+    },
+    {
+        "id": "Autoconf-exception-2.0",
+        "name": "Autoconf exception 2.0"
+    },
+    {
+        "id": "Autoconf-exception-3.0",
+        "name": "Autoconf exception 3.0"
+    },
+    {
+        "id": "Bison-exception-2.2",
+        "name": "Bison exception 2.2"
+    },
+    {
+        "id": "Bootloader-exception",
+        "name": "Bootloader Distribution Exception"
+    },
+    {
+        "id": "CLISP-exception-2.0",
+        "name": "CLISP exception 2.0"
+    },
+    {
+        "id": "Classpath-exception-2.0",
+        "name": "Classpath exception 2.0"
+    },
+    {
+        "id": "DigiRule-FOSS-exception",
+        "name": "DigiRule FOSS License Exception"
+    },
+    {
+        "id": "FLTK-exception",
+        "name": "FLTK exception"
+    },
+    {
+        "id": "Fawkes-Runtime-exception",
+        "name": "Fawkes Runtime Exception"
+    },
+    {
+        "id": "Font-exception-2.0",
+        "name": "Font exception 2.0"
+    },
+    {
+        "id": "GCC-exception-2.0",
+        "name": "GCC Runtime Library exception 2.0"
+    },
+    {
+        "id": "GCC-exception-3.1",
+        "name": "GCC Runtime Library exception 3.1"
+    },
+    {
+        "id": "GPL-3.0-linking-exception",
+        "name": "GPL-3.0 Linking Exception"
+    },
+    {
+        "id": "GPL-3.0-linking-source-exception",
+        "name": "GPL-3.0 Linking Exception (with Corresponding Source)"
+    },
+    {
+        "id": "GPL-CC-1.0",
+        "name": "GPL Cooperation Commitment 1.0"
+    },
+    {
+        "id": "LLVM-exception",
+        "name": "LLVM Exception"
+    },
+    {
+        "id": "LZMA-exception",
+        "name": "LZMA exception"
+    },
+    {
+        "id": "Libtool-exception",
+        "name": "Libtool Exception"
+    },
+    {
+        "id": "Linux-syscall-note",
+        "name": "Linux Syscall Note"
+    },
+    {
+        "id": "Nokia-Qt-exception-1.1",
+        "name": "Nokia Qt LGPL exception 1.1"
+    },
+    {
+        "id": "OCCT-exception-1.0",
+        "name": "Open CASCADE Exception 1.0"
+    },
+    {
+        "id": "OCaml-LGPL-linking-exception",
+        "name": "OCaml LGPL Linking Exception"
+    },
+    {
+        "id": "OpenJDK-assembly-exception-1.0",
+        "name": "OpenJDK Assembly exception 1.0"
+    },
+    {
+        "id": "PS-or-PDF-font-exception-20170817",
+        "name": "PS/PDF font exception (2017-08-17)"
+    },
+    {
+        "id": "Qt-GPL-exception-1.0",
+        "name": "Qt GPL exception 1.0"
+    },
+    {
+        "id": "Qt-LGPL-exception-1.1",
+        "name": "Qt LGPL exception 1.1"
+    },
+    {
+        "id": "Qwt-exception-1.0",
+        "name": "Qwt exception 1.0"
+    },
+    {
+        "id": "Swift-exception",
+        "name": "Swift Exception"
+    },
+    {
+        "id": "Universal-FOSS-exception-1.0",
+        "name": "Universal FOSS Exception, Version 1.0"
+    },
+    {
+        "id": "WxWindows-exception-3.1",
+        "name": "WxWindows Library Exception 3.1"
+    },
+    {
+        "id": "eCos-exception-2.0",
+        "name": "eCos exception 2.0"
+    },
+    {
+        "id": "freertos-exception-2.0",
+        "name": "FreeRTOS Exception 2.0"
+    },
+    {
+        "id": "gnu-javamail-exception",
+        "name": "GNU JavaMail exception"
+    },
+    {
+        "id": "i2p-gpl-java-exception",
+        "name": "i2p GPL+Java Exception"
+    },
+    {
+        "id": "mif-exception",
+        "name": "Macros and Inline Functions Exception"
+    },
+    {
+        "id": "openvpn-openssl-exception",
+        "name": "OpenVPN OpenSSL Exception"
+    },
+    {
+        "id": "u-boot-exception-2.0",
+        "name": "U-Boot exception 2.0"
+    }
+]

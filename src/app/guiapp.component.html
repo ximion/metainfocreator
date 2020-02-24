@@ -34,6 +34,8 @@
             <div class="control">
                 <input class="input" formControlName="appName" type="text" placeholder="The human-readable name of your application">
             </div>
+
+            <p *ngIf="appName.invalid && (appName.dirty || appName.touched)" class="help is-danger">A name is required</p>
         </div>
 
         <div class="field">
@@ -41,6 +43,8 @@
             <div class="control">
                 <input class="input" formControlName="appSummary" type="text" placeholder="A short text summarizing what the application does">
             </div>
+
+            <p *ngIf="appSummary.invalid && (appSummary.dirty || appSummary.touched)" class="help is-danger">A summary is required</p>
         </div>
 
         <div class="field">
@@ -48,6 +52,8 @@
             <div class="control">
                 <input class="input" formControlName="appHomepage" type="text" placeholder="The website where this application is hosted.">
             </div>
+
+            <p *ngIf="appHomepage.invalid && (appHomepage.dirty || appHomepage.touched)" class="help is-danger">A project homepage is required</p>
         </div>
 
         <div class="field">
@@ -55,14 +61,22 @@
             <div class="control">
                 <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software."></textarea>
             </div>
+
+            <p *ngIf="appDescription.invalid && (appDescription.dirty || appDescription.touched)" class="help is-danger">A long description is required</p>
         </div>
 
         <div class="field">
             <label class="label">Unique Software Identifier</label>
             <div class="control">
-                <input class="input" formControlName="cptId" type="text" value="{{ cid }}" placeholder="Reverse-DNS string uniquely identifying your application.">
+                <input class="input" formControlName="cptId" type="text" placeholder="Reverse-DNS string uniquely identifying your application.">
             </div>
             <p class="help">A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</p>
+
+            <div *ngIf="cptId.invalid && (cptId.dirty || cptId.touched)">
+                <p *ngIf="cptId.errors.required" class="help is-danger">A component-ID is required</p>
+                <p *ngIf="cptId.errors.minlength" class="help is-danger">A component-ID is too short</p>
+                <p *ngIf="cptId.errors.forbiddenId" class="help is-danger">This ID is not valid: {{cptId.errors.forbiddenId.value}}</p>
+            </div>
         </div>
 
     </div>
@@ -87,6 +101,8 @@
                 </select>
             </div>
             <p class="help">The license that applies to this particular metadata and linked assets (like screenshots and videos).</p>
+
+            <p *ngIf="metadataLicense.invalid && (metadataLicense.dirty || metadataLicense.touched)" class="help is-danger">A metadata license must be selected</p>
         </div>
         </div>
 
@@ -175,19 +191,28 @@
 <br/>
 <!-- Output area -->
 
-<div *ngIf="dataGenerated" class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Result
-      </p>
-    </header>
-    <div class="card-content content">
 
-    <h2>MetaInfo file</h2>
-    <p>Install as <code>/usr/share/metainfo/{{cid}}.metainfo.xml</code></p>
-    <div class="control">
-        <textarea class="textarea is-primary" rows="24" readonly>{{dataMetainfo}}</textarea>
-    </div>
+<div *ngIf="dataError" class="notification is-danger">
+  <p><strong>Unable to generate metadata:</strong></p>
+  <p>{{dataErrorMessage}}</p>
 </div>
+
+
+<article *ngIf="dataGenerated" class="panel is-success">
+  <p class="panel-heading">
+    Result
+  </p>
+
+  <div class="panel-block">
+  <div class="column is-full">
+      <h2>MetaInfo file</h2>
+      <p>Install as <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code></p>
+      <div class="control">
+          <textarea class="textarea is-primary" rows="24" readonly>{{dataMetainfo}}</textarea>
+      </div>
+  </div>
+  </div>
+
+</article>
 
 </div> <!-- End of content -->

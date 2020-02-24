@@ -37,8 +37,8 @@ export class GUIAppComponent implements OnInit
 
     ngOnInit()
     {
-        this.metadataLicenses = this.http.get('/assets/metadata-licenses.json');
-        this.spdxLicenses = this.http.get('/assets/spdx-licenses.json');
+        this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
+        this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
         this.createForm();
     };
 

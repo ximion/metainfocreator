@@ -49,8 +49,11 @@
 
         <div class="field">
             <label class="label">Homepage of the application</label>
-            <div class="control">
+            <div class="control has-icons-left">
                 <input class="input" formControlName="appHomepage" type="text" placeholder="The website where this application is hosted.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-link"></i>
+                </span>
             </div>
 
             <p *ngIf="appHomepage.invalid && (appHomepage.dirty || appHomepage.touched)" class="help is-danger">A project homepage is required</p>
@@ -67,8 +70,11 @@
 
         <div class="field">
             <label class="label">Unique Software Identifier</label>
-            <div class="control">
+            <div class="control has-icons-left">
                 <input class="input" formControlName="cptId" type="text" placeholder="Reverse-DNS string uniquely identifying your application.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-fingerprint"></i>
+                </span>
             </div>
             <p class="help">A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</p>
 

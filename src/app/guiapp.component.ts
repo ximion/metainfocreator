@@ -6,6 +6,7 @@ import { FormGroup,  FormBuilder, FormControl,
 
 import { guessComponentId, componentIdValid } from './utils';
 import { makeMetainfoGuiApp, BasicASInfo, GUIAppInfo } from './makemetainfo';
+import { makeMesonValidateSnippet } from './makeauxdata';
 
 @Component({
     selector: 'app-guiapp',
@@ -58,7 +59,8 @@ export class GUIAppComponent implements OnInit
             cptId: ['', [ Validators.required, Validators.minLength(4), this.componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
             simpleProjectLicense: new FormControl({value: '', disabled: false}),
-            complexProjectLicense: new FormControl({value: '', disabled: true})
+            complexProjectLicense: new FormControl({value: '', disabled: true}),
+            cbMesonValidate: ['']
         });
 
         this.cptForm.get('appName').valueChanges.subscribe(value => {
@@ -150,8 +152,17 @@ export class GUIAppComponent implements OnInit
         return true;
     }
 
+    resetGeneratedData()
+    {
+        this.dataGenerated = false;
+        this.dataMetainfo = null;
+        this.dataMesonValidate = null;
+    }
+
     generate()
     {
+        this.resetGeneratedData();
+
         if (!this.validateField(this.appName, 'application name'))
             return;
         if (!this.validateField(this.appSummary, 'application summary'))
@@ -182,14 +193,17 @@ export class GUIAppComponent implements OnInit
         let baseInfo: BasicASInfo = {
             cid: this.cptId.value,
             name: this.appName.value,
-            summary: this.cptForm.value.appSummary,
+            summary: this.appSummary.value,
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
-            description: this.cptForm.value.appDescription
+            description: this.appDescription.value
         };
         let appInfo: GUIAppInfo = {test: 'none'};
 
         this.dataGenerated = true;
         this.dataMetainfo = makeMetainfoGuiApp(baseInfo, appInfo);
+
+        if (this.cptForm.value.cbMesonValidate)
+            this.dataMesonValidate = makeMesonValidateSnippet(baseInfo);
     }
 }

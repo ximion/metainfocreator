@@ -151,8 +151,26 @@
         <div class="field">
         <div class="control">
             <label class="checkbox">
-            <input type="checkbox">
+            <input type="checkbox" formControlName="cbMesonValidate">
               Generate <a href="https://mesonbuild.com/">Meson</a> snippet for data validation.
+            </label>
+        </div>
+        </div>
+
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox">
+              Generate information and <a href="https://mesonbuild.com/">Meson</a> snippet for metadata localization.
+            </label>
+        </div>
+        </div>
+
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox">
+              Generate information and <a href="https://mesonbuild.com/">Meson</a> snippet to embed release data from <code>NEWS</code> files.
             </label>
         </div>
         </div>
@@ -206,9 +224,23 @@
   <div class="panel-block">
   <div class="column is-full">
       <h2>MetaInfo file</h2>
-      <p>Install as <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code></p>
+      <p>Install this file as as <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code></p>
+      <p>You can validate this metadata locally by running: <code>appstreamcli validate {{finalCptId}}.metainfo.xml</code></p>
       <div class="control">
           <textarea class="textarea is-primary" rows="24" readonly>{{dataMetainfo}}</textarea>
+      </div>
+  </div>
+  </div>
+
+  <div *ngIf="dataMesonValidate" class="panel-block">
+  <div class="column is-full">
+      <h2>Meson snippet for MetaInfo validation</h2>
+      <p>
+        Adjust the data location in <code>metainfo_file</code> and add this snippet to your Meson build definition in order to
+        validate the metainfo file as part of the project's tests.
+      </p>
+      <div class="control">
+          <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonValidate}}</textarea>
       </div>
   </div>
   </div>

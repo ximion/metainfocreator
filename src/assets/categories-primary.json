@@ -1,0 +1,51 @@
+[
+    {
+        "desc": "Application for presenting, creating, or processing multimedia (audio/video)",
+        "name": "AudioVideo"
+    },
+    {
+        "desc": "Application that only works inside a terminal (text-based or command line application)",
+        "name": "ConsoleOnly",
+        "rel": "Application that only works inside a terminal (text-based or command line application)"
+    },
+    {
+        "desc": "An application for development",
+        "name": "Development"
+    },
+    {
+        "desc": "Educational software",
+        "name": "Education"
+    },
+    {
+        "desc": "A game",
+        "name": "Game"
+    },
+    {
+        "desc": "Application for viewing, creating, or processing graphics",
+        "name": "Graphics"
+    },
+    {
+        "desc": "Network application such as a web browser",
+        "name": "Network"
+    },
+    {
+        "desc": "An office type application",
+        "name": "Office"
+    },
+    {
+        "desc": "Scientific software",
+        "name": "Science"
+    },
+    {
+        "desc": "Settings applications",
+        "name": "Settings"
+    },
+    {
+        "desc": "System application, \"System Tools\" such as say a log viewer or network monitor",
+        "name": "System"
+    },
+    {
+        "desc": "Small utility application, \"Accessories\"",
+        "name": "Utility"
+    }
+]

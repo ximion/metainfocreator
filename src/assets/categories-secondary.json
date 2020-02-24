@@ -1,0 +1,627 @@
+[
+    {
+        "desc": "2D based graphical application",
+        "name": "2DGraphics",
+        "rel": "2D based graphical application"
+    },
+    {
+        "desc": "Application for viewing, creating, or processing 3-D graphics",
+        "name": "3DGraphics",
+        "rel": "Application for viewing, creating, or processing 3-D graphics"
+    },
+    {
+        "desc": "Accessibility",
+        "name": "Accessibility",
+        "rel": "Accessibility"
+    },
+    {
+        "desc": "An action game",
+        "name": "ActionGame",
+        "rel": "An action game"
+    },
+    {
+        "desc": "Application handles adult or explicit material",
+        "name": "Adult",
+        "rel": "Application handles adult or explicit material"
+    },
+    {
+        "desc": "Adventure style game",
+        "name": "AdventureGame",
+        "rel": "Adventure style game"
+    },
+    {
+        "desc": "A simple amusement",
+        "name": "Amusement",
+        "rel": "A simple amusement"
+    },
+    {
+        "desc": "Arcade style game",
+        "name": "ArcadeGame",
+        "rel": "Arcade style game"
+    },
+    {
+        "desc": "A tool to archive/backup data",
+        "name": "Archiving",
+        "rel": "A tool to archive/backup data"
+    },
+    {
+        "desc": "Software to teach arts",
+        "name": "Art",
+        "rel": "Software to teach arts"
+    },
+    {
+        "desc": "Artificial Intelligence software",
+        "name": "ArtificialIntelligence",
+        "rel": "Artificial Intelligence software"
+    },
+    {
+        "desc": "Astronomy software",
+        "name": "Astronomy",
+        "rel": "Astronomy software"
+    },
+    {
+        "desc": "Application to edit audio/video files",
+        "name": "AudioVideoEditing",
+        "rel": "Application to edit audio/video files"
+    },
+    {
+        "desc": "Biology software",
+        "name": "Biology",
+        "rel": "Biology software"
+    },
+    {
+        "desc": "Falling blocks game",
+        "name": "BlocksGame",
+        "rel": "Falling blocks game"
+    },
+    {
+        "desc": "A board game",
+        "name": "BoardGame",
+        "rel": "A board game"
+    },
+    {
+        "desc": "A tool to build applications",
+        "name": "Building",
+        "rel": "A tool to build applications"
+    },
+    {
+        "desc": "A calculator",
+        "name": "Calculator",
+        "rel": "A calculator"
+    },
+    {
+        "desc": "Calendar application",
+        "name": "Calendar",
+        "rel": "Calendar application"
+    },
+    {
+        "desc": "A card game",
+        "name": "CardGame",
+        "rel": "A card game"
+    },
+    {
+        "desc": "Chart application",
+        "name": "Chart",
+        "rel": "Chart application"
+    },
+    {
+        "desc": "A chat client",
+        "name": "Chat",
+        "rel": "A chat client"
+    },
+    {
+        "desc": "Chemistry software",
+        "name": "Chemistry",
+        "rel": "Chemistry software"
+    },
+    {
+        "desc": "A clock application/applet",
+        "name": "Clock",
+        "rel": "A clock application/applet"
+    },
+    {
+        "desc": "A tool to manage compressed data/archives",
+        "name": "Compression",
+        "rel": "A tool to manage compressed data/archives"
+    },
+    {
+        "desc": "ComputerSience software",
+        "name": "ComputerScience",
+        "rel": "ComputerSience software"
+    },
+    {
+        "desc": "Education or Science",
+        "name": "Construction",
+        "rel": "Education or Science"
+    },
+    {
+        "desc": "E.g. an address book",
+        "name": "ContactManagement",
+        "rel": "E.g. an address book"
+    },
+    {
+        "desc": "Important application, core to the desktop such as a file manager or a help browser",
+        "name": "Core",
+        "rel": "Important application, core to the desktop such as a file manager or a help browser"
+    },
+    {
+        "desc": "Data visualization software",
+        "name": "DataVisualization",
+        "rel": "Data visualization software"
+    },
+    {
+        "desc": "Application to manage a database",
+        "name": "Database",
+        "rel": "Application to manage a database"
+    },
+    {
+        "desc": "A tool to debug applications",
+        "name": "Debugger",
+        "rel": "A tool to debug applications"
+    },
+    {
+        "desc": "Configuration tool for the GUI",
+        "name": "DesktopSettings",
+        "rel": "Configuration tool for the GUI"
+    },
+    {
+        "desc": "A dial-up program",
+        "name": "Dialup",
+        "rel": "A dial-up program"
+    },
+    {
+        "desc": "A dictionary",
+        "name": "Dictionary",
+        "rel": "A dictionary"
+    },
+    {
+        "desc": "Application to burn a disc",
+        "name": "DiscBurning",
+        "rel": "Application to burn a disc"
+    },
+    {
+        "desc": "Help or documentation",
+        "name": "Documentation",
+        "rel": "Help or documentation"
+    },
+    {
+        "desc": "Economy software",
+        "name": "Economy",
+        "rel": "Economy software"
+    },
+    {
+        "desc": "Electricity software",
+        "name": "Electricity",
+        "rel": "Electricity software"
+    },
+    {
+        "desc": "Electronics software, e.g. a circuit designer",
+        "name": "Electronics",
+        "rel": "Electronics software, e.g. a circuit designer"
+    },
+    {
+        "desc": "Email application",
+        "name": "Email",
+        "rel": "Email application"
+    },
+    {
+        "desc": "Emulator of another platform, such as a DOS emulator",
+        "name": "Emulator",
+        "rel": "Emulator of another platform, such as a DOS emulator"
+    },
+    {
+        "desc": "Engineering software, e.g. CAD programs",
+        "name": "Engineering",
+        "rel": "Engineering software, e.g. CAD programs"
+    },
+    {
+        "desc": "RSS, podcast and other subscription based contents",
+        "name": "Feed",
+        "rel": "RSS, podcast and other subscription based contents"
+    },
+    {
+        "desc": "A file manager",
+        "name": "FileManager",
+        "rel": "A file manager"
+    },
+    {
+        "desc": "A file tool utility",
+        "name": "FileTools",
+        "rel": "A file tool utility"
+    },
+    {
+        "desc": "Tools like FTP or P2P programs",
+        "name": "FileTransfer",
+        "rel": "Tools like FTP or P2P programs"
+    },
+    {
+        "desc": "A file system tool",
+        "name": "Filesystem",
+        "rel": "A file system tool"
+    },
+    {
+        "desc": "Application to manage your finance",
+        "name": "Finance",
+        "rel": "Application to manage your finance"
+    },
+    {
+        "desc": "A flowchart application",
+        "name": "FlowChart",
+        "rel": "A flowchart application"
+    },
+    {
+        "desc": "Application based on GNOME libraries",
+        "name": "GNOME",
+        "rel": "Application based on GNOME libraries"
+    },
+    {
+        "desc": "Application based on GTK+ libraries",
+        "name": "GTK",
+        "rel": "Application based on GTK+ libraries"
+    },
+    {
+        "desc": "A GUI designer application",
+        "name": "GUIDesigner",
+        "rel": "A GUI designer application"
+    },
+    {
+        "desc": "Geography software",
+        "name": "Geography",
+        "rel": "Geography software"
+    },
+    {
+        "desc": "Geology software",
+        "name": "Geology",
+        "rel": "Geology software"
+    },
+    {
+        "desc": "Geoscience software, GIS",
+        "name": "Geoscience",
+        "rel": "Geoscience software, GIS"
+    },
+    {
+        "desc": "HAM radio software",
+        "name": "HamRadio",
+        "rel": "HAM radio software"
+    },
+    {
+        "desc": "A tool to manage hardware components, like sound cards, video cards or printers",
+        "name": "HardwareSettings",
+        "rel": "A tool to manage hardware components, like sound cards, video cards or printers"
+    },
+    {
+        "desc": "History software",
+        "name": "History",
+        "rel": "History software"
+    },
+    {
+        "desc": "Software for philosophy, psychology and other humanities",
+        "name": "Humanities",
+        "rel": "Software for philosophy, psychology and other humanities"
+    },
+    {
+        "desc": "IDE application",
+        "name": "IDE",
+        "rel": "IDE application"
+    },
+    {
+        "desc": "An IRC client",
+        "name": "IRCClient",
+        "rel": "An IRC client"
+    },
+    {
+        "desc": "Image Processing software",
+        "name": "ImageProcessing",
+        "rel": "Image Processing software"
+    },
+    {
+        "desc": "An instant messaging client",
+        "name": "InstantMessaging",
+        "rel": "An instant messaging client"
+    },
+    {
+        "desc": "Application based on Java GUI libraries, such as AWT or Swing",
+        "name": "Java",
+        "rel": "Application based on Java GUI libraries, such as AWT or Swing"
+    },
+    {
+        "desc": "Application based on KDE libraries",
+        "name": "KDE",
+        "rel": "Application based on KDE libraries"
+    },
+    {
+        "desc": "A game for kids",
+        "name": "KidsGame",
+        "rel": "A game for kids"
+    },
+    {
+        "desc": "Software to learn foreign languages",
+        "name": "Languages",
+        "rel": "Software to learn foreign languages"
+    },
+    {
+        "desc": "Literature software",
+        "name": "Literature",
+        "rel": "Literature software"
+    },
+    {
+        "desc": "Logic games like puzzles, etc",
+        "name": "LogicGame",
+        "rel": "Logic games like puzzles, etc"
+    },
+    {
+        "desc": "Sofware for viewing maps, navigation, mapping, GPS",
+        "name": "Maps",
+        "rel": "Sofware for viewing maps, navigation, mapping, GPS"
+    },
+    {
+        "desc": "Math software",
+        "name": "Math",
+        "rel": "Math software"
+    },
+    {
+        "desc": "Medical software",
+        "name": "MedicalSoftware",
+        "rel": "Medical software"
+    },
+    {
+        "desc": "An app related to MIDI",
+        "name": "Midi",
+        "rel": "An app related to MIDI"
+    },
+    {
+        "desc": "Just a mixer",
+        "name": "Mixer",
+        "rel": "Just a mixer"
+    },
+    {
+        "desc": "Monitor application/applet that monitors some resource or activity",
+        "name": "Monitor",
+        "rel": "Monitor application/applet that monitors some resource or activity"
+    },
+    {
+        "desc": "Application based on Motif libraries",
+        "name": "Motif",
+        "rel": "Application based on Motif libraries"
+    },
+    {
+        "desc": "Musical software",
+        "name": "Music",
+        "rel": "Musical software"
+    },
+    {
+        "desc": "A news reader or a news ticker",
+        "name": "News",
+        "rel": "A news reader or a news ticker"
+    },
+    {
+        "desc": "Numerical analysis software",
+        "name": "NumericalAnalysis",
+        "rel": "Numerical analysis software"
+    },
+    {
+        "desc": "Optical character recognition application",
+        "name": "OCR",
+        "rel": "Optical character recognition application"
+    },
+    {
+        "desc": "A P2P program",
+        "name": "P2P",
+        "rel": "A P2P program"
+    },
+    {
+        "desc": "Tool to manage your PDA",
+        "name": "PDA",
+        "rel": "Tool to manage your PDA"
+    },
+    {
+        "desc": "A package manager application",
+        "name": "PackageManager",
+        "rel": "A package manager application"
+    },
+    {
+        "desc": "Parallel computing software",
+        "name": "ParallelComputing",
+        "rel": "Parallel computing software"
+    },
+    {
+        "desc": "Camera tools, etc.",
+        "name": "Photography",
+        "rel": "Camera tools, etc."
+    },
+    {
+        "desc": "Physics software",
+        "name": "Physics",
+        "rel": "Physics software"
+    },
+    {
+        "desc": "Application to play audio/video files",
+        "name": "Player",
+        "rel": "Application to play audio/video files"
+    },
+    {
+        "desc": "Presentation software",
+        "name": "Presentation",
+        "rel": "Presentation software"
+    },
+    {
+        "desc": "A tool to manage printers",
+        "name": "Printing",
+        "rel": "A tool to manage printers"
+    },
+    {
+        "desc": "A profiling tool",
+        "name": "Profiling",
+        "rel": "A profiling tool"
+    },
+    {
+        "desc": "Project management application",
+        "name": "ProjectManagement",
+        "rel": "Project management application"
+    },
+    {
+        "desc": "Desktop Publishing applications and Color Management tools",
+        "name": "Publishing",
+        "rel": "Desktop Publishing applications and Color Management tools"
+    },
+    {
+        "desc": "Application based on Qt libraries",
+        "name": "Qt",
+        "rel": "Application based on Qt libraries"
+    },
+    {
+        "desc": "Application for viewing, creating, or processing raster (bitmap) graphics",
+        "name": "RasterGraphics",
+        "rel": "Application for viewing, creating, or processing raster (bitmap) graphics"
+    },
+    {
+        "desc": "Application to record audio/video files",
+        "name": "Recorder",
+        "rel": "Application to record audio/video files"
+    },
+    {
+        "desc": "A tool to remotely manage your PC",
+        "name": "RemoteAccess",
+        "rel": "A tool to remotely manage your PC"
+    },
+    {
+        "desc": "Applications like cvs or subversion",
+        "name": "RevisionControl",
+        "rel": "Applications like cvs or subversion"
+    },
+    {
+        "desc": "Robotics software",
+        "name": "Robotics",
+        "rel": "Robotics software"
+    },
+    {
+        "desc": "A role playing game",
+        "name": "RolePlaying",
+        "rel": "A role playing game"
+    },
+    {
+        "desc": "Tool to scan a file/text",
+        "name": "Scanning",
+        "rel": "Tool to scan a file/text"
+    },
+    {
+        "desc": "A security tool",
+        "name": "Security",
+        "rel": "A security tool"
+    },
+    {
+        "desc": "A sequencer",
+        "name": "Sequencer",
+        "rel": "A sequencer"
+    },
+    {
+        "desc": "A shooter game",
+        "name": "Shooter",
+        "rel": "A shooter game"
+    },
+    {
+        "desc": "A simulation game",
+        "name": "Simulation",
+        "rel": "A simulation game"
+    },
+    {
+        "desc": "Religious and spiritual software, theology",
+        "name": "Spirituality",
+        "rel": "Religious and spiritual software, theology"
+    },
+    {
+        "desc": "Sports software",
+        "name": "Sports",
+        "rel": "Sports software"
+    },
+    {
+        "desc": "A sports game",
+        "name": "SportsGame",
+        "rel": "A sports game"
+    },
+    {
+        "desc": "A spreadsheet",
+        "name": "Spreadsheet",
+        "rel": "A spreadsheet"
+    },
+    {
+        "desc": "A strategy game",
+        "name": "StrategyGame",
+        "rel": "A strategy game"
+    },
+    {
+        "desc": "A TV application",
+        "name": "TV",
+        "rel": "A TV application"
+    },
+    {
+        "desc": "Telephony via PC",
+        "name": "Telephony",
+        "rel": "Telephony via PC"
+    },
+    {
+        "desc": "Telephony tools, to dial a number, manage PBX, ...",
+        "name": "TelephonyTools",
+        "rel": "Telephony tools, to dial a number, manage PBX, ..."
+    },
+    {
+        "desc": "A terminal emulator application",
+        "name": "TerminalEmulator",
+        "rel": "A terminal emulator application"
+    },
+    {
+        "desc": "A text editor",
+        "name": "TextEditor",
+        "rel": "A text editor"
+    },
+    {
+        "desc": "A text tool utility",
+        "name": "TextTools",
+        "rel": "A text tool utility"
+    },
+    {
+        "desc": "A translation tool",
+        "name": "Translation",
+        "rel": "A translation tool"
+    },
+    {
+        "desc": "A tuner",
+        "name": "Tuner",
+        "rel": "A tuner"
+    },
+    {
+        "desc": "Application for viewing, creating, or processing vector graphics",
+        "name": "VectorGraphics",
+        "rel": "Application for viewing, creating, or processing vector graphics"
+    },
+    {
+        "desc": "Video Conference software",
+        "name": "VideoConference",
+        "rel": "Video Conference software"
+    },
+    {
+        "desc": "Tool to view e.g. a graphic or pdf file",
+        "name": "Viewer",
+        "rel": "Tool to view e.g. a graphic or pdf file"
+    },
+    {
+        "desc": "A web browser",
+        "name": "WebBrowser",
+        "rel": "A web browser"
+    },
+    {
+        "desc": "A tool for web developers",
+        "name": "WebDevelopment",
+        "rel": "A tool for web developers"
+    },
+    {
+        "desc": "A word processor",
+        "name": "WordProcessor",
+        "rel": "A word processor"
+    },
+    {
+        "desc": "Application based on XFCE libraries",
+        "name": "XFCE",
+        "rel": "Application based on XFCE libraries"
+    }
+]

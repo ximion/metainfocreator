@@ -17,6 +17,7 @@ from tempfile import TemporaryDirectory
 
 
 SPDX_REPO_URL = 'https://github.com/spdx/license-list-data.git'
+MENU_SPEC_URL = 'https://gitlab.freedesktop.org/xdg/xdg-specs/raw/master/menu/menu-spec.xml'
 
 
 def _read_spdx_licenses(data_dir, last_tag_ver):
@@ -56,7 +57,7 @@ def _read_spdx_licenses(data_dir, last_tag_ver):
             'eceptions_list_ver': exceptions_ver_ref}
 
 
-def get_spdx_id_list(licenselist_fname, exceptionlist_fname, git_url, with_deprecated=True):
+def update_spdx_license_list(git_url, licenselist_fname, exceptionlist_fname, with_deprecated=True):
     print('Updating list of SPDX licenses...')
     tdir = TemporaryDirectory(prefix='spdx_master-')
 
@@ -77,13 +78,116 @@ def get_spdx_id_list(licenselist_fname, exceptionlist_fname, git_url, with_depre
         f.write(json.dumps(license_data['exceptions'], sort_keys=True, indent=4))
 
 
+def update_categories_list(spec_url, primary_fname, secondary_fname):
+    ''' The worst parser ever, extracting category information directoly from the spec Docbook file '''
+    from enum import Enum, auto
+
+    req = requests.get(spec_url)
+
+    class SpecSection(Enum):
+        NONE = auto()
+        MAIN_CATS = auto()
+        MAIN_CATS_BODY = auto()
+        EXTRA_CATS = auto()
+        EXTRA_CATS_BODY = auto()
+
+    def get_entry(line):
+        start = line.index('<entry>') + 7
+        end = line.index('</entry>')
+        return line[start:end].strip()
+
+    main_cats = []
+    extra_cats = []
+
+    current_cat = {}
+    spec_sect = SpecSection.NONE
+    for line in str(req.content, 'utf-8').splitlines():
+        if '<entry>Main Category</entry>' in line:
+            spec_sect = SpecSection.MAIN_CATS
+            continue
+
+        if '<entry>Additional Category</entry>' in line:
+            spec_sect = SpecSection.EXTRA_CATS
+            continue
+
+        if '<tbody>' in line:
+            current_cat = {}
+            if spec_sect == SpecSection.MAIN_CATS:
+                spec_sect = SpecSection.MAIN_CATS_BODY
+            else:
+                spec_sect = SpecSection.EXTRA_CATS_BODY
+            continue
+
+        if spec_sect == SpecSection.MAIN_CATS_BODY:
+            if '<row>' in line:
+                if current_cat:
+                    main_cats.append(current_cat)
+                    current_cat = {}
+                continue
+            if '</tbody>' in line:
+                if current_cat:
+                    main_cats.append(current_cat)
+                    current_cat = {}
+                spec_sect = SpecSection.NONE
+                continue
+
+            if '<entry>' in line:
+                if current_cat.get('desc'):
+                    continue
+                if current_cat:
+                    current_cat['desc'] = get_entry(line)
+                else:
+                    current_cat['name'] = get_entry(line)
+            continue
+
+        if spec_sect == SpecSection.EXTRA_CATS_BODY:
+            if '<row>' in line:
+                if current_cat:
+                    extra_cats.append(current_cat)
+                    current_cat = {}
+                continue
+            if '</tbody>' in line:
+                if current_cat:
+                    main_cats.append(current_cat)
+                    current_cat = {}
+                spec_sect = SpecSection.NONE
+                # nothing interesting follows for us after the additional categories are done
+                break
+
+            if '<entry>' in line:
+                if current_cat.get('rel'):
+                    continue
+                if current_cat:
+                    if not current_cat.get('desc'):
+                        current_cat['desc'] = get_entry(line)
+                    if not current_cat.get('rel'):
+                        current_cat['rel'] = get_entry(line)
+                else:
+                    current_cat['name'] = get_entry(line)
+            continue
+
+    # we don't want to expose the Audio and Video categories, as a special rule applies
+    # for them. People should use AudioVideo instead.
+    main_cats = [e for e in main_cats if (e['name'] != 'Audio' and e['name'] != 'Video')]
+
+    main_cats = sorted(main_cats, key=lambda k: k['name'])
+    extra_cats = sorted(extra_cats, key=lambda k: k['name'])
+
+    with open(primary_fname, 'w') as f:
+        f.write(json.dumps(main_cats, sort_keys=True, indent=4))
+
+    with open(secondary_fname, 'w') as f:
+        f.write(json.dumps(extra_cats, sort_keys=True, indent=4))
+
+
 def main():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     assets_dir = os.path.join(root_dir, 'src', 'assets')
     print('Asset directory is: {}'.format(assets_dir))
     os.chdir(assets_dir)
 
-    get_spdx_id_list('spdx-licenses.json', 'spdx-license-exceptions.json', SPDX_REPO_URL)
+    update_spdx_license_list(SPDX_REPO_URL, 'spdx-licenses.json', 'spdx-license-exceptions.json')
+    update_categories_list(MENU_SPEC_URL, 'categories-primary.json', 'categories-secondary.json')
 
     print('All done.')
 

@@ -66,9 +66,8 @@ function convertDescription(desc: string): string
     return res;
 }
 
-export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo): string
+function createMetainfoPreamble(binfo: BasicASInfo): string
 {
-    binfo['ckind'] = 'desktop-application';
     let miXml = miTemplateHead.replace(/<\?(\w+)\?>/g,
         function(match, name) {
             if (name == 'description')
@@ -76,6 +75,27 @@ export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo): string
             else
                 return xmlEscape(binfo[name]);
         });
+
+    let cid = binfo.cid;
+    let project_group: string = null;
+    if (cid.startsWith('org.kde.'))
+        project_group = 'KDE';
+    else if (cid.startsWith('org.gnome.'))
+        project_group = 'GNOME';
+    else if (cid.startsWith('org.mozilla.'))
+        project_group = 'Mozilla';
+    else if (cid.startsWith('org.xfce.'))
+        project_group = 'Xfce';
+    if (project_group)
+        miXml = miXml + '\n<project_group>' + project_group + '</project_group>';
+
+    return miXml;
+}
+
+export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo): string
+{
+    binfo['ckind'] = 'desktop-application';
+    let miXml = createMetainfoPreamble(binfo);
 
     if (info.scrImages.length > 0) {
         miXml = miXml.concat('\n<screenshots>');

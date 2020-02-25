@@ -25,7 +25,8 @@
             ],
             "styles": [
               "src/style.css",
-              "node_modules/bulma/css/bulma.css"
+              "node_modules/bulma/css/bulma.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": []
           },

@@ -120,11 +120,11 @@
 
         <div class="control">
             <label class="radio">
-            <input type="radio" checked="!useSPDXExpression" name="rbLicenseMode" (change)="licenseModeSimpleChange($event)">
+            <input type="radio" value="simple" formControlName="rbLicenseMode" (change)="licenseModeChange($event)">
             Simple Single License
             </label>
             <label class="radio">
-            <input type="radio" name="rbLicenseMode" (change)="licenseModeSPDXExprChange($event)">
+            <input type="radio" value="spdx" formControlName="rbLicenseMode" (change)="licenseModeChange($event)">
             Custom SPDX Expression
             </label>
         </div>
@@ -142,6 +142,7 @@
             <div *ngIf="complexProjectLicense.enabled" class="control is-expanded">
                 <input class="input" formControlName="complexProjectLicense" type="text" placeholder="A SPDX license expression, e.g. GPL-3.0-or-later and MPL-2.0">
                 <p class="help">A <a href="https://spdx.org/licenses/">SPDX</a> license expression string.</p>
+                <p *ngIf="complexProjectLicense.invalid && (complexProjectLicense.dirty || complexProjectLicense.touched)" class="help is-danger">You need to enter a SPDX expression</p>
             </div>
         </div>
         <p class="help">The license that applies to the described software.</p>
@@ -212,7 +213,148 @@
 <div class="card">
     <header class="card-header">
       <p class="card-header-title">
-        Misc
+        Launchables
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <p>
+          In order to launch your application from a menu or a software center, you will need a
+          <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/">desktop-entry</a> file. You can either
+          set the name of a file you already have, have this tool generate one for you, or generate the file from your metainfo file
+          when your application is compiled. For the latter case, this tool can also produce instructions.
+        </p>
+
+        <div class="field ">
+            <div class="control">
+                <label class="radio">
+                <input type="radio" value="provided" formControlName="rbLaunchableMode">
+                I already have a .desktop file
+                </label>
+                <label class="radio">
+                <input type="radio" value="generate" formControlName="rbLaunchableMode">
+                Generate a .desktop file for me
+                </label>
+                <label class="radio">
+                <input type="radio" value="generate-from-mi" formControlName="rbLaunchableMode">
+                Create instructions to autogenerate a .desktop file from my metainfo file
+                </label>
+            </div>
+        </div>
+
+        <div *ngIf="rbLaunchableMode.value == 'provided'" class="field">
+            <label class="label">Name of your .desktop file</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="desktopEntryName" type="text" placeholder="myapplication.desktop">
+                <span class="icon is-small is-left">
+                    <i class="far fa-file"></i>
+                </span>
+            </div>
+
+            <div *ngIf="desktopEntryName.invalid && (desktopEntryName.dirty || desktopEntryName.touched)">
+                <p *ngIf="desktopEntryName.errors.required" class="help is-danger">A desktop-entry filename is required</p>
+                <p *ngIf="desktopEntryName.errors.invalidName" class="help is-danger">This is not a valid .desktop filename</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card" *ngIf="createDesktopData">
+    <header class="card-header">
+      <p class="card-header-title">
+        Categorization
+      </p>
+    </header>
+    <div class="card-content content">
+        <p>
+          Your software will appear in at least two categories in software center searches and menus of some desktop environments, one
+          primary broad category, and one secondary more specific category.
+          You can add more secondary categories to your metadata later, if you like to and think your application fits into more categories..
+        </p>
+        <div class="field is-grouped">
+
+            <div class="control">
+              <label class="label">Primary Category</label>
+              <div class="select">
+                <select formControlName="primaryCategory">
+                    <option value="">Choose a category</option>
+                    <option *ngFor="let cat of categoriesPrimary | async" value="{{cat.name}}">{{cat.name}}</option>
+                </select>
+              </div>
+              <p *ngIf="primaryCategory.invalid && (primaryCategory.dirty || primaryCategory.touched)" class="help is-danger">A primary category must be selected</p>
+            </div>
+
+            <div class="control">
+              <label class="label">Secondary Category</label>
+              <div class="select">
+                <select formControlName="secondaryCategory">
+                    <option value="">Choose an additional category</option>
+                    <option *ngFor="let cat of categoriesSecondary | async" value="{{cat.name}}">{{cat.name}}</option>
+                </select>
+              </div>
+              <p *ngIf="secondaryCategory.invalid && (secondaryCategory.dirty || secondaryCategory.touched)" class="help is-danger">A secondary category must be selected</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card" *ngIf="createDesktopData">
+    <header class="card-header">
+      <p class="card-header-title">
+        Launchable Details
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field">
+            <label class="label">Icon Name</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="appIcon" type="text" placeholder="Stock icon name without file extension">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-icons"></i>
+                </span>
+            </div>
+            <p class="help">
+              Please enter the name of your icon (usually installed into <code>/usr/share/icons/hicolor/&lt;size&gt;/apps/</code>) without its
+              .png or .svg(z) file extension.
+            </p>
+
+            <div *ngIf="appIcon.invalid && (appIcon.dirty || appIcon.touched)">
+                <p *ngIf="appIcon.errors.required" class="help is-danger">An icon name is required</p>
+                <p *ngIf="appIcon.errors.invalidName" class="help is-danger">This is not a valid icon name</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Executable Name</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="exeName" type="text" placeholder="Executable (command) binary name">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-terminal"></i>
+                </span>
+            </div>
+            <p class="help">
+              Please enter the name of the binary to run your application (as installed in <code>$PATH</code>). Do not use absolute paths!
+            </p>
+
+            <div *ngIf="exeName.invalid && (exeName.dirty || exeName.touched)">
+                <p *ngIf="exeName.errors.required" class="help is-danger">An executable name is required</p>
+                <p *ngIf="exeName.errors.invalidName" class="help is-danger">This is not a valid executable name</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Additional Options
       </p>
     </header>
     <div class="card-content content">
@@ -244,15 +386,6 @@
         </div>
         </div>
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox">
-              Build desktop-entry file from MetaInfo data.
-            </label>
-        </div>
-        </div>
-
     </div>
 </div>
 
@@ -277,6 +410,10 @@
 
 <br/>
 <!-- Output area -->
+
+<p>
+  {{rbLaunchableMode.value}}
+  </p>
 
 
 <div *ngIf="dataError" class="notification is-danger">

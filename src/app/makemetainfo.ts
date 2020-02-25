@@ -27,6 +27,7 @@ export interface BasicASInfo {
 
 export class GUIAppInfo {
   scrImages: Array<string> = [];
+  desktopEntryName: string = null;
 }
 
 function xmlEscape(s: string)

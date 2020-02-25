@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder, FormControl,
          Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
-import { guessComponentId, componentIdValid,
-         isAcceptableUrl, arrayAddIfNotEmpty } from './utils';
+import { guessComponentId, componentIdValid, isAcceptableUrl,
+         isDesktopFilename, isNoPath, arrayAddIfNotEmpty } from './utils';
 import { makeMetainfoGuiApp, BasicASInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet } from './makeauxdata';
 
@@ -22,6 +22,11 @@ export class GUIAppComponent implements OnInit
     metadataLicenses: any;
     spdxLicenses: any;
 
+    categoriesPrimary: any;
+    categoriesSecondary: any;
+
+    createDesktopData: boolean;
+
     dataGenerated: boolean;
     dataError: boolean;
     dataErrorMessage: string;
@@ -34,12 +39,17 @@ export class GUIAppComponent implements OnInit
     {
         this.dataGenerated = false;
         this.dataError = false;
+        this.createDesktopData = false;
     }
 
     ngOnInit()
     {
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
+
+        this.categoriesPrimary = this.http.get('assets/categories-primary.json');
+        this.categoriesSecondary = this.http.get('assets/categories-secondary.json');
+
         this.createForm();
     };
 
@@ -56,6 +66,18 @@ export class GUIAppComponent implements OnInit
         };
     }
 
+    desktopEntryValidator(): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} | null => {
+            return isDesktopFilename(control.value) ? null : {'invalidName': {value: control.value}};
+        };
+    }
+
+    noPathValidator(): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} | null => {
+            return isNoPath(control.value) ? null : {'invalidName': {value: control.value}};
+        };
+    }
+
     createForm()
     {
         this.cptForm = this.fb.group({
@@ -65,6 +87,7 @@ export class GUIAppComponent implements OnInit
             appDescription: ['', Validators.required ],
             cptId: ['', [ Validators.required, Validators.minLength(4), this.componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
+            rbLicenseMode: [''],
             simpleProjectLicense: new FormControl({value: '', disabled: false}),
             complexProjectLicense: new FormControl({value: '', disabled: true}),
 
@@ -72,23 +95,43 @@ export class GUIAppComponent implements OnInit
             extraScreenshot1: ['', this.urlValidator() ],
             extraScreenshot2: ['', this.urlValidator() ],
 
+            rbLaunchableMode: [''],
+            desktopEntryName: ['', [ Validators.required, this.desktopEntryValidator() ] ],
+
+            primaryCategory: ['', Validators.required ],
+            secondaryCategory: ['', Validators.required ],
+
+            appIcon: ['', [ Validators.required, this.noPathValidator() ] ],
+            exeName: ['', [ Validators.required, this.noPathValidator() ] ],
+
             cbMesonValidate: ['']
         });
 
-        this.cptForm.get('appName').valueChanges.subscribe(value => {
-          if (!this.cptId.dirty)
-              this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
+        // some defaults
+        this.rbLicenseMode.setValue('simple');
+        this.rbLaunchableMode.setValue('provided');
+
+        this.appName.valueChanges.subscribe(value => {
+            if (!this.cptId.dirty)
+                this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
         });
 
-        this.cptForm.get('appHomepage').valueChanges.subscribe(value => {
-          if (!this.cptId.dirty)
-              this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
+        this.appHomepage.valueChanges.subscribe(value => {
+            if (!this.cptId.dirty)
+                this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
+        });
+
+        this.rbLaunchableMode.valueChanges.subscribe(value => {
+            // if the desktop-entry ID isn't provided, we have to request additional data
+            this.createDesktopData = false;
+            if (value != 'provided')
+                this.createDesktopData = true;
         });
     }
 
-    licenseModeSimpleChange(evt)
+    licenseModeChange(evt)
     {
-        if (evt.target.checked) {
+        if (evt.target.value == 'simple') {
             this.complexProjectLicense.disable();
             this.simpleProjectLicense.enable();
         } else {
@@ -97,16 +140,6 @@ export class GUIAppComponent implements OnInit
         }
     }
 
-    licenseModeSPDXExprChange(evt)
-    {
-        if (evt.target.checked) {
-            this.complexProjectLicense.enable();
-            this.simpleProjectLicense.disable();
-        } else {
-            this.complexProjectLicense.disable();
-            this.simpleProjectLicense.enable();
-        }
-    }
 
     get appName() { return this.cptForm.get('appName'); }
     get appSummary() { return this.cptForm.get('appSummary'); }
@@ -118,12 +151,23 @@ export class GUIAppComponent implements OnInit
     get cptId() { return this.cptForm.get('cptId'); }
 
     get metadataLicense() { return this.cptForm.get('metadataLicense'); }
+    get rbLicenseMode() { return this.cptForm.get('rbLicenseMode'); }
     get simpleProjectLicense() { return this.cptForm.get('simpleProjectLicense'); }
     get complexProjectLicense() { return this.cptForm.get('complexProjectLicense'); }
 
     get primaryScreenshot() { return this.cptForm.get('primaryScreenshot'); }
     get extraScreenshot1() { return this.cptForm.get('extraScreenshot1'); }
     get extraScreenshot2() { return this.cptForm.get('extraScreenshot2'); }
+
+    get rbLaunchableMode() { return this.cptForm.get('rbLaunchableMode'); }
+    get desktopEntryName() { return this.cptForm.get('desktopEntryName'); }
+
+    get primaryCategory() { return this.cptForm.get('primaryCategory'); }
+    get secondaryCategory() { return this.cptForm.get('secondaryCategory'); }
+
+    get appIcon() { return this.cptForm.get('appIcon'); }
+    get exeName() { return this.cptForm.get('exeName'); }
+
 
     validationError(message: string)
     {
@@ -174,10 +218,11 @@ export class GUIAppComponent implements OnInit
             return;
 
         let pLicense;
-        if (this.simpleProjectLicense.enabled)
+        if (this.rbLicenseMode.value == 'simple')
             pLicense = this.simpleProjectLicense.value;
         else
             pLicense = this.complexProjectLicense.value;
+        pLicense = pLicense.trim();
         if (!pLicense) {
             this.validationError('No project license has been selected.');
             return;
@@ -189,6 +234,27 @@ export class GUIAppComponent implements OnInit
             return;
         if (!this.validateField(this.extraScreenshot2, 'additional screenshot 2', true))
             return;
+
+        let appInfo: GUIAppInfo = new GUIAppInfo();
+
+        let launchableMode = this.rbLaunchableMode.value;
+        if (launchableMode == 'provided') {
+            if (!this.validateField(this.desktopEntryName, 'desktop-entry filename'))
+                return;
+            appInfo.desktopEntryName = this.desktopEntryName.value;
+        } else {
+            // no desktop-entry filename was provided, so we need to check if a bunch more
+            // data is present to build one
+
+            if (!this.validateField(this.primaryCategory, 'primary application category'))
+                return;
+            if (!this.validateField(this.secondaryCategory, 'secondary application category'))
+                return;
+            if (!this.validateField(this.appIcon, 'application icon'))
+                return;
+            if (!this.validateField(this.exeName, 'executable name'))
+                return;
+        }
 
         // all validity checks have passed at this point
         this.dataError = false;
@@ -203,7 +269,7 @@ export class GUIAppComponent implements OnInit
             description: this.appDescription.value
         };
 
-        let appInfo: GUIAppInfo = new GUIAppInfo();
+
         arrayAddIfNotEmpty(appInfo.scrImages, this.primaryScreenshot.value);
         arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot1.value);
         arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot2.value);

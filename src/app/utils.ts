@@ -24,6 +24,22 @@ export function isAcceptableUrl(url: string): boolean
     return false;
 }
 
+export function isNoPath(basename: string): boolean
+{
+    // it's no path - it's nothing!
+    if (!basename)
+        return true;
+
+    return !basename.includes('/');
+}
+
+export function isDesktopFilename(fname: string): boolean
+{
+    if (!fname)
+        return false;
+    return !fname.includes('/') && fname.endsWith('.desktop');
+}
+
 export function guessComponentId(homepage: string, appName: string): string
 {
     if (!homepage)

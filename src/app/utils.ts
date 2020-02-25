@@ -12,16 +12,22 @@ export function guessComponentId(homepage: string, appName: string): string
         url = new URL(urlStr);
     } catch { return ''; }
 
+    let userPart = ''; // Only used with GitHub URLs at the moment
     let rDNSRootParts = url.host.split('.').reverse()
     if (rDNSRootParts.length >= 2) {
-        // usually projects hosted on GitHub are not from GitHub / Microsoft
-        // themselves, so we use github.io for those apps.
-        // This is super nitpicky though.
-        if (rDNSRootParts[1].toLowerCase() == 'github')
+        // Usually projects hosted on GitHub are not from GitHub Inc. / Microsoft
+        // themselves, so we use github.io for those apps (this seems to be the way
+        // at Github to indicate "created on our platform, but not owned by us)
+        // We also special-case the GitHub username here, for extra namespace precision.
+        if (rDNSRootParts[1].toLowerCase() == 'github') {
             rDNSRootParts[0] = 'io';
+            userPart = url.pathname.split('/')[1];
+            if (userPart)
+                userPart = userPart + '.';
+        }
     }
 
-    let tmp = rDNSRootParts.join('.') + '.' + appName;
+    let tmp = rDNSRootParts.join('.') + '.' + userPart + appName;
     tmp = tmp.trim()
              .toLowerCase()
              .normalize()

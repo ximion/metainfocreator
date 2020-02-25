@@ -1,8 +1,33 @@
 
+export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean
+{
+    let e = element;
+    if (typeof e === 'string' || e instanceof String)
+        e = e.trim();
+    if (!e)
+        return false;
+
+    arr.push(e);
+    return true;
+}
+
+export function isAcceptableUrl(url: string): boolean
+{
+    // if the URL doesn't exist, that's okay too
+    if (!url)
+        return true;
+
+    // we only permit HTTP(s) URLs in most places in AppStream,
+    // so we can just make this mandatory here
+    if (url.startsWith('https://') || url.startsWith('http://'))
+        return true;
+    return false;
+}
+
 export function guessComponentId(homepage: string, appName: string): string
 {
     if (!homepage)
-    return '';
+        return '';
 
     let url;
     try {

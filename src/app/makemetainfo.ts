@@ -25,8 +25,8 @@ export interface BasicASInfo {
   description: string;
 }
 
-export interface GUIAppInfo {
-  test: string;
+export class GUIAppInfo {
+  scrImages: Array<string> = [];
 }
 
 function xmlEscape(s: string)
@@ -76,6 +76,21 @@ export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo): string
             else
                 return xmlEscape(binfo[name]);
         });
+
+    if (info.scrImages.length > 0) {
+        miXml = miXml.concat('\n<screenshots>');
+
+        for (let i = 0; i < info.scrImages.length; i++) {
+            if (i == 0)
+                miXml = miXml.concat('<screenshot type="default">\n<image>');
+            else
+                miXml = miXml.concat('<screenshot>\n<image>');
+            miXml = miXml.concat(xmlEscape(info.scrImages[i]));
+            miXml = miXml.concat('</image>\n</screenshot>');
+        }
+
+        miXml = miXml.concat('\n</screenshots>');
+    }
 
     miXml = miXml + miTemplateTail;
     return prettyXml(miXml);

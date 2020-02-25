@@ -56,7 +56,10 @@
                 </span>
             </div>
 
-            <p *ngIf="appHomepage.invalid && (appHomepage.dirty || appHomepage.touched)" class="help is-danger">A project homepage is required</p>
+            <div *ngIf="appHomepage.invalid && (appHomepage.dirty || appHomepage.touched)">
+                <p *ngIf="appHomepage.errors.required" class="help is-danger">A project homepage is required</p>
+                <p *ngIf="appHomepage.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
         </div>
 
         <div class="field">
@@ -145,6 +148,66 @@
 
     </div>
 </div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Screenshots
+      </p>
+    </header>
+    <div class="card-content content">
+        <p>
+          Screenshots present your application to the outside world and could be seen by thousands of people. They are optional,
+          but you can link to up to three of them here (and add more to the generated metadata if you want to).
+          Please paste URLs to screenshots in the format of PNG, JPEG or WebP. You can find more information on how to create good screenshots
+          for your application in
+          <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#qsr-app-screenshots-info">the AppStream quickstart manual</a>.
+        </p>
+        <div class="field">
+            <label class="label">Primary Screenshot Image</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="primaryScreenshot" type="text" placeholder="URL of the primary screenshot image.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-link"></i>
+                </span>
+            </div>
+
+            <div *ngIf="primaryScreenshot.invalid && (primaryScreenshot.dirty || primaryScreenshot.touched)">
+                <p *ngIf="primaryScreenshot.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Additional Screenshot Image 1</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="extraScreenshot1" type="text" placeholder="URL of an additional screenshot image.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-link"></i>
+                </span>
+            </div>
+
+            <div *ngIf="extraScreenshot1.invalid && (extraScreenshot1.dirty || extraScreenshot1.touched)">
+                <p *ngIf="extraScreenshot1.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Additional Screenshot Image 2</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="extraScreenshot2" type="text" placeholder="URL of an additional screenshot image.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-link"></i>
+                </span>
+            </div>
+
+            <div *ngIf="extraScreenshot2.invalid && (extraScreenshot2.dirty || extraScreenshot2.touched)">
+                <p *ngIf="extraScreenshot2.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 <div class="card">
     <header class="card-header">

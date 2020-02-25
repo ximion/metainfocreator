@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder, FormControl,
          Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
-import { guessComponentId, componentIdValid } from './utils';
+import { guessComponentId, componentIdValid,
+         isAcceptableUrl, arrayAddIfNotEmpty } from './utils';
 import { makeMetainfoGuiApp, BasicASInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet } from './makeauxdata';
 
@@ -49,17 +50,28 @@ export class GUIAppComponent implements OnInit
         };
     }
 
+    urlValidator(): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} | null => {
+            return isAcceptableUrl(control.value) ? null : {'invalidUrl': {value: control.value}};
+        };
+    }
+
     createForm()
     {
         this.cptForm = this.fb.group({
             appName: ['', Validators.required ],
             appSummary: ['', Validators.required ],
-            appHomepage: ['', Validators.required ],
+            appHomepage: ['', [ Validators.required, this.urlValidator() ] ],
             appDescription: ['', Validators.required ],
             cptId: ['', [ Validators.required, Validators.minLength(4), this.componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
             simpleProjectLicense: new FormControl({value: '', disabled: false}),
             complexProjectLicense: new FormControl({value: '', disabled: true}),
+
+            primaryScreenshot: ['', this.urlValidator() ],
+            extraScreenshot1: ['', this.urlValidator() ],
+            extraScreenshot2: ['', this.urlValidator() ],
+
             cbMesonValidate: ['']
         });
 
@@ -96,37 +108,22 @@ export class GUIAppComponent implements OnInit
         }
     }
 
-    get appName() {
-        return this.cptForm.get('appName');
-    }
+    get appName() { return this.cptForm.get('appName'); }
+    get appSummary() { return this.cptForm.get('appSummary'); }
 
-    get appSummary() {
-        return this.cptForm.get('appSummary');
-    }
+    get appHomepage() { return this.cptForm.get('appHomepage'); }
 
-    get appHomepage() {
-        return this.cptForm.get('appHomepage');
-    }
+    get appDescription() { return this.cptForm.get('appDescription'); }
 
-    get appDescription() {
-        return this.cptForm.get('appDescription');
-    }
+    get cptId() { return this.cptForm.get('cptId'); }
 
-    get cptId() {
-        return this.cptForm.get('cptId');
-    }
+    get metadataLicense() { return this.cptForm.get('metadataLicense'); }
+    get simpleProjectLicense() { return this.cptForm.get('simpleProjectLicense'); }
+    get complexProjectLicense() { return this.cptForm.get('complexProjectLicense'); }
 
-    get metadataLicense() {
-        return this.cptForm.get('metadataLicense');
-    }
-
-    get simpleProjectLicense() {
-        return this.cptForm.get('simpleProjectLicense');
-    }
-
-    get complexProjectLicense() {
-        return this.cptForm.get('complexProjectLicense');
-    }
+    get primaryScreenshot() { return this.cptForm.get('primaryScreenshot'); }
+    get extraScreenshot1() { return this.cptForm.get('extraScreenshot1'); }
+    get extraScreenshot2() { return this.cptForm.get('extraScreenshot2'); }
 
     validationError(message: string)
     {
@@ -186,6 +183,13 @@ export class GUIAppComponent implements OnInit
             return;
         }
 
+        if (!this.validateField(this.primaryScreenshot, 'primary screenshot', true))
+            return;
+        if (!this.validateField(this.extraScreenshot1, 'additional screenshot 1', true))
+            return;
+        if (!this.validateField(this.extraScreenshot2, 'additional screenshot 2', true))
+            return;
+
         // all validity checks have passed at this point
         this.dataError = false;
         this.finalCptId = this.cptId.value;
@@ -198,7 +202,11 @@ export class GUIAppComponent implements OnInit
             projectLicense: pLicense,
             description: this.appDescription.value
         };
-        let appInfo: GUIAppInfo = {test: 'none'};
+
+        let appInfo: GUIAppInfo = new GUIAppInfo();
+        arrayAddIfNotEmpty(appInfo.scrImages, this.primaryScreenshot.value);
+        arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot1.value);
+        arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot2.value);
 
         this.dataGenerated = true;
         this.dataMetainfo = makeMetainfoGuiApp(baseInfo, appInfo);

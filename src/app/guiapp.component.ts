@@ -7,7 +7,9 @@ import { FormGroup,  FormBuilder, FormControl,
 import { guessComponentId, componentIdValid, isAcceptableUrl,
          isDesktopFilename, isNoPath, arrayAddIfNotEmpty } from './utils';
 import { makeMetainfoGuiApp, BasicASInfo, GUIAppInfo } from './makemetainfo';
-import { makeMesonValidateSnippet } from './makeauxdata';
+import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
+         makeMesonL10NSnippet } from './makemeson';
+import { makeDesktopEntryData } from './makeauxdata';
 
 @Component({
     selector: 'app-guiapp',
@@ -32,7 +34,11 @@ export class GUIAppComponent implements OnInit
     dataErrorMessage: string;
 
     dataMetainfo: string;
+    dataDesktopEntry: string;
+
     dataMesonValidate: string;
+    dataMesonL10N: string;
+    dataMesonMItoDE: string;
 
     constructor(private fb: FormBuilder,
                 private http: HttpClient)
@@ -104,7 +110,7 @@ export class GUIAppComponent implements OnInit
             appIcon: ['', [ Validators.required, this.noPathValidator() ] ],
             exeName: ['', [ Validators.required, this.noPathValidator() ] ],
 
-            cbMesonValidate: ['']
+            cbMesonSnippets: ['']
         });
 
         // some defaults
@@ -114,6 +120,8 @@ export class GUIAppComponent implements OnInit
         this.appName.valueChanges.subscribe(value => {
             if (!this.cptId.dirty)
                 this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
+            if (!this.appIcon.dirty)
+                this.appIcon.setValue(value.replace(/ /g, '').trim().toLowerCase());
         });
 
         this.appHomepage.valueChanges.subscribe(value => {
@@ -197,7 +205,11 @@ export class GUIAppComponent implements OnInit
     {
         this.dataGenerated = false;
         this.dataMetainfo = null;
+        this.dataDesktopEntry = null;
+
         this.dataMesonValidate = null;
+        this.dataMesonL10N = null;
+        this.dataMesonMItoDE = null;
     }
 
     generate()
@@ -254,6 +266,10 @@ export class GUIAppComponent implements OnInit
                 return;
             if (!this.validateField(this.exeName, 'executable name'))
                 return;
+
+            appInfo.categories = [this.primaryCategory.value, this.secondaryCategory.value];
+            appInfo.iconName = this.appIcon.value;
+            appInfo.binary = this.exeName.value;
         }
 
         // all validity checks have passed at this point
@@ -269,15 +285,24 @@ export class GUIAppComponent implements OnInit
             description: this.appDescription.value
         };
 
-
         arrayAddIfNotEmpty(appInfo.scrImages, this.primaryScreenshot.value);
         arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot1.value);
         arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot2.value);
 
-        this.dataGenerated = true;
-        this.dataMetainfo = makeMetainfoGuiApp(baseInfo, appInfo);
+        let miSelfContained: boolean = (launchableMode == 'generate-from-mi');
+        if (launchableMode == 'generate') {
+            this.dataDesktopEntry = makeDesktopEntryData(baseInfo, appInfo);
+        }
 
-        if (this.cptForm.value.cbMesonValidate)
+        this.dataGenerated = true;
+        this.dataMetainfo = makeMetainfoGuiApp(baseInfo, appInfo, miSelfContained);
+
+        // generate new meson snippets
+        if (this.cptForm.value.cbMesonSnippets) {
             this.dataMesonValidate = makeMesonValidateSnippet(baseInfo);
+            this.dataMesonL10N = makeMesonL10NSnippet(baseInfo);
+            if (launchableMode == 'generate-from-mi')
+                this.dataMesonMItoDE = makeMesonMItoDESnippet(baseInfo);
+        }
     }
 }

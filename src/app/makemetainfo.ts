@@ -25,11 +25,6 @@ export interface BasicASInfo {
   description: string;
 }
 
-export class GUIAppInfo {
-  scrImages: Array<string> = [];
-  desktopEntryName: string = null;
-}
-
 function xmlEscape(s: string)
 {
     if (!s)
@@ -93,11 +88,28 @@ function createMetainfoPreamble(binfo: BasicASInfo): string
     return miXml;
 }
 
-export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo): string
+export class GUIAppInfo {
+  scrImages: Array<string> = [];
+  desktopEntryName: string = null;
+
+  categories: Array<string> = [];
+  iconName: string = null;
+  binary: string = null;
+}
+
+export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo, selfcontained: boolean): string
 {
     binfo['ckind'] = 'desktop-application';
     let miXml = createMetainfoPreamble(binfo);
 
+    // if desktop-entry name wasn't set, we guess one
+    if (!info.desktopEntryName)
+        info.desktopEntryName = binfo.cid + '.desktop';
+
+    // add launchable (with a bit of extra spacing around it)
+    miXml = miXml + '\n\n​<launchable type="desktop-id">' + xmlEscape(info.desktopEntryName) + '​</launchable>';
+
+    // add screenshots, if we have any
     if (info.scrImages.length > 0) {
         miXml = miXml.concat('\n<screenshots>');
 
@@ -113,6 +125,32 @@ export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo): string
         miXml = miXml.concat('\n</screenshots>');
     }
 
-    miXml = miXml + miTemplateTail;
+    // add additional stuff if the metainfo file should be selfcontained
+    // (e.g. if a desktop-entry is generated from it)
+    if (selfcontained) {
+
+        // add the stock icon
+        if (info.iconName) {
+            miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>\n';
+        }
+
+        // add categories
+        if (info.categories.length > 0) {
+            miXml = miXml.concat('\n<categories>');
+
+            for (let i = 0; i < info.categories.length; i++) {
+                miXml = miXml + '\n​<category>' + xmlEscape(info.categories[i]) + '​</category>';
+            }
+
+            miXml = miXml.concat('\n</categories>');
+        }
+
+        // add binary name
+        if (info.binary) {
+            miXml = miXml + '\n\n  ​<provides>\n    <binary>' + xmlEscape(info.binary) + '​</binary>\n  </provides>';
+        }
+    }
+
+    miXml = miXml.trim() + miTemplateTail;
     return prettyXml(miXml);
 }

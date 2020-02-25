@@ -1,18 +1,32 @@
 
-import { BasicASInfo } from './makemetainfo';
+import { BasicASInfo, GUIAppInfo } from './makemetainfo';
 
-let mesonValidateTemplate: string =`# Validate MetaInfo file
-metainfo_file = '<?mifname?>'
-ascli = find_program('appstreamcli', required: false)
-if ascli.found()
-  test ('Validate metainfo file',
-        ascli,
-        args: ['validate', '--no-net', '--pedantic', appdata_file.full_path()]
-  )
-endif`;
+let deTemplate: string =`[Desktop Entry]
+Version=1.0
+Type=Application
 
-export function makeMesonValidateSnippet(binfo: BasicASInfo): string
+Name=<?name?>
+Comment=<?summary?>
+Categories=<?categories?>
+
+Icon=<?icon?>
+Exec=<?binary?>
+Terminal=false`;
+
+export function makeDesktopEntryData(binfo: BasicASInfo, info: GUIAppInfo): string
 {
-    let validateSnippet = mesonValidateTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
-    return validateSnippet;
+    let variables = {
+            name: binfo.name,
+            summary: binfo.summary,
+            categories: info.categories.join(';') + ';',
+            icon: info.iconName,
+            binary: info.binary
+        };
+
+    let deData = deTemplate.replace(/<\?(\w+)\?>/g,
+        function(match, name) {
+            return variables[name];
+        });
+
+    return deData;
 }

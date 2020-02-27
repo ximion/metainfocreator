@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2020 Matthias Klumpp <matthias@tenstral.net>
+ *
+ * SPDX-License-Identifier: LGPL-3.0+
+ */
+
 import { NgModule } from '@angular/core';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';

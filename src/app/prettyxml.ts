@@ -1,6 +1,11 @@
-
-// Adapted from https://github.com/jonathanglasmeyer/prettify-xml,
-// original (c) Jonathan Glasmeyer, MIT licensed
+/*
+ * Copyright (C) 2020 Matthias Klumpp <matthias@tenstral.net>
+ * original (c) Jonathan Glasmeyer, MIT licensed
+ *
+ * Adapted from https://github.com/jonathanglasmeyer/prettify-xml
+ *
+ * SPDX-License-Identifier: MIT
+ */
 
 const stringTimesN = (n, char) => Array(n + 1).join(char)
 

@@ -42,7 +42,7 @@ export function isDesktopFilename(fname: string): boolean
 {
     if (!fname)
         return false;
-    return !fname.includes('/') && fname.endsWith('.desktop');
+    return fname.endsWith('.desktop') && !fname.includes('/') && !fname.includes(' ');
 }
 
 export function guessComponentId(homepage: string, appName: string): string

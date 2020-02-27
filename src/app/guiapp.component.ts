@@ -7,11 +7,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup,  FormBuilder, FormControl,
-         Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms';
 
-import { guessComponentId, componentIdValid, isAcceptableUrl,
-         isDesktopFilename, isNoPath, arrayAddIfNotEmpty } from './utils';
+import { componentIdValidator, urlValidator, desktopEntryValidator,
+         noPathOrSpaceValidator } from './formvalidators';
+import { guessComponentId, arrayAddIfNotEmpty } from './utils';
 import { makeMetainfoGuiApp, BasicASInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
          makeMesonL10NSnippet } from './makemeson';
@@ -65,56 +65,31 @@ export class GUIAppComponent implements OnInit
         this.createForm();
     };
 
-    componentIdValidator(): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
-            const res = componentIdValid(control.value);
-            return res.valid ? null : {'forbiddenId': {value: res.message}};
-        };
-    }
-
-    urlValidator(): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
-            return isAcceptableUrl(control.value) ? null : {'invalidUrl': {value: control.value}};
-        };
-    }
-
-    desktopEntryValidator(): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
-            return isDesktopFilename(control.value) ? null : {'invalidName': {value: control.value}};
-        };
-    }
-
-    noPathValidator(): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
-            return isNoPath(control.value) ? null : {'invalidName': {value: control.value}};
-        };
-    }
-
     createForm()
     {
         this.cptForm = this.fb.group({
             appName: ['', Validators.required ],
             appSummary: ['', Validators.required ],
-            appHomepage: ['', [ Validators.required, this.urlValidator() ] ],
+            appHomepage: ['', [ Validators.required, urlValidator() ] ],
             appDescription: ['', Validators.required ],
-            cptId: ['', [ Validators.required, Validators.minLength(4), this.componentIdValidator() ]],
+            cptId: ['', [ Validators.required, Validators.minLength(4), componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
             rbLicenseMode: [''],
             simpleProjectLicense: new FormControl({value: '', disabled: false}),
             complexProjectLicense: new FormControl({value: '', disabled: true}),
 
-            primaryScreenshot: ['', this.urlValidator() ],
-            extraScreenshot1: ['', this.urlValidator() ],
-            extraScreenshot2: ['', this.urlValidator() ],
+            primaryScreenshot: ['', urlValidator() ],
+            extraScreenshot1: ['', urlValidator() ],
+            extraScreenshot2: ['', urlValidator() ],
 
             rbLaunchableMode: [''],
-            desktopEntryName: ['', [ Validators.required, this.desktopEntryValidator() ] ],
+            desktopEntryName: ['', [ Validators.required, desktopEntryValidator() ] ],
 
             primaryCategory: ['', Validators.required ],
             secondaryCategory: ['', Validators.required ],
 
-            appIcon: ['', [ Validators.required, this.noPathValidator() ] ],
-            exeName: ['', [ Validators.required, this.noPathValidator() ] ],
+            appIcon: ['', [ Validators.required, noPathOrSpaceValidator() ] ],
+            exeName: ['', [ Validators.required, noPathOrSpaceValidator() ] ],
 
             cbMesonSnippets: ['']
         });

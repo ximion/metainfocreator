@@ -13,17 +13,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro.component';
 import { GUIAppComponent } from './guiapp.component';
+import { ConsoleAppComponent } from './consoleapp.component';
 
 const routes: Routes = [
       { path: '', component: IntroComponent },
       { path: 'guiapp', component: GUIAppComponent },
+      { path: 'consoleapp', component: ConsoleAppComponent },
     ];
 
 @NgModule({
   declarations: [
       AppComponent,
       IntroComponent,
-      GUIAppComponent
+      GUIAppComponent,
+      ConsoleAppComponent
   ],
   imports: [
       BrowserModule,

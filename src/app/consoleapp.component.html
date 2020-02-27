@@ -3,18 +3,18 @@
 <nav class="breadcrumb" aria-label="breadcrumbs">
   <ul>
     <li><a routerLink="/">Home</a></li>
-    <li class="is-active"><a href="#" aria-current="page">GUI App Metadata</a></li>
+    <li class="is-active"><a href="#" aria-current="page">Console App Metadata</a></li>
   </ul>
 </nav>
 
 <div class="content">
 <h1 class="title">
-  Create metadata for GUI applications
+  Create metadata for console applications
 </h1>
 
 <p>
-  A GUI application (or desktop application) is an application which has a graphical user interface and is commonly used with mouse and keyboard.
-  It also ships a Freedesktop .desktop file to be visible in application menus.
+  Console application are any application that have a command-line or text-based interface and are designed to be used by a human user in a console.
+  Their binaries need to be present in <code>PATH</code>.
 </p>
 
 <p>Please fill out the form below to generate your MetaInfo file as well as (optionally) auxiliary data.</p>
@@ -109,7 +109,7 @@
                     <option *ngFor="let license of metadataLicenses | async" value="{{license.id}}">{{license.name}}</option>
                 </select>
             </div>
-            <p class="help">The license that applies to this particular metadata and linked assets (like screenshots and videos).</p>
+            <p class="help">The license that applies to this particular metadata and linked assets.</p>
 
             <p *ngIf="metadataLicense.invalid && (metadataLicense.dirty || metadataLicense.touched)" class="help is-danger">A metadata license must be selected</p>
         </div>
@@ -154,116 +154,6 @@
 <div class="card">
     <header class="card-header">
       <p class="card-header-title">
-        Screenshots
-      </p>
-    </header>
-    <div class="card-content content">
-        <p>
-          Screenshots present your application to the outside world and could be seen by thousands of people. They are optional,
-          but you can link to up to three of them here (and add more to the generated metadata if you want to).
-          Please paste URLs to screenshots in the format of PNG, JPEG or WebP. You can find more information on how to create good screenshots
-          for your application in
-          <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#qsr-app-screenshots-info">the AppStream quickstart manual</a>.
-        </p>
-        <div class="field">
-            <label class="label">Primary Screenshot Image</label>
-            <div class="control has-icons-left">
-                <input class="input" formControlName="primaryScreenshot" type="text" placeholder="URL of the primary screenshot image.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
-
-            <div *ngIf="primaryScreenshot.invalid && (primaryScreenshot.dirty || primaryScreenshot.touched)">
-                <p *ngIf="primaryScreenshot.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Additional Screenshot Image 1</label>
-            <div class="control has-icons-left">
-                <input class="input" formControlName="extraScreenshot1" type="text" placeholder="URL of an additional screenshot image.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
-
-            <div *ngIf="extraScreenshot1.invalid && (extraScreenshot1.dirty || extraScreenshot1.touched)">
-                <p *ngIf="extraScreenshot1.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
-        <div class="field">
-            <label class="label">Additional Screenshot Image 2</label>
-            <div class="control has-icons-left">
-                <input class="input" formControlName="extraScreenshot2" type="text" placeholder="URL of an additional screenshot image.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
-
-            <div *ngIf="extraScreenshot2.invalid && (extraScreenshot2.dirty || extraScreenshot2.touched)">
-                <p *ngIf="extraScreenshot2.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Launchables
-      </p>
-    </header>
-    <div class="card-content content">
-
-        <p>
-          In order to launch your application from a menu or a software center, you will need a
-          <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/">desktop-entry</a> file. You can either
-          set the name of a file you already have, have this tool generate one for you, or generate the file from your metainfo file
-          when your application is compiled. For the latter case, this tool can also produce instructions.
-        </p>
-
-        <div class="field ">
-            <div class="control">
-                <label class="radio">
-                <input type="radio" value="provided" formControlName="rbLaunchableMode">
-                I already have a .desktop file
-                </label>
-                <label class="radio">
-                <input type="radio" value="generate" formControlName="rbLaunchableMode">
-                Generate a .desktop file for me
-                </label>
-                <label class="radio">
-                <input type="radio" value="generate-from-mi" formControlName="rbLaunchableMode">
-                Create instructions to autogenerate a .desktop file from my metainfo file
-                </label>
-            </div>
-        </div>
-
-        <div *ngIf="rbLaunchableMode.value == 'provided'" class="field">
-            <label class="label">Name of your .desktop file</label>
-            <div class="control has-icons-left">
-                <input class="input" formControlName="desktopEntryName" type="text" placeholder="myapplication.desktop">
-                <span class="icon is-small is-left">
-                    <i class="far fa-file"></i>
-                </span>
-            </div>
-
-            <div *ngIf="desktopEntryName.invalid && (desktopEntryName.dirty || desktopEntryName.touched)">
-                <p *ngIf="desktopEntryName.errors.required" class="help is-danger">A desktop-entry filename is required</p>
-                <p *ngIf="desktopEntryName.errors.invalidName" class="help is-danger">This is not a valid .desktop filename</p>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="card" *ngIf="createDesktopData">
-    <header class="card-header">
-      <p class="card-header-title">
         Categorization
       </p>
     </header>
@@ -271,7 +161,7 @@
         <p>
           Your software will appear in at least two categories in software center searches and menus of some desktop environments, one
           primary broad category, and one secondary more specific category.
-          You can add more secondary categories to your metadata later, if you like to and think your application fits into more categories.
+          You can add more secondary categories to your metadata later, if you think your application fits into even more categories.
         </p>
         <div class="field is-grouped">
 
@@ -302,10 +192,10 @@
 </div>
 
 
-<div class="card" *ngIf="createDesktopData">
+<div class="card">
     <header class="card-header">
       <p class="card-header-title">
-        Launchable Details
+        Details
       </p>
     </header>
     <div class="card-content content">
@@ -363,7 +253,7 @@
         <div class="control">
             <label class="checkbox">
             <input type="checkbox" formControlName="cbMesonSnippets">
-              Generate <a href="https://mesonbuild.com/">Meson</a> sample snippets for metadata maintenance
+              Generate <a href="https://mesonbuild.com/">Meson</a> sample snippet for metadata maintenance
             </label>
         </div>
         </div>
@@ -428,66 +318,6 @@
   </div>
   </div>
 
-  <!-- Info how a desktop-entry file could be autogenerated -->
-  <div class="panel-block" *ngIf="rbLaunchableMode.value == 'generate-from-mi'">
-  <div class="column is-full">
-      <h2 class="title is-2">Autogenerate Desktop Entry file from MetaInfo</h2>
-      <p>
-        The MetaInfo file above contains all essential information to generate a .desktop file from, so the application can be launched.
-        The process of generating the desktop-entry file can be automated. You just need to run
-        <code>appstreamcli make-desktop-file {{finalCptId}}.metainfo.xml {{finalCptId}}.desktop</code> during the build process of your
-        application.
-      </p>
-
-      <div *ngIf="dataMesonMItoDE">
-        <h3 class="subtitle is-3">Meson Snippet</h3>
-        <p>
-          This code fragment for the Meson build system can be used to perform the desktop-entry conversion automatically
-          when the software is installed:
-        </p>
-        <div class="control">
-            <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonMItoDE}}</textarea>
-        </div>
-      </div>
-  </div>
-  </div>
-
-  <!-- Desktop Entry data, in case we generated some -->
-  <div class="panel-block" *ngIf="dataDesktopEntry">
-  <div class="column is-full">
-      <h2 class="title is-2">Desktop Entry File</h2>
-      <p>Install this file as as <code>/usr/share/applications/{{finalCptId}}.desktop</code></p>
-      <p>You can validate this metadata locally by running: <code>desktop-file-validate {{finalCptId}}.desktop</code></p>
-      <div class="control">
-          <textarea class="textarea is-info" rows="10" readonly>{{dataDesktopEntry}}</textarea>
-      </div>
-  </div>
-  </div>
-
-  <!-- Localization info -->
-  <div class="panel-block">
-  <div class="column is-full">
-      <h2 class="title is-2">MetaInfo Localization</h2>
-      <p>
-        AppStream MetaInfo files are recognized by <code>xgettext</code>, so you just need to add <code>{{finalCptId}}</code> to your
-        <code>POTFILES.in</code> to generate templates for all translatable elements in the file. When building the software, you can
-        then instruct your build system to merge in the translations into the new file before installing the translated file as
-        <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code>.
-      </p>
-
-      <div *ngIf="dataMesonL10N">
-        <h3 class="subtitle is-3">Meson Snippet</h3>
-        <p>
-          This code fragment for the Meson build system can be used to perform the merge-and-install step, when templates
-          were already generated in a previous step.
-        </p>
-        <div class="control">
-            <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonL10N}}</textarea>
-        </div>
-      </div>
-  </div>
-  </div>
-
 </article>
 
 <article class="panel is-info" *ngIf="dataGenerated">
@@ -504,14 +334,6 @@
       </p>
       <p>On Debian, Ubuntu and their derivatives, AppStream is preinstalled. In case it is missing, it can be installed using <code>apt install appstream</code></p>
       <p>On Fedora and its derivatives, you can install AppStream via <code>dnf install appstream</code></p>
-
-      <h4 class="title is-4">Desktop Entry Validation</h4>
-      <p>
-        For validation of <em>Desktop Entry</em> files, you need <code>desktop-file-validate</code>, which is usually already preinstalled on your system as well.
-      </p>
-      <p>In case it is missing, it can be installed on Debian, Ubuntu and their derivatives using <code>apt install desktop-file-utils</code></p>
-      <p>On Fedora and its derivatives, you can install the .desktop file validator via <code>dnf install desktop-file-utils</code></p>
-
   </div>
   </div>
 </article>

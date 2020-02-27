@@ -159,3 +159,37 @@ export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo, selfcon
     miXml = miXml.trim() + miTemplateTail;
     return prettyXml(miXml);
 }
+
+export class ConsoleAppInfo {
+  categories: Array<string> = [];
+  iconName: string = null;
+  binary: string = null;
+}
+
+export function makeMetainfoConsoleApp(binfo: BasicASInfo, info: ConsoleAppInfo): string
+{
+    binfo['ckind'] = 'console-application';
+    let miXml = createMetainfoPreamble(binfo);
+
+
+    // add the stock icon
+    miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>\n';
+
+
+    // add categories
+    if (info.categories.length > 0) {
+        miXml = miXml.concat('\n<categories>');
+
+        for (let i = 0; i < info.categories.length; i++) {
+            miXml = miXml + '\n​<category>' + xmlEscape(info.categories[i]) + '​</category>';
+        }
+
+        miXml = miXml.concat('\n</categories>');
+    }
+
+    // add binary name
+    miXml = miXml + '\n\n  ​<provides>\n    <binary>' + xmlEscape(info.binary) + '​</binary>\n  </provides>';
+
+    miXml = miXml.trim() + miTemplateTail;
+    return prettyXml(miXml);
+}

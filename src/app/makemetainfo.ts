@@ -21,13 +21,14 @@ let miTemplateHead: string =`<?xml version="1.0" encoding="UTF-8"?>
 
 let miTemplateTail: string = '\n</component>\n';
 
-export interface BasicASInfo {
-  cid: string;
-  name: string;
-  summary: string;
-  metadataLicense: string;
-  projectLicense: string;
-  description: string;
+export interface BasicASInfo
+{
+    cid: string;
+    name: string;
+    summary: string;
+    metadataLicense: string;
+    projectLicense: string;
+    description: string;
 }
 
 function xmlEscape(s: string)
@@ -93,19 +94,42 @@ function createMetainfoPreamble(binfo: BasicASInfo): string
     return miXml;
 }
 
-export class GUIAppInfo {
-  scrImages: Array<string> = [];
-  desktopEntryName: string = null;
+export class GUIAppInfo
+{
+    inputPointKeyboard: boolean = true;
+    inputTouch: boolean = false;
+    inputGamepad: boolean = false;
 
-  categories: Array<string> = [];
-  iconName: string = null;
-  binary: string = null;
+    scrImages: Array<string> = [];
+    desktopEntryName: string = null;
+
+    categories: Array<string> = [];
+    iconName: string = null;
+    binary: string = null;
 }
 
 export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo, selfcontained: boolean): string
 {
     binfo['ckind'] = 'desktop-application';
     let miXml = createMetainfoPreamble(binfo);
+
+    // sanity check
+    if (!info.inputPointKeyboard && !info.inputTouch && !info.inputGamepad)
+        info.inputPointKeyboard = true;
+
+    // handle input controls, if they are not the default for desktop-apps
+    if (info.inputTouch || info.inputGamepad) {
+        miXml = miXml + '\n\n​<recommends>\n';
+        if (info.inputPointKeyboard) {
+            miXml = miXml + '​<control>pointing​</control>\n';
+            miXml = miXml + '​<control>keyboard</control>\n';
+        }
+        if (info.inputTouch)
+            miXml = miXml + '​<control>touch</control>\n';
+        if (info.inputGamepad)
+            miXml = miXml + '​<control>gamepad</control>\n';
+         miXml = miXml + '</recommends>';
+    }
 
     // if desktop-entry name wasn't set, we guess one
     if (!info.desktopEntryName)
@@ -160,10 +184,11 @@ export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo, selfcon
     return prettyXml(miXml);
 }
 
-export class ConsoleAppInfo {
-  categories: Array<string> = [];
-  iconName: string = null;
-  binary: string = null;
+export class ConsoleAppInfo
+{
+    categories: Array<string> = [];
+    iconName: string = null;
+    binary: string = null;
 }
 
 export function makeMetainfoConsoleApp(binfo: BasicASInfo, info: ConsoleAppInfo): string

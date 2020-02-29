@@ -27,7 +27,7 @@ export function prettyXml(xmlInput: string, indentation: number = 2): string
 
         let indent = 0
         if (line.match(/.+<\/\w[^>]*>$/)) {
-        indent = 0
+            indent = 0
         } else if (line.match(/^<\/\w/)) {
         // Somehow istanbul doesn't see the else case as covered, although it is. Skip it.
         /* istanbul ignore else  */
@@ -35,9 +35,9 @@ export function prettyXml(xmlInput: string, indentation: number = 2): string
             pad -= 1
         }
         } else if (line.match(/^<\w([^>]*[^\/])?>.*$/)) {
-        indent = 1
+            indent = 1
         } else {
-        indent = 0
+            indent = 0
         }
 
         const padding = stringTimesN(pad, indentString)

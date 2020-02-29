@@ -354,6 +354,47 @@
 <div class="card">
     <header class="card-header">
       <p class="card-header-title">
+        User Input
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <p>Select how users can interact with your application.</p>
+
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox" formControlName="cbInputMouseKeys" (change)="inputControlChange($event)">
+              Users use this application via mouse &amp; keyboard
+            </label>
+        </div>
+        </div>
+
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox" formControlName="cbInputTouch" (change)="inputControlChange($event)">
+              The application is usable on touch devices via touch input
+            </label>
+        </div>
+        </div>
+
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox" formControlName="cbInputGamepad" (change)="inputControlChange($event)">
+              This application supports gamepads
+            </label>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
         Additional Options
       </p>
     </header>

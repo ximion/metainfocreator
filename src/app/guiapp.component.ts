@@ -91,12 +91,18 @@ export class GUIAppComponent implements OnInit
             appIcon: ['', [ Validators.required, noPathOrSpaceValidator() ] ],
             exeName: ['', [ Validators.required, noPathOrSpaceValidator() ] ],
 
+            cbInputMouseKeys: [''],
+            cbInputTouch: [''],
+            cbInputGamepad: [''],
+
             cbMesonSnippets: ['']
         });
 
         // some defaults
         this.rbLicenseMode.setValue('simple');
         this.rbLaunchableMode.setValue('provided');
+        this.cbInputMouseKeys.setValue('true');
+        this.cbInputMouseKeys.disable();
 
         this.appName.valueChanges.subscribe(value => {
             if (!this.cptId.dirty)
@@ -129,14 +135,21 @@ export class GUIAppComponent implements OnInit
         }
     }
 
+    inputControlChange(evt)
+    {
+        if (!this.cbInputTouch.value && !this.cbInputGamepad.value) {
+            this.cbInputMouseKeys.disable();
+            this.cbInputMouseKeys.setValue('true');
+        } else {
+            this.cbInputMouseKeys.enable();
+        }
+    }
 
     get appName() { return this.cptForm.get('appName'); }
     get appSummary() { return this.cptForm.get('appSummary'); }
 
     get appHomepage() { return this.cptForm.get('appHomepage'); }
-
     get appDescription() { return this.cptForm.get('appDescription'); }
-
     get cptId() { return this.cptForm.get('cptId'); }
 
     get metadataLicense() { return this.cptForm.get('metadataLicense'); }
@@ -157,6 +170,9 @@ export class GUIAppComponent implements OnInit
     get appIcon() { return this.cptForm.get('appIcon'); }
     get exeName() { return this.cptForm.get('exeName'); }
 
+    get cbInputMouseKeys() { return this.cptForm.get('cbInputMouseKeys'); }
+    get cbInputTouch() { return this.cptForm.get('cbInputTouch'); }
+    get cbInputGamepad() { return this.cptForm.get('cbInputGamepad'); }
 
     validationError(message: string)
     {
@@ -252,6 +268,11 @@ export class GUIAppComponent implements OnInit
             appInfo.iconName = this.appIcon.value;
             appInfo.binary = this.exeName.value;
         }
+
+        // input controls
+        appInfo.inputPointKeyboard = this.cbInputMouseKeys.value;
+        appInfo.inputTouch = this.cbInputTouch.value;
+        appInfo.inputGamepad = this.cbInputGamepad.value;
 
         // all validity checks have passed at this point
         this.dataError = false;

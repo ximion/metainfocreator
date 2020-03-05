@@ -11,25 +11,22 @@ import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms
 
 import { componentIdValidator, urlValidator, noPathOrSpaceValidator } from './formvalidators';
 import { guessComponentId } from './utils';
-import { makeMetainfoConsoleApp, ASBasicInfo, ConsoleAppInfo } from './makemetainfo';
+import { makeMetainfoAddon, ASBasicInfo, AddonInfo } from './makemetainfo';
 import { makeMesonValidateSnippet } from './makemeson';
 import { makeDesktopEntryData } from './makeauxdata';
 
 @Component({
-    selector: 'app-consoleapp',
-    templateUrl: './consoleapp.component.html'
+    selector: 'app-addon',
+    templateUrl: './addon.component.html'
 })
 
-export class ConsoleAppComponent implements OnInit
+export class AddonComponent implements OnInit
 {
     cptForm: FormGroup;
     finalCptId: string;
 
     metadataLicenses: any;
     spdxLicenses: any;
-
-    categoriesPrimary: any;
-    categoriesSecondary: any;
 
     dataGenerated: boolean;
     dataError: boolean;
@@ -50,30 +47,25 @@ export class ConsoleAppComponent implements OnInit
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
-        this.categoriesPrimary = this.http.get('assets/categories-primary.json');
-        this.categoriesSecondary = this.http.get('assets/categories-secondary.json');
-
         this.createForm();
     };
 
     createForm()
     {
         this.cptForm = this.fb.group({
-            appName: ['', Validators.required ],
-            appSummary: ['', Validators.required ],
-            appHomepage: ['', [ Validators.required, urlValidator() ] ],
-            appDescription: ['', Validators.required ],
+            cptName: ['', Validators.required ],
+            cptSummary: ['', Validators.required ],
+            cptHomepage: ['', [ Validators.required, urlValidator() ] ],
+            cptDescription: ['', Validators.required ],
             cptId: ['', [ Validators.required, Validators.minLength(4), componentIdValidator() ]],
+            extendsCptId: ['', [ Validators.required, Validators.minLength(4), componentIdValidator() ]],
+
             metadataLicense: ['', Validators.required ],
             rbLicenseMode: [''],
             simpleProjectLicense: new FormControl({value: '', disabled: false}),
             complexProjectLicense: new FormControl({value: '', disabled: true}),
 
-            primaryCategory: ['', Validators.required ],
-            secondaryCategory: ['', Validators.required ],
-
-            appIcon: ['', [ Validators.required, noPathOrSpaceValidator() ] ],
-            exeName: ['', [ Validators.required, noPathOrSpaceValidator() ] ],
+            cptIcon: ['', noPathOrSpaceValidator() ],
 
             cbMesonSnippets: ['']
         });
@@ -81,16 +73,14 @@ export class ConsoleAppComponent implements OnInit
         // some defaults
         this.rbLicenseMode.setValue('simple');
 
-        this.appName.valueChanges.subscribe(value => {
+        this.cptName.valueChanges.subscribe(value => {
             if (!this.cptId.dirty)
-                this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
-            if (!this.appIcon.dirty)
-                this.appIcon.setValue(value.replace(/ /g, '').trim().toLowerCase());
+                this.cptId.setValue(guessComponentId(this.cptHomepage.value, this.cptName.value));
         });
 
-        this.appHomepage.valueChanges.subscribe(value => {
+        this.cptHomepage.valueChanges.subscribe(value => {
             if (!this.cptId.dirty)
-                this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
+                this.cptId.setValue(guessComponentId(this.cptHomepage.value, this.cptName.value));
         });
     }
 
@@ -105,26 +95,22 @@ export class ConsoleAppComponent implements OnInit
         }
     }
 
-    get appName() { return this.cptForm.get('appName'); }
-    get appSummary() { return this.cptForm.get('appSummary'); }
+    get cptName() { return this.cptForm.get('cptName'); }
+    get cptSummary() { return this.cptForm.get('cptSummary'); }
 
-    get appHomepage() { return this.cptForm.get('appHomepage'); }
+    get cptHomepage() { return this.cptForm.get('cptHomepage'); }
 
-    get appDescription() { return this.cptForm.get('appDescription'); }
+    get cptDescription() { return this.cptForm.get('cptDescription'); }
 
     get cptId() { return this.cptForm.get('cptId'); }
+    get extendsCptId() { return this.cptForm.get('extendsCptId'); }
 
     get metadataLicense() { return this.cptForm.get('metadataLicense'); }
     get rbLicenseMode() { return this.cptForm.get('rbLicenseMode'); }
     get simpleProjectLicense() { return this.cptForm.get('simpleProjectLicense'); }
     get complexProjectLicense() { return this.cptForm.get('complexProjectLicense'); }
 
-    get primaryCategory() { return this.cptForm.get('primaryCategory'); }
-    get secondaryCategory() { return this.cptForm.get('secondaryCategory'); }
-
-    get appIcon() { return this.cptForm.get('appIcon'); }
-    get exeName() { return this.cptForm.get('exeName'); }
-
+    get cptIcon() { return this.cptForm.get('cptIcon'); }
 
     validationError(message: string)
     {
@@ -161,15 +147,17 @@ export class ConsoleAppComponent implements OnInit
     {
         this.resetGeneratedData();
 
-        if (!this.validateField(this.appName, 'application name'))
+        if (!this.validateField(this.cptName, 'addon name'))
             return;
-        if (!this.validateField(this.appSummary, 'application summary'))
+        if (!this.validateField(this.cptSummary, 'addon summary'))
             return;
-        if (!this.validateField(this.appHomepage, 'homepage'))
+        if (!this.validateField(this.cptHomepage, 'homepage'))
             return;
-        if (!this.validateField(this.appDescription, 'long description'))
+        if (!this.validateField(this.cptDescription, 'long description'))
             return;
         if (!this.validateField(this.cptId, 'component ID'))
+            return;
+        if (!this.validateField(this.extendsCptId, 'extended app component ID'))
             return;
         if (!this.validateField(this.metadataLicense, 'metadata license'))
             return;
@@ -185,19 +173,12 @@ export class ConsoleAppComponent implements OnInit
             return;
         }
 
-        if (!this.validateField(this.primaryCategory, 'primary application category'))
-            return;
-        if (!this.validateField(this.secondaryCategory, 'secondary application category'))
-            return;
-        if (!this.validateField(this.appIcon, 'application icon'))
-            return;
-        if (!this.validateField(this.exeName, 'executable name'))
+        if (!this.validateField(this.cptIcon, 'addon icon', true))
             return;
 
-        let appInfo: ConsoleAppInfo = new ConsoleAppInfo();
-        appInfo.categories = [this.primaryCategory.value, this.secondaryCategory.value];
-        appInfo.iconName = this.appIcon.value;
-        appInfo.binary = this.exeName.value;
+        let addonInfo: AddonInfo = new AddonInfo();
+        addonInfo.extends = [this.extendsCptId.value];
+        addonInfo.iconName = this.cptIcon.value;
 
         // all validity checks have passed at this point
         this.dataError = false;
@@ -205,15 +186,15 @@ export class ConsoleAppComponent implements OnInit
 
         let baseInfo: ASBasicInfo = {
             cid: this.cptId.value,
-            name: this.appName.value,
-            summary: this.appSummary.value,
+            name: this.cptName.value,
+            summary: this.cptSummary.value,
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
-            description: this.appDescription.value
+            description: this.cptDescription.value
         };
 
         this.dataGenerated = true;
-        this.dataMetainfo = makeMetainfoConsoleApp(baseInfo, appInfo);
+        this.dataMetainfo = makeMetainfoAddon(baseInfo, addonInfo);
 
         // generate new meson snippets
         if (this.cptForm.value.cbMesonSnippets) {

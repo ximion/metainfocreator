@@ -14,14 +14,11 @@ let miTemplateHead: string =`<?xml version="1.0" encoding="UTF-8"?>
     <summary><?summary?></summary>
 
     <metadata_license><?metadataLicense?></metadata_license>
-    <project_license><?projectLicense?></project_license>
-
-    <description><?description?>
-    </description>`;
+    <project_license><?projectLicense?></project_license>`;
 
 let miTemplateTail: string = '\n</component>\n';
 
-export interface BasicASInfo
+export interface ASBasicInfo
 {
     cid: string;
     name: string;
@@ -45,6 +42,8 @@ function xmlEscape(s: string)
 function convertDescription(desc: string): string
 {
     let res: string = '';
+    if (!desc)
+        return res;
 
     let paras = desc.split('\n\n');
     for (let i = 0; i < paras.length; i++) {
@@ -68,15 +67,39 @@ function convertDescription(desc: string): string
     return res;
 }
 
-function createMetainfoPreamble(binfo: BasicASInfo): string
+class ASRelationXMLData
+{
+    extends: Array<string> = [];
+    requires: Array<string> = [];
+    recommends: Array<string> = [];
+}
+
+function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLData = null): string
 {
     let miXml = miTemplateHead.replace(/<\?(\w+)\?>/g,
         function(match, name) {
-            if (name == 'description')
-                return convertDescription(binfo[name]);
-            else
-                return xmlEscape(binfo[name]);
+            return xmlEscape(binfo[name]);
         });
+
+    // add (injected) relation XML, if there is any
+    if (relXMLData) {
+        miXml = miXml + '\n';
+        let addRelationXml = (items: Array<string>, relName: string) => {
+            if (items.length <= 0)
+                return;
+            miXml = miXml + '\n​<' + relName + '>\n';
+            for (let i = 0; i < items.length; i++)
+                miXml = miXml + items[i] + '\n';
+            miXml = miXml + '</' + relName + '>';
+        }
+
+        addRelationXml(relXMLData.extends, 'extends');
+        addRelationXml(relXMLData.requires, 'requires');
+        addRelationXml(relXMLData.recommends, 'recommends');
+    }
+
+    // add long description block
+    miXml = miXml + '\n\n<description>' + convertDescription(binfo.description) + '\n</description>';
 
     let cid = binfo.cid;
     let project_group: string = null;
@@ -108,28 +131,29 @@ export class GUIAppInfo
     binary: string = null;
 }
 
-export function makeMetainfoGuiApp(binfo: BasicASInfo, info: GUIAppInfo, selfcontained: boolean): string
+export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcontained: boolean): string
 {
-    binfo['ckind'] = 'desktop-application';
-    let miXml = createMetainfoPreamble(binfo);
-
     // sanity check
     if (!info.inputPointKeyboard && !info.inputTouch && !info.inputGamepad)
         info.inputPointKeyboard = true;
 
+    binfo['ckind'] = 'desktop-application';
+    let relXmlData: ASRelationXMLData = new ASRelationXMLData();
+
     // handle input controls, if they are not the default for desktop-apps
     if (info.inputTouch || info.inputGamepad) {
-        miXml = miXml + '\n\n​<recommends>\n';
         if (info.inputPointKeyboard) {
-            miXml = miXml + '​<control>pointing​</control>\n';
-            miXml = miXml + '​<control>keyboard</control>\n';
+            relXmlData.recommends.push('​<control>pointing​</control>');
+            relXmlData.recommends.push('​<control>keyboard</control>');
         }
         if (info.inputTouch)
-            miXml = miXml + '​<control>touch</control>\n';
+            relXmlData.recommends.push('​<control>touch</control>');
         if (info.inputGamepad)
-            miXml = miXml + '​<control>gamepad</control>\n';
-         miXml = miXml + '</recommends>';
+            relXmlData.recommends.push('​<control>gamepad</control>');
     }
+
+    // create generic preamble
+    let miXml = createMetainfoPreamble(binfo, relXmlData);
 
     // if desktop-entry name wasn't set, we guess one
     if (!info.desktopEntryName)
@@ -191,7 +215,7 @@ export class ConsoleAppInfo
     binary: string = null;
 }
 
-export function makeMetainfoConsoleApp(binfo: BasicASInfo, info: ConsoleAppInfo): string
+export function makeMetainfoConsoleApp(binfo: ASBasicInfo, info: ConsoleAppInfo): string
 {
     binfo['ckind'] = 'console-application';
     let miXml = createMetainfoPreamble(binfo);
@@ -214,6 +238,28 @@ export function makeMetainfoConsoleApp(binfo: BasicASInfo, info: ConsoleAppInfo)
 
     // add binary name
     miXml = miXml + '\n\n  ​<provides>\n    <binary>' + xmlEscape(info.binary) + '​</binary>\n  </provides>';
+
+    miXml = miXml.trim() + miTemplateTail;
+    return prettyXml(miXml);
+}
+
+export class AddonInfo
+{
+    extends: Array<string> = [];
+    iconName: string = null;
+}
+
+export function makeMetainfoAddon(binfo: ASBasicInfo, info: AddonInfo): string
+{
+    binfo['ckind'] = 'addon';
+    let relXmlData: ASRelationXMLData = new ASRelationXMLData();
+    for (let i = 0; i < info.extends.length; i++)
+        relXmlData.extends.push('<id>' + info.extends[i] + '</id>');
+    let miXml = createMetainfoPreamble(binfo, relXmlData);
+
+    // add the stock icon, if we have one
+    if (info.iconName)
+        miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>';
 
     miXml = miXml.trim() + miTemplateTail;
     return prettyXml(miXml);

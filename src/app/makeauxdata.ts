@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { BasicASInfo, GUIAppInfo } from './makemetainfo';
+import { ASBasicInfo, GUIAppInfo } from './makemetainfo';
 
 let deTemplate: string =`[Desktop Entry]
 Version=1.0
@@ -18,7 +18,7 @@ Icon=<?icon?>
 Exec=<?binary?>
 Terminal=false`;
 
-export function makeDesktopEntryData(binfo: BasicASInfo, info: GUIAppInfo): string
+export function makeDesktopEntryData(binfo: ASBasicInfo, info: GUIAppInfo): string
 {
     let variables = {
             name: binfo.name,

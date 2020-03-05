@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { BasicASInfo } from './makemetainfo';
+import { ASBasicInfo } from './makemetainfo';
 
 let mesonValidateTemplate: string =`# Validate MetaInfo file
 metainfo_file = '/path/to/<?mifname?>'
@@ -19,7 +19,7 @@ if ascli_exe.found()
   )
 endif`;
 
-export function makeMesonValidateSnippet(binfo: BasicASInfo): string
+export function makeMesonValidateSnippet(binfo: ASBasicInfo): string
 {
     let validateSnippet = mesonValidateTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
     return validateSnippet;
@@ -36,7 +36,7 @@ custom_target('gen-desktop-entry',
     install_dir: join_paths (get_option ('datadir'), 'applications')
 )`;
 
-export function makeMesonMItoDESnippet(binfo: BasicASInfo): string
+export function makeMesonMItoDESnippet(binfo: ASBasicInfo): string
 {
     let snippet = mesonMItoDETemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
     snippet = snippet.replace(/<\?(defname)\?>/g, binfo.cid + '.desktop');
@@ -57,7 +57,7 @@ i18n.merge_file(
     install_dir: join_paths (get_option ('datadir'), 'metainfo')
 )`;
 
-export function makeMesonL10NSnippet(binfo: BasicASInfo): string
+export function makeMesonL10NSnippet(binfo: ASBasicInfo): string
 {
     let snippet = mesonL10NTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
     return snippet;

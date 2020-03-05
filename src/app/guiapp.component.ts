@@ -12,7 +12,7 @@ import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms
 import { componentIdValidator, urlValidator, desktopEntryValidator,
          noPathOrSpaceValidator } from './formvalidators';
 import { guessComponentId, arrayAddIfNotEmpty } from './utils';
-import { makeMetainfoGuiApp, BasicASInfo, GUIAppInfo } from './makemetainfo';
+import { makeMetainfoGuiApp, ASBasicInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
          makeMesonL10NSnippet } from './makemeson';
 import { makeDesktopEntryData } from './makeauxdata';
@@ -278,7 +278,7 @@ export class GUIAppComponent implements OnInit
         this.dataError = false;
         this.finalCptId = this.cptId.value;
 
-        let baseInfo: BasicASInfo = {
+        let baseInfo: ASBasicInfo = {
             cid: this.cptId.value,
             name: this.appName.value,
             summary: this.appSummary.value,

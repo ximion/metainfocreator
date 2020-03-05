@@ -14,11 +14,13 @@ import { AppComponent } from './app.component';
 import { IntroComponent } from './intro.component';
 import { GUIAppComponent } from './guiapp.component';
 import { ConsoleAppComponent } from './consoleapp.component';
+import { AddonComponent } from './addon.component';
 
 const routes: Routes = [
       { path: '', component: IntroComponent },
       { path: 'guiapp', component: GUIAppComponent },
       { path: 'consoleapp', component: ConsoleAppComponent },
+      { path: 'addon', component: AddonComponent },
     ];
 
 @NgModule({
@@ -26,7 +28,8 @@ const routes: Routes = [
       AppComponent,
       IntroComponent,
       GUIAppComponent,
-      ConsoleAppComponent
+      ConsoleAppComponent,
+      AddonComponent
   ],
   imports: [
       BrowserModule,

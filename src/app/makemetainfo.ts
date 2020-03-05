@@ -83,7 +83,11 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
 
     // add (injected) relation XML, if there is any
     if (relXMLData) {
-        miXml = miXml + '\n';
+        if ((relXMLData.extends.length != 0) ||
+            (relXMLData.requires.length != 0) ||
+            (relXMLData.recommends.length != 0))
+            miXml = miXml + '\n';
+
         let addRelationXml = (items: Array<string>, relName: string) => {
             if (items.length <= 0)
                 return;

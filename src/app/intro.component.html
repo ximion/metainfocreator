@@ -89,10 +89,40 @@
             </div>
         </div>
         <footer class="card-footer">
-            <a routerLink="/addon" class="card-footer-item button is-info is-light">Create Addon Metadata</a>
+            <a routerLink="/addon" class="card-footer-item button is-link is-light">Create Addon Metadata</a>
         </footer>
         </div>
       </div>
+
+      <div class="column is-two-fifths">
+        <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">
+            Service
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+            <p>Services are background processes ("daemons") providing a general system ability.
+            They can for example be webservers, mailservers, webapps (basically anything that is started by the init system, usually systemd).</p>
+            </div>
+        </div>
+        <footer class="card-footer">
+            <a routerLink="/service" class="card-footer-item button is-link is-light">Create Service Metadata</a>
+        </footer>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!--
+<div class="columns">
+
+  <div class="column">
+    <div class="columns is-centered">
 
       <div class="column is-two-fifths">
         <div class="card">
@@ -112,10 +142,12 @@
         </div>
       </div>
 
+
     </div>
   </div>
 
 </div>
+-->
 
 <div class="columns">
 
@@ -126,16 +158,18 @@
         <div class="card">
         <header class="card-header">
             <p class="card-header-title">
-            Service
+            More Software Types
             </p>
         </header>
         <div class="card-content">
             <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.</p>
+            <p>AppStream provides support for describing a lot more software components than just the ones listed here,
+            such as fonts, firmware, drivers, localization or whole operating systems.</p>
+            <p>Check out the specification to learn how to write metadata for these types of software and data!</p>
             </div>
         </div>
         <footer class="card-footer">
-            <a class="card-footer-item">Create metadata</a>
+            <a href="https://www.freedesktop.org/software/appstream/docs/" class="card-footer-item button is-info is-light">To The Specification</a>
         </footer>
         </div>
       </div>

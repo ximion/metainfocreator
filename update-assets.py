@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2015-2020 Matthias Klumpp <mak@debian.org>
 #
-# SPDX-License-Identifier: LGPL-2.1+
+# SPDX-License-Identifier: LGPL-3.0+
 
 #
 # Script to download updated static data from the web and process it for AppStream to use.

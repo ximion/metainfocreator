@@ -9,6 +9,7 @@ import { Router, Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro.component';
@@ -35,7 +36,9 @@ const routes: Routes = [
       BrowserModule,
       HttpClientModule,
       ReactiveFormsModule,
-      RouterModule.forRoot(routes, { enableTracing: false }),
+      RouterModule.forRoot(routes,
+                           { enableTracing: false,
+                             useHash: environment.routerHashLocations }),
   ],
   bootstrap: [
       AppComponent

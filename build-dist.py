@@ -11,6 +11,7 @@
 import os
 import sys
 import subprocess
+import shutil
 from argparse import ArgumentParser
 
 
@@ -29,6 +30,12 @@ def main():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     print('Source directory is: {}'.format(root_dir))
     os.chdir(root_dir)
+
+    # check if we have the Angular executable
+    if not shutil.which('ng'):
+        print('Angular CLI was not found.')
+        print('Please install it via `npm install -g @angular/cli`')
+        sys.exit(4)
 
     config_name = h_args.config
     if config_name:

@@ -20,8 +20,7 @@ import { makeDesktopEntryData } from './makeauxdata';
     templateUrl: './addon.component.html'
 })
 
-export class AddonComponent implements OnInit
-{
+export class AddonComponent implements OnInit {
     cptForm: FormGroup;
     finalCptId: string;
 
@@ -36,22 +35,19 @@ export class AddonComponent implements OnInit
     dataMesonValidate: string;
 
     constructor(private fb: FormBuilder,
-                private http: HttpClient)
-    {
+                private http: HttpClient) {
         this.dataGenerated = false;
         this.dataError = false;
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
         this.createForm();
-    };
+    }
 
-    createForm()
-    {
+    createForm() {
         this.cptForm = this.fb.group({
             cptName: ['', Validators.required ],
             cptSummary: ['', Validators.required ],
@@ -84,9 +80,8 @@ export class AddonComponent implements OnInit
         });
     }
 
-    licenseModeChange(evt)
-    {
-        if (evt.target.value == 'simple') {
+    licenseModeChange(evt) {
+        if (evt.target.value === 'simple') {
             this.complexProjectLicense.disable();
             this.simpleProjectLicense.enable();
         } else {
@@ -112,14 +107,12 @@ export class AddonComponent implements OnInit
 
     get cptIcon() { return this.cptForm.get('cptIcon'); }
 
-    validationError(message: string)
-    {
+    validationError(message: string) {
         this.dataError = true;
         this.dataErrorMessage = message;
     }
 
-    validateField(field: any, name: string, emptyOkay: boolean = false): boolean
-    {
+    validateField(field: any, name: string, emptyOkay: boolean = false): boolean {
         field.markAsTouched();
 
         if (!emptyOkay) {
@@ -136,15 +129,13 @@ export class AddonComponent implements OnInit
         return true;
     }
 
-    resetGeneratedData()
-    {
+    resetGeneratedData() {
         this.dataGenerated = false;
         this.dataMetainfo = null;
         this.dataMesonValidate = null;
     }
 
-    generate()
-    {
+    generate() {
         this.resetGeneratedData();
 
         if (!this.validateField(this.cptName, 'addon name'))
@@ -163,7 +154,7 @@ export class AddonComponent implements OnInit
             return;
 
         let pLicense;
-        if (this.rbLicenseMode.value == 'simple')
+        if (this.rbLicenseMode.value === 'simple')
             pLicense = this.simpleProjectLicense.value;
         else
             pLicense = this.complexProjectLicense.value;
@@ -176,7 +167,7 @@ export class AddonComponent implements OnInit
         if (!this.validateField(this.cptIcon, 'addon icon', true))
             return;
 
-        let addonInfo: AddonInfo = new AddonInfo();
+        const addonInfo: AddonInfo = new AddonInfo();
         addonInfo.extends = [this.extendsCptId.value];
         addonInfo.iconName = this.cptIcon.value;
 
@@ -184,7 +175,7 @@ export class AddonComponent implements OnInit
         this.dataError = false;
         this.finalCptId = this.cptId.value;
 
-        let baseInfo: ASBasicInfo = {
+        const baseInfo: ASBasicInfo = {
             cid: this.cptId.value,
             name: this.cptName.value,
             summary: this.cptSummary.value,

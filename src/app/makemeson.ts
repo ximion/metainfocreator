@@ -6,7 +6,7 @@
 
 import { ASBasicInfo } from './makemetainfo';
 
-let mesonValidateTemplate: string =`# Validate MetaInfo file
+const mesonValidateTemplate = `# Validate MetaInfo file
 metainfo_file = '/path/to/<?mifname?>'
 ascli_exe = find_program('appstreamcli', required: false)
 if ascli_exe.found()
@@ -19,13 +19,12 @@ if ascli_exe.found()
   )
 endif`;
 
-export function makeMesonValidateSnippet(binfo: ASBasicInfo): string
-{
-    let validateSnippet = mesonValidateTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
+export function makeMesonValidateSnippet(binfo: ASBasicInfo): string {
+    const validateSnippet = mesonValidateTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
     return validateSnippet;
 }
 
-let mesonMItoDETemplate: string =`# Create desktop-entry file from metainfo
+const mesonMItoDETemplate = `# Create desktop-entry file from metainfo
 metainfo_file = '/path/to/<?mifname?>'
 ascli_exe = find_program('appstreamcli')
 custom_target('gen-desktop-entry',
@@ -36,14 +35,13 @@ custom_target('gen-desktop-entry',
     install_dir: join_paths (get_option ('datadir'), 'applications')
 )`;
 
-export function makeMesonMItoDESnippet(binfo: ASBasicInfo): string
-{
+export function makeMesonMItoDESnippet(binfo: ASBasicInfo): string {
     let snippet = mesonMItoDETemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
     snippet = snippet.replace(/<\?(defname)\?>/g, binfo.cid + '.desktop');
     return snippet;
 }
 
-let mesonL10NTemplate: string =`# Localize a MetaInfo file and install it
+const mesonL10NTemplate = `# Localize a MetaInfo file and install it
 i18n = import('i18n')
 
 # NOTE: Remember to add the XML file to POTFILES.in!
@@ -57,8 +55,7 @@ i18n.merge_file(
     install_dir: join_paths (get_option ('datadir'), 'metainfo')
 )`;
 
-export function makeMesonL10NSnippet(binfo: ASBasicInfo): string
-{
-    let snippet = mesonL10NTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
+export function makeMesonL10NSnippet(binfo: ASBasicInfo): string {
+    const snippet = mesonL10NTemplate.replace(/<\?(mifname)\?>/g, binfo.cid + '.metainfo.xml');
     return snippet;
 }

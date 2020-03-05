@@ -47,7 +47,7 @@ const routes: Routes = [
 export class AppModule {
   constructor(router: Router) {
       // Debugging aid for routing
-      //const replacer = (key, value) => (typeof value === 'function') ? value.name : value;
-      //console.log('Routes: ', JSON.stringify(router.config, replacer, 2));
+      // const replacer = (key, value) => (typeof value === 'function') ? value.name : value;
+      // console.log('Routes: ', JSON.stringify(router.config, replacer, 2));
   }
 }

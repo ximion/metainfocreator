@@ -20,8 +20,7 @@ import { makeDesktopEntryData } from './makeauxdata';
     templateUrl: './consoleapp.component.html'
 })
 
-export class ConsoleAppComponent implements OnInit
-{
+export class ConsoleAppComponent implements OnInit {
     cptForm: FormGroup;
     finalCptId: string;
 
@@ -39,14 +38,12 @@ export class ConsoleAppComponent implements OnInit
     dataMesonValidate: string;
 
     constructor(private fb: FormBuilder,
-                private http: HttpClient)
-    {
+                private http: HttpClient) {
         this.dataGenerated = false;
         this.dataError = false;
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
@@ -54,10 +51,9 @@ export class ConsoleAppComponent implements OnInit
         this.categoriesSecondary = this.http.get('assets/categories-secondary.json');
 
         this.createForm();
-    };
+    }
 
-    createForm()
-    {
+    createForm() {
         this.cptForm = this.fb.group({
             appName: ['', Validators.required ],
             appSummary: ['', Validators.required ],
@@ -94,9 +90,8 @@ export class ConsoleAppComponent implements OnInit
         });
     }
 
-    licenseModeChange(evt)
-    {
-        if (evt.target.value == 'simple') {
+    licenseModeChange(evt) {
+        if (evt.target.value === 'simple') {
             this.complexProjectLicense.disable();
             this.simpleProjectLicense.enable();
         } else {
@@ -126,14 +121,12 @@ export class ConsoleAppComponent implements OnInit
     get exeName() { return this.cptForm.get('exeName'); }
 
 
-    validationError(message: string)
-    {
+    validationError(message: string) {
         this.dataError = true;
         this.dataErrorMessage = message;
     }
 
-    validateField(field: any, name: string, emptyOkay: boolean = false): boolean
-    {
+    validateField(field: any, name: string, emptyOkay: boolean = false): boolean {
         field.markAsTouched();
 
         if (!emptyOkay) {
@@ -150,15 +143,13 @@ export class ConsoleAppComponent implements OnInit
         return true;
     }
 
-    resetGeneratedData()
-    {
+    resetGeneratedData() {
         this.dataGenerated = false;
         this.dataMetainfo = null;
         this.dataMesonValidate = null;
     }
 
-    generate()
-    {
+    generate() {
         this.resetGeneratedData();
 
         if (!this.validateField(this.appName, 'application name'))
@@ -175,7 +166,7 @@ export class ConsoleAppComponent implements OnInit
             return;
 
         let pLicense;
-        if (this.rbLicenseMode.value == 'simple')
+        if (this.rbLicenseMode.value === 'simple')
             pLicense = this.simpleProjectLicense.value;
         else
             pLicense = this.complexProjectLicense.value;
@@ -194,7 +185,7 @@ export class ConsoleAppComponent implements OnInit
         if (!this.validateField(this.exeName, 'executable name'))
             return;
 
-        let appInfo: ConsoleAppInfo = new ConsoleAppInfo();
+        const appInfo: ConsoleAppInfo = new ConsoleAppInfo();
         appInfo.categories = [this.primaryCategory.value, this.secondaryCategory.value];
         appInfo.iconName = this.appIcon.value;
         appInfo.binary = this.exeName.value;
@@ -203,7 +194,7 @@ export class ConsoleAppComponent implements OnInit
         this.dataError = false;
         this.finalCptId = this.cptId.value;
 
-        let baseInfo: ASBasicInfo = {
+        const baseInfo: ASBasicInfo = {
             cid: this.cptId.value,
             name: this.appName.value,
             summary: this.appSummary.value,

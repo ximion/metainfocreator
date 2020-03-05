@@ -6,7 +6,7 @@
 
 import { ASBasicInfo, GUIAppInfo } from './makemetainfo';
 
-let deTemplate: string =`[Desktop Entry]
+const deTemplate = `[Desktop Entry]
 Version=1.0
 Type=Application
 
@@ -18,9 +18,8 @@ Icon=<?icon?>
 Exec=<?binary?>
 Terminal=false`;
 
-export function makeDesktopEntryData(binfo: ASBasicInfo, info: GUIAppInfo): string
-{
-    let variables = {
+export function makeDesktopEntryData(binfo: ASBasicInfo, info: GUIAppInfo): string {
+    const variables = {
             name: binfo.name,
             summary: binfo.summary,
             categories: info.categories.join(';') + ';',
@@ -28,8 +27,8 @@ export function makeDesktopEntryData(binfo: ASBasicInfo, info: GUIAppInfo): stri
             binary: info.binary
         };
 
-    let deData = deTemplate.replace(/<\?(\w+)\?>/g,
-        function(match, name) {
+    const deData = deTemplate.replace(/<\?(\w+)\?>/g,
+        (match, name) => {
             return variables[name];
         });
 

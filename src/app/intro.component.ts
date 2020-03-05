@@ -17,5 +17,5 @@ export class IntroComponent implements OnInit {
     }
 
     ngOnInit() {
-    };
+    }
 }

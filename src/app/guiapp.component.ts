@@ -22,8 +22,7 @@ import { makeDesktopEntryData } from './makeauxdata';
     templateUrl: './guiapp.component.html'
 })
 
-export class GUIAppComponent implements OnInit
-{
+export class GUIAppComponent implements OnInit {
     cptForm: FormGroup;
     finalCptId: string;
 
@@ -47,15 +46,13 @@ export class GUIAppComponent implements OnInit
     dataMesonMItoDE: string;
 
     constructor(private fb: FormBuilder,
-                private http: HttpClient)
-    {
+                private http: HttpClient) {
         this.dataGenerated = false;
         this.dataError = false;
         this.createDesktopData = false;
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
@@ -63,10 +60,9 @@ export class GUIAppComponent implements OnInit
         this.categoriesSecondary = this.http.get('assets/categories-secondary.json');
 
         this.createForm();
-    };
+    }
 
-    createForm()
-    {
+    createForm() {
         this.cptForm = this.fb.group({
             appName: ['', Validators.required ],
             appSummary: ['', Validators.required ],
@@ -119,14 +115,13 @@ export class GUIAppComponent implements OnInit
         this.rbLaunchableMode.valueChanges.subscribe(value => {
             // if the desktop-entry ID isn't provided, we have to request additional data
             this.createDesktopData = false;
-            if (value != 'provided')
+            if (value !== 'provided')
                 this.createDesktopData = true;
         });
     }
 
-    licenseModeChange(evt)
-    {
-        if (evt.target.value == 'simple') {
+    licenseModeChange(evt) {
+        if (evt.target.value === 'simple') {
             this.complexProjectLicense.disable();
             this.simpleProjectLicense.enable();
         } else {
@@ -135,8 +130,7 @@ export class GUIAppComponent implements OnInit
         }
     }
 
-    inputControlChange(evt)
-    {
+    inputControlChange(evt) {
         if (!this.cbInputTouch.value && !this.cbInputGamepad.value) {
             this.cbInputMouseKeys.disable();
             this.cbInputMouseKeys.setValue('true');
@@ -174,14 +168,12 @@ export class GUIAppComponent implements OnInit
     get cbInputTouch() { return this.cptForm.get('cbInputTouch'); }
     get cbInputGamepad() { return this.cptForm.get('cbInputGamepad'); }
 
-    validationError(message: string)
-    {
+    validationError(message: string) {
         this.dataError = true;
         this.dataErrorMessage = message;
     }
 
-    validateField(field: any, name: string, emptyOkay: boolean = false): boolean
-    {
+    validateField(field: any, name: string, emptyOkay: boolean = false): boolean {
         field.markAsTouched();
 
         if (!emptyOkay) {
@@ -198,8 +190,7 @@ export class GUIAppComponent implements OnInit
         return true;
     }
 
-    resetGeneratedData()
-    {
+    resetGeneratedData() {
         this.dataGenerated = false;
         this.dataMetainfo = null;
         this.dataDesktopEntry = null;
@@ -209,8 +200,7 @@ export class GUIAppComponent implements OnInit
         this.dataMesonMItoDE = null;
     }
 
-    generate()
-    {
+    generate() {
         this.resetGeneratedData();
 
         if (!this.validateField(this.appName, 'application name'))
@@ -227,7 +217,7 @@ export class GUIAppComponent implements OnInit
             return;
 
         let pLicense;
-        if (this.rbLicenseMode.value == 'simple')
+        if (this.rbLicenseMode.value === 'simple')
             pLicense = this.simpleProjectLicense.value;
         else
             pLicense = this.complexProjectLicense.value;
@@ -244,10 +234,10 @@ export class GUIAppComponent implements OnInit
         if (!this.validateField(this.extraScreenshot2, 'additional screenshot 2', true))
             return;
 
-        let appInfo: GUIAppInfo = new GUIAppInfo();
+        const appInfo: GUIAppInfo = new GUIAppInfo();
 
-        let launchableMode = this.rbLaunchableMode.value;
-        if (launchableMode == 'provided') {
+        const launchableMode = this.rbLaunchableMode.value;
+        if (launchableMode === 'provided') {
             if (!this.validateField(this.desktopEntryName, 'desktop-entry filename'))
                 return;
             appInfo.desktopEntryName = this.desktopEntryName.value;
@@ -278,7 +268,7 @@ export class GUIAppComponent implements OnInit
         this.dataError = false;
         this.finalCptId = this.cptId.value;
 
-        let baseInfo: ASBasicInfo = {
+        const baseInfo: ASBasicInfo = {
             cid: this.cptId.value,
             name: this.appName.value,
             summary: this.appSummary.value,
@@ -291,8 +281,8 @@ export class GUIAppComponent implements OnInit
         arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot1.value);
         arrayAddIfNotEmpty(appInfo.scrImages, this.extraScreenshot2.value);
 
-        let miSelfContained: boolean = (launchableMode == 'generate-from-mi');
-        if (launchableMode == 'generate') {
+        const miSelfContained: boolean = (launchableMode === 'generate-from-mi');
+        if (launchableMode === 'generate') {
             this.dataDesktopEntry = makeDesktopEntryData(baseInfo, appInfo);
         }
 
@@ -303,7 +293,7 @@ export class GUIAppComponent implements OnInit
         if (this.cptForm.value.cbMesonSnippets) {
             this.dataMesonValidate = makeMesonValidateSnippet(baseInfo);
             this.dataMesonL10N = makeMesonL10NSnippet(baseInfo);
-            if (launchableMode == 'generate-from-mi')
+            if (launchableMode === 'generate-from-mi')
                 this.dataMesonMItoDE = makeMesonMItoDESnippet(baseInfo);
         }
     }

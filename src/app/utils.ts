@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean
-{
+export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean {
     let e = element;
     if (typeof e === 'string' || e instanceof String)
         e = e.trim();
@@ -16,8 +15,7 @@ export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean
     return true;
 }
 
-export function isAcceptableUrl(url: string): boolean
-{
+export function isAcceptableUrl(url: string): boolean {
     // if the URL doesn't exist, that's okay too
     if (!url)
         return true;
@@ -29,8 +27,7 @@ export function isAcceptableUrl(url: string): boolean
     return false;
 }
 
-export function isNoPath(basename: string): boolean
-{
+export function isNoPath(basename: string): boolean {
     // it's no path - it's nothing!
     if (!basename)
         return true;
@@ -38,15 +35,13 @@ export function isNoPath(basename: string): boolean
     return !basename.includes('/');
 }
 
-export function isDesktopFilename(fname: string): boolean
-{
+export function isDesktopFilename(fname: string): boolean {
     if (!fname)
         return false;
     return fname.endsWith('.desktop') && !fname.includes('/') && !fname.includes(' ');
 }
 
-export function guessComponentId(homepage: string, appName: string): string
-{
+export function guessComponentId(homepage: string, appName: string): string {
     if (!homepage)
         return '';
 
@@ -59,13 +54,13 @@ export function guessComponentId(homepage: string, appName: string): string
     } catch { return ''; }
 
     let userPart = ''; // Only used with GitHub URLs at the moment
-    let rDNSRootParts = url.host.split('.').reverse()
+    const rDNSRootParts = url.host.split('.').reverse();
     if (rDNSRootParts.length >= 2) {
         // Usually projects hosted on GitHub are not from GitHub Inc. / Microsoft
         // themselves, so we use github.io for those apps (this seems to be the way
         // at Github to indicate "created on our platform, but not owned by us)
         // We also special-case the GitHub username here, for extra namespace precision.
-        if (rDNSRootParts[1].toLowerCase() == 'github') {
+        if (rDNSRootParts[1].toLowerCase() === 'github') {
             rDNSRootParts[0] = 'io';
             userPart = url.pathname.split('/')[1];
             if (userPart)
@@ -95,26 +90,25 @@ export interface CIDValidationResult {
   message: string;
 }
 
-export function componentIdValid(cid: string): CIDValidationResult
-{
-    let res: CIDValidationResult = {valid: false, message: 'ID was empty'}
+export function componentIdValid(cid: string): CIDValidationResult {
+    const res: CIDValidationResult = {valid: false, message: 'ID was empty'};
     if (!cid)
         return res;
 
-    let rDNSParts = cid.split('.')
+    const rDNSParts = cid.split('.');
     if (rDNSParts.length < 3) {
         res.message = 'ID does not follow the reverse-DNS scheme';
         return res;
     }
 
-    for (let i = 0; i < rDNSParts.length; i++) {
-        if (!rDNSParts[i].trim()) {
+    for (const part of rDNSParts) {
+        if (!part.trim()) {
             res.message = 'ID contains an empty segment.';
             return res;
         }
     }
 
-    let ascii = /^[ -~]+$/;
+    const ascii = /^[ -~]+$/;
     if (!ascii.test(cid)) {
         res.message = 'ID contains non-ASCII characters.';
         return res;
@@ -131,11 +125,11 @@ export function componentIdValid(cid: string): CIDValidationResult
     }
 
     for (let i = 0; i < cid.length; i++) {
-        let code = cid.charCodeAt(i);
+        const code = cid.charCodeAt(i);
         if (!(code > 47 && code < 58) && // numeric (0-9)
             !(code > 64 && code < 91) && // upper alpha (A-Z)
             !(code > 96 && code < 123)) { // lower alpha (a-z)
-                if ((cid[i] != '_') && (cid[i] != '.')) {
+                if ((cid[i] !== '_') && (cid[i] !== '.')) {
                     res.message = `ID contains invalid character: ${cid[i]}`;
                     return res;
                 }

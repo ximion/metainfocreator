@@ -12,12 +12,26 @@
 </h1>
 
 <p>
-  This simple tool lets you create <a href="https://www.freedesktop.org/software/appstream/docs/">AppStream</a> MetaInfo files by
-  answering a simple set of questions.
+  <a href="https://www.freedesktop.org/software/appstream/docs/">AppStream</a> is a cross-distro effort for providing metadata for software in the Freedesktop ecosystem.
+  It provides a convenient way to get information about not installed software, and is one of the building blocks for modern software centers.
+</p>
+<p>
+  In order to provide good metadata to users and to provide additional information the operating system needs to retrieve missing components, software needs to ship
+  <em>MetaInfo files</em>, small XML files installed to <code>/usr/share/metainfo/</code> describing the software in question and (optionally) the interfaces
+  (D-Bus, media types, binaries, ...) it provides.
+</p>
+<p>
+  A MetaInfo file defines how users first experience your software in a catalog of lots of applications, so it is useful to invest a bit of time to make the best
+  possible impression.
+  This simple web application lets you create initial MetaInfo files as well as some accompanying metadata by answering a simple set of questions.
+  You can later expand the metadata if you so choose.
+</p>
+<p>
+  No data entered on these pages is transferred to Freedesktop.org. All processing happens directly in your web browser.
 </p>
 
-<p>Please select the type of software that you want to generate metadata for:</p>
-
+<hr/>
+<p class="subtitle is-5">Please select the type of software that you want to generate metadata for:</p>
 
 <div class="columns">
 
@@ -35,7 +49,7 @@
             <div class="content">
             <p>GUI applications are application which have a graphical user interface and are commonly
             used with mouse and keyboard.
-            They also ship a Freedesktop desktop-entry file to be visible in application menus.</p>
+            They also ship a Freedesktop desktop-entry file to be visible in application menus of the desktop environment.</p>
             </div>
         </div>
         <footer class="card-footer">
@@ -53,9 +67,9 @@
         </header>
         <div class="card-content">
             <div class="content">
-            <p>Console application are any application that have a command-line or text-based interface and are designed
+            <p>Console applications are programs that have a command-line or text-based interface and are designed
             to be used by a human user in a console.
-            Their binaries need to be present in <code>PATH</code>.</p>
+            Their binaries need to be present in the default <code>PATH</code>, so they are immediately executable by the user.</p>
             </div>
         </div>
         <footer class="card-footer">
@@ -118,36 +132,6 @@
 
 </div>
 
-<!--
-<div class="columns">
-
-  <div class="column">
-    <div class="columns is-centered">
-
-      <div class="column is-two-fifths">
-        <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-            Font
-            </p>
-        </header>
-        <div class="card-content">
-            <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.</p>
-            </div>
-        </div>
-        <footer class="card-footer">
-            <a class="card-footer-item">Create metadata</a>
-        </footer>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-
-</div>
--->
 
 <div class="columns">
 
@@ -164,7 +148,7 @@
         <div class="card-content">
             <div class="content">
             <p>AppStream provides support for describing a lot more software components than just the ones listed here,
-            such as fonts, firmware, drivers, localization or whole operating systems.</p>
+            such as fonts, firmware, icon-themes, localization or whole operating systems.</p>
             <p>Check out the specification to learn how to write metadata for these types of software and data!</p>
             </div>
         </div>

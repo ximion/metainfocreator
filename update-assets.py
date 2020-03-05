@@ -12,7 +12,6 @@ import os
 import json
 import requests
 import subprocess
-from datetime import date
 from tempfile import TemporaryDirectory
 
 

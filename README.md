@@ -1,8 +1,9 @@
 AppStream MetaInfo Creator
 ==========================
 
-AppStream is a cross-distro effort for providing metadata for software in the Freedesktop ecosystem. It provides a convenient way
-to get information about not installed software, and is one of the building blocks for software centers.
+[AppStream](https://github.com/ximion/appstream) is a cross-distro effort for providing metadata for software in
+the Freedesktop ecosystem. It provides a convenient way to get information about not installed software, and is one
+of the building blocks for software centers.
 
 This web application provides an easy way to generate good initial metadata for some software types to represent them in software
 centers or to provide additional metadata for systems.

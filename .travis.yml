@@ -1,0 +1,15 @@
+dist: bionic
+sudo: false
+
+language: node_js
+node_js:
+  - '12'
+  - '10'
+
+before_script:
+  - npm install -g @angular/cli
+  - npm install .
+
+script:
+  - ./build-dist.py
+  - ng lint

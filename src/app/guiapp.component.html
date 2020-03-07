@@ -1,5 +1,4 @@
 
-
 <nav class="breadcrumb" aria-label="breadcrumbs">
   <ul>
     <li><a routerLink="/">Home</a></li>
@@ -65,7 +64,7 @@
         <div class="field">
             <label class="label">Description</label>
             <div class="control">
-                <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software."></textarea>
+                <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software. You can use Mardown in-line `code`, paragraph and *emphasis* markup."></textarea>
             </div>
 
             <p *ngIf="appDescription.invalid && (appDescription.dirty || appDescription.touched)" class="help is-danger">A long description is required</p>

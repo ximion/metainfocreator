@@ -188,6 +188,10 @@ def update_categories_list(spec_url, primary_fname, secondary_fname):
     # for them. People should use AudioVideo instead.
     main_cats = [e for e in main_cats if (e['name'] != 'Audio' and e['name'] != 'Video')]
 
+    # we don't want to expose the ConsoleOnly and Core categories, this is confusing to users
+    # as those are already specified via different means in AppStream
+    extra_cats = [e for e in extra_cats if (e['name'] != 'ConsoleOnly' and e['name'] != 'Core')]
+
     main_cats = sorted(main_cats, key=lambda k: k['name'])
     extra_cats = sorted(extra_cats, key=lambda k: k['name'])
 

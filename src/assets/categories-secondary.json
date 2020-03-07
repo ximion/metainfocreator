@@ -188,11 +188,6 @@
         ]
     },
     {
-        "desc": "Application that only works inside a terminal (text-based or command line application)",
-        "name": "ConsoleOnly",
-        "parents": []
-    },
-    {
         "desc": "Education or Science",
         "name": "Construction"
     },
@@ -202,11 +197,6 @@
         "parents": [
             "Office"
         ]
-    },
-    {
-        "desc": "Important application, core to the desktop such as a file manager or a help browser",
-        "name": "Core",
-        "parents": []
     },
     {
         "desc": "Data visualization software",

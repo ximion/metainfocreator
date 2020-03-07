@@ -256,3 +256,34 @@ export function makeMetainfoAddon(binfo: ASBasicInfo, info: AddonInfo): string {
     miXml = miXml.trim() + miTemplateTail;
     return prettyXml(miXml);
 }
+
+export class ServiceInfo {
+    categories: Array<string> = [];
+    iconName: string = null;
+    serviceName: string = null;
+}
+
+export function makeMetainfoService(binfo: ASBasicInfo, info: ServiceInfo): string {
+    binfo.ckind = 'service';
+    let miXml = createMetainfoPreamble(binfo);
+
+    // add service launcher name
+    miXml = miXml + '\n\n​<launchable type="service">' + xmlEscape(info.serviceName) + '​</launchable>';
+
+    // add the stock icon
+    miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>\n';
+
+    // add categories
+    if (info.categories.length > 0) {
+        miXml = miXml.concat('\n<categories>');
+
+        for (const category of info.categories) {
+            miXml = miXml + '\n​<category>' + xmlEscape(category) + '​</category>';
+        }
+
+        miXml = miXml.concat('\n</categories>');
+    }
+
+    miXml = miXml.trim() + miTemplateTail;
+    return prettyXml(miXml);
+}

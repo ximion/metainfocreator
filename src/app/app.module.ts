@@ -16,12 +16,14 @@ import { IntroComponent } from './intro.component';
 import { GUIAppComponent } from './guiapp.component';
 import { ConsoleAppComponent } from './consoleapp.component';
 import { AddonComponent } from './addon.component';
+import { ServiceComponent } from './service.component';
 
 const routes: Routes = [
       { path: '', component: IntroComponent },
       { path: 'guiapp', component: GUIAppComponent },
       { path: 'consoleapp', component: ConsoleAppComponent },
       { path: 'addon', component: AddonComponent },
+      { path: 'service', component: ServiceComponent },
     ];
 
 @NgModule({
@@ -30,7 +32,8 @@ const routes: Routes = [
       IntroComponent,
       GUIAppComponent,
       ConsoleAppComponent,
-      AddonComponent
+      AddonComponent,
+      ServiceComponent
   ],
   imports: [
       BrowserModule,

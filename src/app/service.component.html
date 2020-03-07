@@ -1,0 +1,342 @@
+
+
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li class="is-active"><a href="#" aria-current="page">Service Metadata</a></li>
+  </ul>
+</nav>
+
+<div class="content">
+<h1 class="title">
+  Create metadata for system services
+</h1>
+
+<p>
+  Services are background processes ("daemons") providing a general system ability.
+  They can for example be webservers, mailservers, webapps (basically anything that is started by the init system, usually systemd).
+</p>
+
+<p>Please fill out the form below to generate your MetaInfo file as well as (optionally) auxiliary data.</p>
+
+<form [formGroup]="cptForm" novalidate>
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Basic Information
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field">
+            <label class="label">Name of the service</label>
+            <div class="control">
+                <input class="input" formControlName="cptName" type="text" placeholder="The human-readable name of your service">
+            </div>
+
+            <p *ngIf="cptName.invalid && (cptName.dirty || cptName.touched)" class="help is-danger">A name is required</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Summary of the service</label>
+            <div class="control">
+                <input class="input" formControlName="cptSummary" type="text" placeholder="A short text summarizing what the service does">
+            </div>
+
+            <p *ngIf="cptSummary.invalid && (cptSummary.dirty || cptSummary.touched)" class="help is-danger">A summary is required</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Homepage of the service</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="cptHomepage" type="text" placeholder="The website where this service source code is hosted.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-link"></i>
+                </span>
+            </div>
+
+            <div *ngIf="cptHomepage.invalid && (cptHomepage.dirty || cptHomepage.touched)">
+                <p *ngIf="cptHomepage.errors.required" class="help is-danger">A project homepage is required</p>
+                <p *ngIf="cptHomepage.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea class="textarea" formControlName="cptDescription" placeholder="Long description of this software."></textarea>
+            </div>
+
+            <p *ngIf="cptDescription.invalid && (cptDescription.dirty || cptDescription.touched)" class="help is-danger">A long description is required</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Unique Software Identifier</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="cptId" type="text" placeholder="Reverse-DNS string uniquely identifying your software.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-fingerprint"></i>
+                </span>
+            </div>
+            <p class="help">A rDNS-style string uniquely identifying this software component. Must contain only ASCII characters, dots and numbers.</p>
+
+            <div *ngIf="cptId.invalid && (cptId.dirty || cptId.touched)">
+                <p *ngIf="cptId.errors.required" class="help is-danger">A component-ID is required</p>
+                <p *ngIf="cptId.errors.minlength" class="help is-danger">A component-ID is too short</p>
+                <p *ngIf="cptId.errors.forbiddenId" class="help is-danger">This ID is not valid: {{cptId.errors.forbiddenId.value}}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Licensing
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field">
+        <label class="label">Metadata License</label>
+        <div class="control">
+            <div class="select">
+                <select formControlName="metadataLicense">
+                    <option value="">Choose a metadata license</option>
+                    <option *ngFor="let license of metadataLicenses | async" value="{{license.id}}">{{license.name}}</option>
+                </select>
+            </div>
+            <p class="help">The license that applies to this particular metadata and linked assets.</p>
+
+            <p *ngIf="metadataLicense.invalid && (metadataLicense.dirty || metadataLicense.touched)" class="help is-danger">A metadata license must be selected</p>
+        </div>
+        </div>
+
+        <div class="field">
+        <label class="label">Software License</label>
+
+        <div class="control">
+            <label class="radio">
+            <input type="radio" value="simple" formControlName="rbLicenseMode" (change)="licenseModeChange($event)">
+            Simple Single License
+            </label>
+            <label class="radio">
+            <input type="radio" value="spdx" formControlName="rbLicenseMode" (change)="licenseModeChange($event)">
+            Custom SPDX Expression
+            </label>
+        </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+            <div class="select">
+                <select formControlName="simpleProjectLicense">
+                    <option value="">Choose a project license</option>
+                    <option *ngFor="let license of spdxLicenses | async" value="{{license.id}}">{{license.name}}</option>
+                </select>
+                </div>
+            </div>
+
+            <div *ngIf="complexProjectLicense.enabled" class="control is-expanded">
+                <input class="input" formControlName="complexProjectLicense" type="text" placeholder="A SPDX license expression, e.g. GPL-3.0-or-later and MPL-2.0">
+                <p class="help">A <a href="https://spdx.org/licenses/">SPDX</a> license expression string.</p>
+                <p *ngIf="complexProjectLicense.invalid && (complexProjectLicense.dirty || complexProjectLicense.touched)" class="help is-danger">You need to enter a SPDX expression</p>
+            </div>
+        </div>
+        <p class="help">The license that applies to the described software.</p>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Categorization
+      </p>
+    </header>
+    <div class="card-content content">
+        <p>
+          Your software will appear in at least two categories in software center searches, one primary broad category, and one secondary
+          more specific one.
+          You can add more secondary categories to your metadata later, if you think your service fits into even more categories. The secondary
+          category is optional for services.
+        </p>
+        <div class="field is-grouped">
+
+            <div class="control">
+              <label class="label">Primary Category</label>
+              <div class="select">
+                <select formControlName="primaryCategory" (change)="primaryCategoryChange($event)">
+                    <option value="">Choose a category</option>
+                    <option *ngFor="let cat of categoriesPrimary" value="{{cat.name}}">{{cat.desc}} [{{cat.name}}]</option>
+                </select>
+              </div>
+              <p *ngIf="primaryCategory.invalid && (primaryCategory.dirty || primaryCategory.touched)" class="help is-danger">A primary category must be selected</p>
+            </div>
+
+            <div class="control">
+              <label class="label">Secondary Category</label>
+              <div class="select">
+                <select formControlName="secondaryCategory">
+                    <option value="">Choose an additional category</option>
+                    <option *ngFor="let cat of categoriesSecondaryFiltered" value="{{cat.name}}">{{cat.desc}} [{{cat.name}}]</option>
+                </select>
+              </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Details
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field">
+            <label class="label">Icon Name</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="cptIcon" type="text" placeholder="Stock icon name without file extension">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-icons"></i>
+                </span>
+            </div>
+            <p class="help">
+              Please enter the name of your icon (usually installed into <code>/usr/share/icons/hicolor/&lt;size&gt;/apps/</code>) without its
+              .png or .svg(z) file extension.
+            </p>
+
+            <div *ngIf="cptIcon.invalid && (cptIcon.dirty || cptIcon.touched)">
+                <p *ngIf="cptIcon.errors.required" class="help is-danger">An icon name is required</p>
+                <p *ngIf="cptIcon.errors.invalidName" class="help is-danger">This is not a valid icon name</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Service Name</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="serviceName" type="text" placeholder="System service name">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-cogs"></i>
+                </span>
+            </div>
+            <p class="help">
+              Please enter the name of the service as run by the init system. This is the name you would use in a <code>systemctl status</code>
+              command to refer to your service. If you only support systemd, you may include the systemd unit type suffix (<code>.service</code>, <code>.timer</code>, etc.)
+              in the service name to make it more explicit.
+            </p>
+
+            <div *ngIf="serviceName.invalid && (serviceName.dirty || serviceName.touched)">
+                <p *ngIf="serviceName.errors.required" class="help is-danger">A service launcher name is required</p>
+                <p *ngIf="serviceName.errors.invalidName" class="help is-danger">This is not a valid service name</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Additional Options
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field">
+        <div class="control">
+            <label class="checkbox">
+            <input type="checkbox" formControlName="cbMesonSnippets">
+              Generate <a href="https://mesonbuild.com/">Meson</a> sample snippet for metadata maintenance
+            </label>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Finish
+      </p>
+    </header>
+    <div class="card-content content">
+
+        <div class="field is-grouped">
+            <div class="control">
+                <a class="button is-link" (click)="generate()">Generate Metadata</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</form>
+
+<br/>
+<!-- Output area -->
+
+
+<div *ngIf="dataError" class="notification is-danger">
+  <p><strong>Unable to generate metadata:</strong></p>
+  <p>{{dataErrorMessage}}</p>
+</div>
+
+
+<article class="panel is-success" *ngIf="dataGenerated">
+  <p class="panel-heading">
+    Result
+  </p>
+
+  <!-- MetaInfo data -->
+  <div class="panel-block">
+  <div class="column is-full">
+      <h2 class="title is-2">MetaInfo File</h2>
+      <p>Install this file as as <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code></p>
+      <p>You can validate this metadata locally by running: <code>appstreamcli validate {{finalCptId}}.metainfo.xml</code></p>
+      <div class="control">
+          <textarea class="textarea is-primary" rows="24" readonly>{{dataMetainfo}}</textarea>
+      </div>
+
+      <div *ngIf="dataMesonValidate" style="margin-top: 1em;">
+        <h3 class="subtitle is-3">Meson Validation Testcase</h3>
+        <p>
+          Adjust the data location in <code>metainfo_file</code> and add this snippet to your Meson build definition in order to
+          validate the MetaInfo file as part of the project's tests.
+        </p>
+        <div class="control">
+            <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonValidate}}</textarea>
+        </div>
+      </div>
+  </div>
+  </div>
+</article>
+
+<article class="panel is-info" *ngIf="dataGenerated">
+  <p class="panel-heading">
+    Missing tools to validate your data?
+  </p>
+
+  <div class="panel-block">
+  <div class="column is-full">
+      <h4 class="title is-4">MetaInfo Validation</h4>
+      <p>
+        For validation of <em>MetaInfo</em> files, you need <code>appstreamcli</code>, which is available in pretty much every Linux distribution.
+        For best results, you should validate with version <code>0.12.10</code> or later.
+      </p>
+      <p>On Debian, Ubuntu and their derivatives, AppStream is preinstalled. In case it is missing, it can be installed using <code>apt install appstream</code></p>
+      <p>On Fedora and its derivatives, you can install AppStream via <code>dnf install appstream</code></p>
+  </div>
+  </div>
+</article>
+
+</div> <!-- End of content -->

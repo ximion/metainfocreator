@@ -103,17 +103,23 @@ def update_categories_list(spec_url, primary_fname, secondary_fname):
     for line in str(req.content, 'utf-8').splitlines():
         if '<entry>Main Category</entry>' in line:
             spec_sect = SpecSection.MAIN_CATS
+            current_cat = {}
             continue
 
         if '<entry>Additional Category</entry>' in line:
             spec_sect = SpecSection.EXTRA_CATS
+            current_cat = {}
             continue
+
+        if '<title>Reserved Categories</title>' in line:
+            # don't read any further after reserved categories
+            break
 
         if '<tbody>' in line:
             current_cat = {}
             if spec_sect == SpecSection.MAIN_CATS:
                 spec_sect = SpecSection.MAIN_CATS_BODY
-            else:
+            elif spec_sect == SpecSection.EXTRA_CATS:
                 spec_sect = SpecSection.EXTRA_CATS_BODY
             continue
 
@@ -147,20 +153,33 @@ def update_categories_list(spec_url, primary_fname, secondary_fname):
                 continue
             if '</tbody>' in line:
                 if current_cat:
-                    main_cats.append(current_cat)
+                    extra_cats.append(current_cat)
                     current_cat = {}
                 spec_sect = SpecSection.NONE
                 # nothing interesting follows for us after the additional categories are done
                 break
 
             if '<entry>' in line:
-                if current_cat.get('rel'):
+                if current_cat.get('parents'):
                     continue
                 if current_cat:
                     if not current_cat.get('desc'):
                         current_cat['desc'] = get_entry(line)
-                    if not current_cat.get('rel'):
-                        current_cat['rel'] = get_entry(line)
+                        continue
+                    if not current_cat.get('parents'):
+                        pparts = get_entry(line).split(';')
+                        parents = []
+                        for p in pparts:
+                            for s in p.split(' or '):
+                                s = s.strip()
+                                if not s:
+                                    continue
+                                # filter out toolkit tags, we don't need them
+                                if s.lower() in ['gnome', 'gtk', 'qt', 'kde']:
+                                    continue
+                                parents.append(s)
+                        current_cat['parents'] = parents
+                        continue
                 else:
                     current_cat['name'] = get_entry(line)
             continue

@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { componentIdValidator, urlValidator, noPathOrSpaceValidator } from './formvalidators';
-import { guessComponentId } from './utils';
+import { guessComponentId, filterCategoriesByPrimary } from './utils';
 import { makeMetainfoConsoleApp, ASBasicInfo, ConsoleAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet } from './makemeson';
 import { makeDesktopEntryData } from './makeauxdata';
@@ -28,7 +28,8 @@ export class ConsoleAppComponent implements OnInit {
     spdxLicenses: any;
 
     categoriesPrimary: any;
-    categoriesSecondary: any;
+    categoriesSecondaryFiltered: any;
+    categoriesSecondaryAll: any;
 
     dataGenerated: boolean;
     dataError: boolean;
@@ -41,14 +42,20 @@ export class ConsoleAppComponent implements OnInit {
                 private http: HttpClient) {
         this.dataGenerated = false;
         this.dataError = false;
+        this.categoriesSecondaryFiltered = [];
     }
 
     ngOnInit() {
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
-        this.categoriesPrimary = this.http.get('assets/categories-primary.json');
-        this.categoriesSecondary = this.http.get('assets/categories-secondary.json');
+        this.http.get('assets/categories-primary.json').subscribe((data) => {
+            this.categoriesPrimary = data;
+        });
+
+        this.http.get('assets/categories-secondary.json').subscribe((data) => {
+            this.categoriesSecondaryAll = data;
+        });
 
         this.createForm();
     }
@@ -98,6 +105,12 @@ export class ConsoleAppComponent implements OnInit {
             this.complexProjectLicense.enable();
             this.simpleProjectLicense.disable();
         }
+    }
+
+    primaryCategoryChange(evt) {
+        this.secondaryCategory.setValue('');
+        this.categoriesSecondaryFiltered = filterCategoriesByPrimary(this.categoriesSecondaryAll,
+                                                                     this.primaryCategory.value);
     }
 
     get appName() { return this.cptForm.get('appName'); }

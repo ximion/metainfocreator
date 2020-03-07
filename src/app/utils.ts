@@ -15,10 +15,10 @@ export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean {
     return true;
 }
 
-export function filterMatchingSecondaryCategories(secondaryCats: any, primaryCat: string): Array<any> {
-    let filtered = [];
+export function filterCategoriesByPrimary(secondaryCats: any, primaryCat: string): Array<any> {
+    const filtered = [];
     for (const scat of secondaryCats) {
-        if ((!scat.parents) || (scat.parents.length == 0)) {
+        if ((!scat.parents) || (scat.parents.length === 0)) {
             filtered.push(scat);
             continue;
         }

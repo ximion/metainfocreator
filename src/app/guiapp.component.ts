@@ -11,7 +11,7 @@ import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms
 
 import { componentIdValidator, urlValidator, desktopEntryValidator,
          noPathOrSpaceValidator } from './formvalidators';
-import { guessComponentId, arrayAddIfNotEmpty, filterMatchingSecondaryCategories } from './utils';
+import { guessComponentId, arrayAddIfNotEmpty, filterCategoriesByPrimary } from './utils';
 import { makeMetainfoGuiApp, ASBasicInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
          makeMesonL10NSnippet } from './makemeson';
@@ -59,11 +59,11 @@ export class GUIAppComponent implements OnInit {
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
         this.http.get('assets/categories-primary.json').subscribe((data) => {
-          this.categoriesPrimary = data;
+            this.categoriesPrimary = data;
         });
 
         this.http.get('assets/categories-secondary.json').subscribe((data) => {
-          this.categoriesSecondaryAll = data;
+            this.categoriesSecondaryAll = data;
         });
 
         this.createForm();
@@ -148,8 +148,8 @@ export class GUIAppComponent implements OnInit {
 
     primaryCategoryChange(evt) {
         this.secondaryCategory.setValue('');
-        this.categoriesSecondaryFiltered = filterMatchingSecondaryCategories(this.categoriesSecondaryAll,
-                                                                             this.primaryCategory.value);
+        this.categoriesSecondaryFiltered = filterCategoriesByPrimary(this.categoriesSecondaryAll,
+                                                                     this.primaryCategory.value);
     }
 
     get appName() { return this.cptForm.get('appName'); }

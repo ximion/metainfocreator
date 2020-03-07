@@ -4,11 +4,6 @@
         "name": "AudioVideo"
     },
     {
-        "desc": "Application that only works inside a terminal (text-based or command line application)",
-        "name": "ConsoleOnly",
-        "rel": "Application that only works inside a terminal (text-based or command line application)"
-    },
-    {
         "desc": "An application for development",
         "name": "Development"
     },

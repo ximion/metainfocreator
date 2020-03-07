@@ -2,626 +2,917 @@
     {
         "desc": "2D based graphical application",
         "name": "2DGraphics",
-        "rel": "2D based graphical application"
+        "parents": [
+            "Graphics"
+        ]
     },
     {
         "desc": "Application for viewing, creating, or processing 3-D graphics",
         "name": "3DGraphics",
-        "rel": "Application for viewing, creating, or processing 3-D graphics"
+        "parents": [
+            "Graphics"
+        ]
     },
     {
         "desc": "Accessibility",
         "name": "Accessibility",
-        "rel": "Accessibility"
+        "parents": [
+            "Settings",
+            "Utility"
+        ]
     },
     {
         "desc": "An action game",
         "name": "ActionGame",
-        "rel": "An action game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "Application handles adult or explicit material",
         "name": "Adult",
-        "rel": "Application handles adult or explicit material"
+        "parents": []
     },
     {
         "desc": "Adventure style game",
         "name": "AdventureGame",
-        "rel": "Adventure style game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A simple amusement",
         "name": "Amusement",
-        "rel": "A simple amusement"
+        "parents": []
     },
     {
         "desc": "Arcade style game",
         "name": "ArcadeGame",
-        "rel": "Arcade style game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A tool to archive/backup data",
         "name": "Archiving",
-        "rel": "A tool to archive/backup data"
+        "parents": [
+            "Utility"
+        ]
     },
     {
         "desc": "Software to teach arts",
         "name": "Art",
-        "rel": "Software to teach arts"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Artificial Intelligence software",
         "name": "ArtificialIntelligence",
-        "rel": "Artificial Intelligence software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Astronomy software",
         "name": "Astronomy",
-        "rel": "Astronomy software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Application to edit audio/video files",
         "name": "AudioVideoEditing",
-        "rel": "Application to edit audio/video files"
+        "parents": [
+            "Audio",
+            "Video",
+            "AudioVideo"
+        ]
     },
     {
         "desc": "Biology software",
         "name": "Biology",
-        "rel": "Biology software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Falling blocks game",
         "name": "BlocksGame",
-        "rel": "Falling blocks game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A board game",
         "name": "BoardGame",
-        "rel": "A board game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A tool to build applications",
         "name": "Building",
-        "rel": "A tool to build applications"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "A calculator",
         "name": "Calculator",
-        "rel": "A calculator"
+        "parents": [
+            "Utility"
+        ]
     },
     {
         "desc": "Calendar application",
         "name": "Calendar",
-        "rel": "Calendar application"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "A card game",
         "name": "CardGame",
-        "rel": "A card game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "Chart application",
         "name": "Chart",
-        "rel": "Chart application"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "A chat client",
         "name": "Chat",
-        "rel": "A chat client"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Chemistry software",
         "name": "Chemistry",
-        "rel": "Chemistry software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "A clock application/applet",
         "name": "Clock",
-        "rel": "A clock application/applet"
+        "parents": [
+            "Utility"
+        ]
     },
     {
         "desc": "A tool to manage compressed data/archives",
         "name": "Compression",
-        "rel": "A tool to manage compressed data/archives"
+        "parents": [
+            "Utility",
+            "Archiving"
+        ]
     },
     {
         "desc": "ComputerSience software",
         "name": "ComputerScience",
-        "rel": "ComputerSience software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
+    },
+    {
+        "desc": "Application that only works inside a terminal (text-based or command line application)",
+        "name": "ConsoleOnly",
+        "parents": []
     },
     {
         "desc": "Education or Science",
-        "name": "Construction",
-        "rel": "Education or Science"
+        "name": "Construction"
     },
     {
         "desc": "E.g. an address book",
         "name": "ContactManagement",
-        "rel": "E.g. an address book"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "Important application, core to the desktop such as a file manager or a help browser",
         "name": "Core",
-        "rel": "Important application, core to the desktop such as a file manager or a help browser"
+        "parents": []
     },
     {
         "desc": "Data visualization software",
         "name": "DataVisualization",
-        "rel": "Data visualization software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Application to manage a database",
         "name": "Database",
-        "rel": "Application to manage a database"
+        "parents": [
+            "Office",
+            "Development",
+            "AudioVideo"
+        ]
     },
     {
         "desc": "A tool to debug applications",
         "name": "Debugger",
-        "rel": "A tool to debug applications"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "Configuration tool for the GUI",
         "name": "DesktopSettings",
-        "rel": "Configuration tool for the GUI"
+        "parents": [
+            "Settings"
+        ]
     },
     {
         "desc": "A dial-up program",
         "name": "Dialup",
-        "rel": "A dial-up program"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "A dictionary",
         "name": "Dictionary",
-        "rel": "A dictionary"
+        "parents": [
+            "Office",
+            "TextTools"
+        ]
     },
     {
         "desc": "Application to burn a disc",
         "name": "DiscBurning",
-        "rel": "Application to burn a disc"
+        "parents": [
+            "AudioVideo"
+        ]
     },
     {
         "desc": "Help or documentation",
         "name": "Documentation",
-        "rel": "Help or documentation"
+        "parents": []
     },
     {
         "desc": "Economy software",
         "name": "Economy",
-        "rel": "Economy software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Electricity software",
         "name": "Electricity",
-        "rel": "Electricity software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Electronics software, e.g. a circuit designer",
         "name": "Electronics",
-        "rel": "Electronics software, e.g. a circuit designer"
+        "parents": []
     },
     {
         "desc": "Email application",
         "name": "Email",
-        "rel": "Email application"
+        "parents": [
+            "Office",
+            "Network"
+        ]
     },
     {
         "desc": "Emulator of another platform, such as a DOS emulator",
         "name": "Emulator",
-        "rel": "Emulator of another platform, such as a DOS emulator"
+        "parents": [
+            "System",
+            "Game"
+        ]
     },
     {
         "desc": "Engineering software, e.g. CAD programs",
         "name": "Engineering",
-        "rel": "Engineering software, e.g. CAD programs"
+        "parents": []
     },
     {
         "desc": "RSS, podcast and other subscription based contents",
         "name": "Feed",
-        "rel": "RSS, podcast and other subscription based contents"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "A file manager",
         "name": "FileManager",
-        "rel": "A file manager"
+        "parents": [
+            "System",
+            "FileTools"
+        ]
     },
     {
         "desc": "A file tool utility",
         "name": "FileTools",
-        "rel": "A file tool utility"
+        "parents": [
+            "Utility",
+            "System"
+        ]
     },
     {
         "desc": "Tools like FTP or P2P programs",
         "name": "FileTransfer",
-        "rel": "Tools like FTP or P2P programs"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "A file system tool",
         "name": "Filesystem",
-        "rel": "A file system tool"
+        "parents": [
+            "System"
+        ]
     },
     {
         "desc": "Application to manage your finance",
         "name": "Finance",
-        "rel": "Application to manage your finance"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "A flowchart application",
         "name": "FlowChart",
-        "rel": "A flowchart application"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "Application based on GNOME libraries",
         "name": "GNOME",
-        "rel": "Application based on GNOME libraries"
+        "parents": []
     },
     {
         "desc": "Application based on GTK+ libraries",
         "name": "GTK",
-        "rel": "Application based on GTK+ libraries"
+        "parents": []
     },
     {
         "desc": "A GUI designer application",
         "name": "GUIDesigner",
-        "rel": "A GUI designer application"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "Geography software",
         "name": "Geography",
-        "rel": "Geography software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Geology software",
         "name": "Geology",
-        "rel": "Geology software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Geoscience software, GIS",
         "name": "Geoscience",
-        "rel": "Geoscience software, GIS"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "HAM radio software",
         "name": "HamRadio",
-        "rel": "HAM radio software"
+        "parents": [
+            "Network",
+            "Audio"
+        ]
     },
     {
         "desc": "A tool to manage hardware components, like sound cards, video cards or printers",
         "name": "HardwareSettings",
-        "rel": "A tool to manage hardware components, like sound cards, video cards or printers"
+        "parents": [
+            "Settings"
+        ]
     },
     {
         "desc": "History software",
         "name": "History",
-        "rel": "History software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Software for philosophy, psychology and other humanities",
         "name": "Humanities",
-        "rel": "Software for philosophy, psychology and other humanities"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "IDE application",
         "name": "IDE",
-        "rel": "IDE application"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "An IRC client",
         "name": "IRCClient",
-        "rel": "An IRC client"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Image Processing software",
         "name": "ImageProcessing",
-        "rel": "Image Processing software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "An instant messaging client",
         "name": "InstantMessaging",
-        "rel": "An instant messaging client"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Application based on Java GUI libraries, such as AWT or Swing",
         "name": "Java",
-        "rel": "Application based on Java GUI libraries, such as AWT or Swing"
+        "parents": []
     },
     {
         "desc": "Application based on KDE libraries",
         "name": "KDE",
-        "rel": "Application based on KDE libraries"
+        "parents": []
     },
     {
         "desc": "A game for kids",
         "name": "KidsGame",
-        "rel": "A game for kids"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "Software to learn foreign languages",
         "name": "Languages",
-        "rel": "Software to learn foreign languages"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Literature software",
         "name": "Literature",
-        "rel": "Literature software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Logic games like puzzles, etc",
         "name": "LogicGame",
-        "rel": "Logic games like puzzles, etc"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "Sofware for viewing maps, navigation, mapping, GPS",
         "name": "Maps",
-        "rel": "Sofware for viewing maps, navigation, mapping, GPS"
+        "parents": [
+            "Education",
+            "Science",
+            "Utility"
+        ]
     },
     {
         "desc": "Math software",
         "name": "Math",
-        "rel": "Math software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Medical software",
         "name": "MedicalSoftware",
-        "rel": "Medical software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "An app related to MIDI",
         "name": "Midi",
-        "rel": "An app related to MIDI"
+        "parents": [
+            "AudioVideo",
+            "Audio"
+        ]
     },
     {
         "desc": "Just a mixer",
         "name": "Mixer",
-        "rel": "Just a mixer"
+        "parents": [
+            "AudioVideo",
+            "Audio"
+        ]
     },
     {
         "desc": "Monitor application/applet that monitors some resource or activity",
         "name": "Monitor",
-        "rel": "Monitor application/applet that monitors some resource or activity"
+        "parents": [
+            "System",
+            "Network"
+        ]
     },
     {
         "desc": "Application based on Motif libraries",
         "name": "Motif",
-        "rel": "Application based on Motif libraries"
+        "parents": []
     },
     {
         "desc": "Musical software",
         "name": "Music",
-        "rel": "Musical software"
+        "parents": [
+            "AudioVideo",
+            "Education"
+        ]
     },
     {
         "desc": "A news reader or a news ticker",
         "name": "News",
-        "rel": "A news reader or a news ticker"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Numerical analysis software",
         "name": "NumericalAnalysis",
-        "rel": "Numerical analysis software"
+        "parents": [
+            "Education",
+            "Math",
+            "Science",
+            "Math"
+        ]
     },
     {
         "desc": "Optical character recognition application",
         "name": "OCR",
-        "rel": "Optical character recognition application"
+        "parents": [
+            "Graphics",
+            "Scanning"
+        ]
     },
     {
         "desc": "A P2P program",
         "name": "P2P",
-        "rel": "A P2P program"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Tool to manage your PDA",
         "name": "PDA",
-        "rel": "Tool to manage your PDA"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "A package manager application",
         "name": "PackageManager",
-        "rel": "A package manager application"
+        "parents": [
+            "Settings"
+        ]
     },
     {
         "desc": "Parallel computing software",
         "name": "ParallelComputing",
-        "rel": "Parallel computing software"
+        "parents": [
+            "Education",
+            "ComputerScience",
+            "Science",
+            "ComputerScience"
+        ]
     },
     {
         "desc": "Camera tools, etc.",
         "name": "Photography",
-        "rel": "Camera tools, etc."
+        "parents": [
+            "Graphics",
+            "Office"
+        ]
     },
     {
         "desc": "Physics software",
         "name": "Physics",
-        "rel": "Physics software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "Application to play audio/video files",
         "name": "Player",
-        "rel": "Application to play audio/video files"
+        "parents": [
+            "Audio",
+            "Video",
+            "AudioVideo"
+        ]
     },
     {
         "desc": "Presentation software",
         "name": "Presentation",
-        "rel": "Presentation software"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "A tool to manage printers",
         "name": "Printing",
-        "rel": "A tool to manage printers"
+        "parents": [
+            "HardwareSettings",
+            "Settings"
+        ]
     },
     {
         "desc": "A profiling tool",
         "name": "Profiling",
-        "rel": "A profiling tool"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "Project management application",
         "name": "ProjectManagement",
-        "rel": "Project management application"
+        "parents": [
+            "Office",
+            "Development"
+        ]
     },
     {
         "desc": "Desktop Publishing applications and Color Management tools",
         "name": "Publishing",
-        "rel": "Desktop Publishing applications and Color Management tools"
+        "parents": [
+            "Graphics",
+            "Office"
+        ]
     },
     {
         "desc": "Application based on Qt libraries",
         "name": "Qt",
-        "rel": "Application based on Qt libraries"
+        "parents": []
     },
     {
         "desc": "Application for viewing, creating, or processing raster (bitmap) graphics",
         "name": "RasterGraphics",
-        "rel": "Application for viewing, creating, or processing raster (bitmap) graphics"
+        "parents": [
+            "Graphics",
+            "2DGraphics"
+        ]
     },
     {
         "desc": "Application to record audio/video files",
         "name": "Recorder",
-        "rel": "Application to record audio/video files"
+        "parents": [
+            "Audio",
+            "Video",
+            "AudioVideo"
+        ]
     },
     {
         "desc": "A tool to remotely manage your PC",
         "name": "RemoteAccess",
-        "rel": "A tool to remotely manage your PC"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Applications like cvs or subversion",
         "name": "RevisionControl",
-        "rel": "Applications like cvs or subversion"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "Robotics software",
         "name": "Robotics",
-        "rel": "Robotics software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "A role playing game",
         "name": "RolePlaying",
-        "rel": "A role playing game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "Tool to scan a file/text",
         "name": "Scanning",
-        "rel": "Tool to scan a file/text"
+        "parents": [
+            "Graphics"
+        ]
     },
     {
         "desc": "A security tool",
         "name": "Security",
-        "rel": "A security tool"
+        "parents": [
+            "Settings",
+            "System"
+        ]
     },
     {
         "desc": "A sequencer",
         "name": "Sequencer",
-        "rel": "A sequencer"
+        "parents": [
+            "AudioVideo",
+            "Audio"
+        ]
     },
     {
         "desc": "A shooter game",
         "name": "Shooter",
-        "rel": "A shooter game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A simulation game",
         "name": "Simulation",
-        "rel": "A simulation game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "Religious and spiritual software, theology",
         "name": "Spirituality",
-        "rel": "Religious and spiritual software, theology"
+        "parents": [
+            "Education",
+            "Science",
+            "Utility"
+        ]
     },
     {
         "desc": "Sports software",
         "name": "Sports",
-        "rel": "Sports software"
+        "parents": [
+            "Education",
+            "Science"
+        ]
     },
     {
         "desc": "A sports game",
         "name": "SportsGame",
-        "rel": "A sports game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A spreadsheet",
         "name": "Spreadsheet",
-        "rel": "A spreadsheet"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "A strategy game",
         "name": "StrategyGame",
-        "rel": "A strategy game"
+        "parents": [
+            "Game"
+        ]
     },
     {
         "desc": "A TV application",
         "name": "TV",
-        "rel": "A TV application"
+        "parents": [
+            "AudioVideo",
+            "Video"
+        ]
     },
     {
         "desc": "Telephony via PC",
         "name": "Telephony",
-        "rel": "Telephony via PC"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Telephony tools, to dial a number, manage PBX, ...",
         "name": "TelephonyTools",
-        "rel": "Telephony tools, to dial a number, manage PBX, ..."
+        "parents": [
+            "Utility"
+        ]
     },
     {
         "desc": "A terminal emulator application",
         "name": "TerminalEmulator",
-        "rel": "A terminal emulator application"
+        "parents": [
+            "System"
+        ]
     },
     {
         "desc": "A text editor",
         "name": "TextEditor",
-        "rel": "A text editor"
+        "parents": [
+            "Utility"
+        ]
     },
     {
         "desc": "A text tool utility",
         "name": "TextTools",
-        "rel": "A text tool utility"
+        "parents": [
+            "Utility"
+        ]
     },
     {
         "desc": "A translation tool",
         "name": "Translation",
-        "rel": "A translation tool"
+        "parents": [
+            "Development"
+        ]
     },
     {
         "desc": "A tuner",
         "name": "Tuner",
-        "rel": "A tuner"
+        "parents": [
+            "AudioVideo",
+            "Audio"
+        ]
     },
     {
         "desc": "Application for viewing, creating, or processing vector graphics",
         "name": "VectorGraphics",
-        "rel": "Application for viewing, creating, or processing vector graphics"
+        "parents": [
+            "Graphics",
+            "2DGraphics"
+        ]
     },
     {
         "desc": "Video Conference software",
         "name": "VideoConference",
-        "rel": "Video Conference software"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "Tool to view e.g. a graphic or pdf file",
         "name": "Viewer",
-        "rel": "Tool to view e.g. a graphic or pdf file"
+        "parents": [
+            "Graphics",
+            "Office"
+        ]
     },
     {
         "desc": "A web browser",
         "name": "WebBrowser",
-        "rel": "A web browser"
+        "parents": [
+            "Network"
+        ]
     },
     {
         "desc": "A tool for web developers",
         "name": "WebDevelopment",
-        "rel": "A tool for web developers"
+        "parents": [
+            "Network",
+            "Development"
+        ]
     },
     {
         "desc": "A word processor",
         "name": "WordProcessor",
-        "rel": "A word processor"
+        "parents": [
+            "Office"
+        ]
     },
     {
         "desc": "Application based on XFCE libraries",
         "name": "XFCE",
-        "rel": "Application based on XFCE libraries"
+        "parents": []
     }
 ]

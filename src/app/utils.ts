@@ -15,6 +15,21 @@ export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean {
     return true;
 }
 
+export function filterMatchingSecondaryCategories(secondaryCats: any, primaryCat: string): Array<any> {
+    let filtered = [];
+    for (const scat of secondaryCats) {
+        if ((!scat.parents) || (scat.parents.length == 0)) {
+            filtered.push(scat);
+            continue;
+        }
+
+        if (scat.parents.includes(primaryCat))
+            filtered.push(scat);
+    }
+
+    return filtered;
+}
+
 export function isAcceptableUrl(url: string): boolean {
     // if the URL doesn't exist, that's okay too
     if (!url)

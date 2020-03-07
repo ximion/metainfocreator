@@ -278,9 +278,9 @@
             <div class="control">
               <label class="label">Primary Category</label>
               <div class="select">
-                <select formControlName="primaryCategory">
+                <select formControlName="primaryCategory" (change)="primaryCategoryChange($event)">
                     <option value="">Choose a category</option>
-                    <option *ngFor="let cat of categoriesPrimary | async" value="{{cat.name}}">{{cat.name}}</option>
+                    <option *ngFor="let cat of categoriesPrimary" value="{{cat.name}}">{{cat.desc}} [{{cat.name}}]</option>
                 </select>
               </div>
               <p *ngIf="primaryCategory.invalid && (primaryCategory.dirty || primaryCategory.touched)" class="help is-danger">A primary category must be selected</p>
@@ -291,7 +291,7 @@
               <div class="select">
                 <select formControlName="secondaryCategory">
                     <option value="">Choose an additional category</option>
-                    <option *ngFor="let cat of categoriesSecondary | async" value="{{cat.name}}">{{cat.name}}</option>
+                    <option *ngFor="let cat of categoriesSecondaryFiltered" value="{{cat.name}}">{{cat.desc}} [{{cat.name}}]</option>
                 </select>
               </div>
               <p *ngIf="secondaryCategory.invalid && (secondaryCategory.dirty || secondaryCategory.touched)" class="help is-danger">A secondary category must be selected</p>

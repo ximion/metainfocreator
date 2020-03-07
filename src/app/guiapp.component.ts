@@ -11,7 +11,7 @@ import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms
 
 import { componentIdValidator, urlValidator, desktopEntryValidator,
          noPathOrSpaceValidator } from './formvalidators';
-import { guessComponentId, arrayAddIfNotEmpty } from './utils';
+import { guessComponentId, arrayAddIfNotEmpty, filterMatchingSecondaryCategories } from './utils';
 import { makeMetainfoGuiApp, ASBasicInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
          makeMesonL10NSnippet } from './makemeson';
@@ -30,7 +30,8 @@ export class GUIAppComponent implements OnInit {
     spdxLicenses: any;
 
     categoriesPrimary: any;
-    categoriesSecondary: any;
+    categoriesSecondaryFiltered: any;
+    categoriesSecondaryAll: any;
 
     createDesktopData: boolean;
 
@@ -50,14 +51,20 @@ export class GUIAppComponent implements OnInit {
         this.dataGenerated = false;
         this.dataError = false;
         this.createDesktopData = false;
+        this.categoriesSecondaryFiltered = [];
     }
 
     ngOnInit() {
         this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
         this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
 
-        this.categoriesPrimary = this.http.get('assets/categories-primary.json');
-        this.categoriesSecondary = this.http.get('assets/categories-secondary.json');
+        this.http.get('assets/categories-primary.json').subscribe((data) => {
+          this.categoriesPrimary = data;
+        });
+
+        this.http.get('assets/categories-secondary.json').subscribe((data) => {
+          this.categoriesSecondaryAll = data;
+        });
 
         this.createForm();
     }
@@ -137,6 +144,12 @@ export class GUIAppComponent implements OnInit {
         } else {
             this.cbInputMouseKeys.enable();
         }
+    }
+
+    primaryCategoryChange(evt) {
+        this.secondaryCategory.setValue('');
+        this.categoriesSecondaryFiltered = filterMatchingSecondaryCategories(this.categoriesSecondaryAll,
+                                                                             this.primaryCategory.value);
     }
 
     get appName() { return this.cptForm.get('appName'); }

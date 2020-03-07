@@ -12,8 +12,13 @@
 </h1>
 
 <p>
-  Services are background processes ("daemons") providing a general system ability.
-  They can for example be webservers, mailservers, webapps (basically anything that is started by the init system, usually systemd).
+  Services are background processes ("daemons") providing a general system ability and usually are not controlled directly by the user.
+  They can for example be webservers, mailservers, webapps etc. Anything that the systemd service manager can start falls into this category.
+</p>
+<p>
+  While the AppStream specification is not requiring the use of systemd for service management, this feature has only properly been tested with
+  systemd. So, please consider adding a systemd .service file for your daemon as well if it does not already have one, or at least test if the
+  service-name set in this metadata is the right one <code>systemctl</code> recognizes to launch your init script.
 </p>
 
 <p>Please fill out the form below to generate your MetaInfo file as well as (optionally) auxiliary data.</p>

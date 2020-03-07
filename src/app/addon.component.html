@@ -13,7 +13,11 @@
 
 <p>
   Addons are software components that are not standalone applications but intended to be used with another software component,
-  usually extending the functionality of the application they extend.
+  usually extending the functionality of their parent application.
+</p>
+<p>
+  They can, for example, be new themes and visual styles for a video editor, plugins to expand a text editor with a VI mode,
+  web browser extensions etc.
 </p>
 
 <p>Please fill out the form below to generate your MetaInfo file as well as (optionally) auxiliary data.</p>
@@ -106,7 +110,11 @@
                     <i class="fas fa-fingerprint"></i>
                 </span>
             </div>
-            <p class="help">The unique rDNS-style identifier of the application this addon was built for.</p>
+            <p class="help">
+                The unique rDNS-style identifier of the application this addon was built for.<br/>
+                An addon can extend multiple other application - please add more <code>extends</code> tags to the
+                generated MetaInfo file manually, if you need this functionality.
+            </p>
 
             <div *ngIf="extendsCptId.invalid && (extendsCptId.dirty || extendsCptId.touched)">
                 <p *ngIf="extendsCptId.errors.required" class="help is-danger">The component-ID of a parent application is required</p>

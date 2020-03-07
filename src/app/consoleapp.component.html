@@ -15,6 +15,12 @@
   Console application are any application that have a command-line or text-based interface and are designed to be used by a human user in a console.
   Their binaries need to be present in <code>PATH</code>.
 </p>
+<p>
+  The console mode needs to be the primary way of using your application, if the application has a GUI and an optional text mode as well, please create
+  a GUI application MetaInfo file for it instead (the CLI can be advertised by adding a <code>provides ⮡ binary</code> entry).
+  Examples of console applications are for example <code>ffmpeg</code>, <code>vi</code>, <code>flatpak</code> and of course
+  <code>appstreamcli</code> itself.
+</p>
 
 <p>Please fill out the form below to generate your MetaInfo file as well as (optionally) auxiliary data.</p>
 
@@ -209,7 +215,9 @@
             </div>
             <p class="help">
               Please enter the name of your icon (usually installed into <code>/usr/share/icons/hicolor/&lt;size&gt;/apps/</code>) without its
-              .png or .svg(z) file extension.
+              .png or .svg(z) file extension.<br/>
+              This is currently exclusively used to show your application in software centers, and may simply be the project's logo. You may enter
+              <code>utilities-terminal</code> here if you have no icon on your own and want a generic placeholder.
             </p>
 
             <div *ngIf="appIcon.invalid && (appIcon.dirty || appIcon.touched)">
@@ -227,7 +235,8 @@
                 </span>
             </div>
             <p class="help">
-              Please enter the name of the binary to run your application (as installed in <code>$PATH</code>). Do not use absolute paths!
+              Please enter the name of the binary to run your application (as installed in the systems's standard <code>$PATH</code>).
+              Do not use an absolute path!
             </p>
 
             <div *ngIf="exeName.invalid && (exeName.dirty || exeName.touched)">

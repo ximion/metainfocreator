@@ -40,12 +40,14 @@ def main():
     config_name = h_args.config
     if config_name:
         config_name = config_name.lower()
+        if config_name == 'fdo':
+            config_name = 'freedesktop'
 
     # construct the Angular build command
     ngbuild_cmd = ['ng', 'build']
     if not config_name:
         ngbuild_cmd.append('--prod')
-    elif config_name == 'fdo' or config_name == 'freedesktop':
+    elif config_name == 'freedesktop':
         ngbuild_cmd.extend(['--configuration', 'freedesktop'])
         ngbuild_cmd.extend(['--base-href', FDO_BASE_HREF])
     else:

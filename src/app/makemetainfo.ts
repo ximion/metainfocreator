@@ -87,7 +87,7 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
         const addRelationXml = (items: Array<string>, relName: string) => {
             if (items.length <= 0)
                 return;
-            miXml = miXml + '\n​<' + relName + '>\n';
+            miXml = miXml + '\n<' + relName + '>\n';
             for (const item of items)
                 miXml = miXml + item + '\n';
             miXml = miXml + '</' + relName + '>';
@@ -141,13 +141,13 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
     // handle input controls, if they are not the default for desktop-apps
     if (info.inputTouch || info.inputGamepad) {
         if (info.inputPointKeyboard) {
-            relXmlData.recommends.push('​<control>pointing​</control>');
-            relXmlData.recommends.push('​<control>keyboard</control>');
+            relXmlData.recommends.push('<control>pointing</control>');
+            relXmlData.recommends.push('<control>keyboard</control>');
         }
         if (info.inputTouch)
-            relXmlData.recommends.push('​<control>touch</control>');
+            relXmlData.recommends.push('<control>touch</control>');
         if (info.inputGamepad)
-            relXmlData.recommends.push('​<control>gamepad</control>');
+            relXmlData.recommends.push('<control>gamepad</control>');
     }
 
     // create generic preamble
@@ -158,7 +158,7 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
         info.desktopEntryName = binfo.cid + '.desktop';
 
     // add launchable (with a bit of extra spacing around it)
-    miXml = miXml + '\n\n​<launchable type="desktop-id">' + xmlEscape(info.desktopEntryName) + '​</launchable>';
+    miXml = miXml + '\n\n<launchable type="desktop-id">' + xmlEscape(info.desktopEntryName) + '</launchable>';
 
     // add screenshots, if we have any
     if (info.scrImages.length > 0) {
@@ -182,7 +182,7 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
 
         // add the stock icon
         if (info.iconName) {
-            miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>\n';
+            miXml = miXml + '\n\n<icon type="stock">' + xmlEscape(info.iconName) + '</icon>\n';
         }
 
         // add categories
@@ -190,7 +190,7 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
             miXml = miXml.concat('\n<categories>');
 
             for (const category of info.categories) {
-                miXml = miXml + '\n​<category>' + xmlEscape(category) + '​</category>';
+                miXml = miXml + '\n<category>' + xmlEscape(category) + '</category>';
             }
 
             miXml = miXml.concat('\n</categories>');
@@ -198,7 +198,7 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
 
         // add binary name
         if (info.binary) {
-            miXml = miXml + '\n\n  ​<provides>\n    <binary>' + xmlEscape(info.binary) + '​</binary>\n  </provides>';
+            miXml = miXml + '\n\n  <provides>\n    <binary>' + xmlEscape(info.binary) + '</binary>\n  </provides>';
         }
     }
 
@@ -217,21 +217,21 @@ export function makeMetainfoConsoleApp(binfo: ASBasicInfo, info: ConsoleAppInfo)
     let miXml = createMetainfoPreamble(binfo);
 
     // add the stock icon
-    miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>\n';
+    miXml = miXml + '\n\n<icon type="stock">' + xmlEscape(info.iconName) + '</icon>\n';
 
     // add categories
     if (info.categories.length > 0) {
         miXml = miXml.concat('\n<categories>');
 
         for (const category of info.categories) {
-            miXml = miXml + '\n​<category>' + xmlEscape(category) + '​</category>';
+            miXml = miXml + '\n<category>' + xmlEscape(category) + '</category>';
         }
 
         miXml = miXml.concat('\n</categories>');
     }
 
     // add binary name
-    miXml = miXml + '\n\n  ​<provides>\n    <binary>' + xmlEscape(info.binary) + '​</binary>\n  </provides>';
+    miXml = miXml + '\n\n  <provides>\n    <binary>' + xmlEscape(info.binary) + '</binary>\n  </provides>';
 
     miXml = miXml.trim() + miTemplateTail;
     return prettyXml(miXml);
@@ -251,7 +251,7 @@ export function makeMetainfoAddon(binfo: ASBasicInfo, info: AddonInfo): string {
 
     // add the stock icon, if we have one
     if (info.iconName)
-        miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>';
+        miXml = miXml + '\n\n<icon type="stock">' + xmlEscape(info.iconName) + '</icon>';
 
     miXml = miXml.trim() + miTemplateTail;
     return prettyXml(miXml);
@@ -268,17 +268,17 @@ export function makeMetainfoService(binfo: ASBasicInfo, info: ServiceInfo): stri
     let miXml = createMetainfoPreamble(binfo);
 
     // add service launcher name
-    miXml = miXml + '\n\n​<launchable type="service">' + xmlEscape(info.serviceName) + '​</launchable>';
+    miXml = miXml + '\n\n<launchable type="service">' + xmlEscape(info.serviceName) + '</launchable>';
 
     // add the stock icon
-    miXml = miXml + '\n\n​<icon type="stock">' + xmlEscape(info.iconName) + '​</icon>\n';
+    miXml = miXml + '\n\n<icon type="stock">' + xmlEscape(info.iconName) + '</icon>\n';
 
     // add categories
     if (info.categories.length > 0) {
         miXml = miXml.concat('\n<categories>');
 
         for (const category of info.categories) {
-            miXml = miXml + '\n​<category>' + xmlEscape(category) + '​</category>';
+            miXml = miXml + '\n<category>' + xmlEscape(category) + '</category>';
         }
 
         miXml = miXml.concat('\n</categories>');

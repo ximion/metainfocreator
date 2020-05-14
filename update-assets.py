@@ -38,6 +38,9 @@ def _read_spdx_licenses(data_dir, last_tag_ver):
 
     license_list = []
     for license in licenses_data['licenses']:
+        # we only want non-deprecated licenses here
+        if license.get('isDeprecatedLicenseId', False):
+            continue
         is_free = True if license.get('isFsfLibre') and license.get('isOsiApproved') else False
         license_list.append({'id': license['licenseId'],
                              'name': license['name'],
@@ -45,6 +48,9 @@ def _read_spdx_licenses(data_dir, last_tag_ver):
 
     exceptions_list = []
     for exception in exceptions_data['exceptions']:
+        # we only want non-deprecated license esceptions here
+        if license.get('isDeprecatedLicenseId', False):
+            continue
         exceptions_list.append({'id': exception['licenseExceptionId'],
                                 'name': exception['name']})
 

@@ -41,11 +41,6 @@
     },
     {
         "free": false,
-        "id": "AGPL-1.0",
-        "name": "Affero General Public License v1.0"
-    },
-    {
-        "free": false,
         "id": "AGPL-1.0-only",
         "name": "Affero General Public License v1.0 only"
     },
@@ -53,11 +48,6 @@
         "free": false,
         "id": "AGPL-1.0-or-later",
         "name": "Affero General Public License v1.0 or later"
-    },
-    {
-        "free": true,
-        "id": "AGPL-3.0",
-        "name": "GNU Affero General Public License v3.0"
     },
     {
         "free": true,
@@ -196,11 +186,6 @@
     },
     {
         "free": false,
-        "id": "BSD-2-Clause-NetBSD",
-        "name": "BSD 2-Clause NetBSD License"
-    },
-    {
-        "free": false,
         "id": "BSD-2-Clause-Patent",
         "name": "BSD-2-Clause Plus Patent License"
     },
@@ -303,6 +288,16 @@
         "free": false,
         "id": "Borceux",
         "name": "Borceux license"
+    },
+    {
+        "free": false,
+        "id": "CAL-1.0",
+        "name": "Cryptographic Autonomy License 1.0"
+    },
+    {
+        "free": false,
+        "id": "CAL-1.0-Combined-Work-Exception",
+        "name": "Cryptographic Autonomy License 1.0"
     },
     {
         "free": false,
@@ -531,6 +526,21 @@
     },
     {
         "free": false,
+        "id": "CERN-OHL-P-2.0",
+        "name": "CERN Open Hardware Licence Version 2 - Permissive"
+    },
+    {
+        "free": false,
+        "id": "CERN-OHL-S-2.0",
+        "name": "CERN Open Hardware Licence Version 2 - Strongly Reciprocal"
+    },
+    {
+        "free": false,
+        "id": "CERN-OHL-W-2.0",
+        "name": "CERN Open Hardware Licence Version 2 - Weakly Reciprocal"
+    },
+    {
+        "free": false,
         "id": "CNRI-Jython",
         "name": "CNRI Jython License"
     },
@@ -716,11 +726,6 @@
     },
     {
         "free": false,
-        "id": "GFDL-1.1",
-        "name": "GNU Free Documentation License v1.1"
-    },
-    {
-        "free": false,
         "id": "GFDL-1.1-only",
         "name": "GNU Free Documentation License v1.1 only"
     },
@@ -731,11 +736,6 @@
     },
     {
         "free": false,
-        "id": "GFDL-1.2",
-        "name": "GNU Free Documentation License v1.2"
-    },
-    {
-        "free": false,
         "id": "GFDL-1.2-only",
         "name": "GNU Free Documentation License v1.2 only"
     },
@@ -743,11 +743,6 @@
         "free": false,
         "id": "GFDL-1.2-or-later",
         "name": "GNU Free Documentation License v1.2 or later"
-    },
-    {
-        "free": false,
-        "id": "GFDL-1.3",
-        "name": "GNU Free Documentation License v1.3"
     },
     {
         "free": false,
@@ -766,16 +761,6 @@
     },
     {
         "free": false,
-        "id": "GPL-1.0",
-        "name": "GNU General Public License v1.0 only"
-    },
-    {
-        "free": false,
-        "id": "GPL-1.0+",
-        "name": "GNU General Public License v1.0 or later"
-    },
-    {
-        "free": false,
         "id": "GPL-1.0-only",
         "name": "GNU General Public License v1.0 only"
     },
@@ -783,16 +768,6 @@
         "free": false,
         "id": "GPL-1.0-or-later",
         "name": "GNU General Public License v1.0 or later"
-    },
-    {
-        "free": true,
-        "id": "GPL-2.0",
-        "name": "GNU General Public License v2.0 only"
-    },
-    {
-        "free": true,
-        "id": "GPL-2.0+",
-        "name": "GNU General Public License v2.0 or later"
     },
     {
         "free": true,
@@ -805,41 +780,6 @@
         "name": "GNU General Public License v2.0 or later"
     },
     {
-        "free": false,
-        "id": "GPL-2.0-with-GCC-exception",
-        "name": "GNU General Public License v2.0 w/GCC Runtime Library exception"
-    },
-    {
-        "free": false,
-        "id": "GPL-2.0-with-autoconf-exception",
-        "name": "GNU General Public License v2.0 w/Autoconf exception"
-    },
-    {
-        "free": false,
-        "id": "GPL-2.0-with-bison-exception",
-        "name": "GNU General Public License v2.0 w/Bison exception"
-    },
-    {
-        "free": false,
-        "id": "GPL-2.0-with-classpath-exception",
-        "name": "GNU General Public License v2.0 w/Classpath exception"
-    },
-    {
-        "free": false,
-        "id": "GPL-2.0-with-font-exception",
-        "name": "GNU General Public License v2.0 w/Font exception"
-    },
-    {
-        "free": true,
-        "id": "GPL-3.0",
-        "name": "GNU General Public License v3.0 only"
-    },
-    {
-        "free": true,
-        "id": "GPL-3.0+",
-        "name": "GNU General Public License v3.0 or later"
-    },
-    {
         "free": true,
         "id": "GPL-3.0-only",
         "name": "GNU General Public License v3.0 only"
@@ -848,16 +788,6 @@
         "free": true,
         "id": "GPL-3.0-or-later",
         "name": "GNU General Public License v3.0 or later"
-    },
-    {
-        "free": false,
-        "id": "GPL-3.0-with-GCC-exception",
-        "name": "GNU General Public License v3.0 w/GCC Runtime Library exception"
-    },
-    {
-        "free": false,
-        "id": "GPL-3.0-with-autoconf-exception",
-        "name": "GNU General Public License v3.0 w/Autoconf exception"
     },
     {
         "free": false,
@@ -888,6 +818,11 @@
         "free": false,
         "id": "HaskellReport",
         "name": "Haskell Language Report License"
+    },
+    {
+        "free": false,
+        "id": "Hippocratic-2.1",
+        "name": "Hippocratic License 2.1"
     },
     {
         "free": false,
@@ -976,16 +911,6 @@
     },
     {
         "free": false,
-        "id": "LGPL-2.0",
-        "name": "GNU Library General Public License v2 only"
-    },
-    {
-        "free": false,
-        "id": "LGPL-2.0+",
-        "name": "GNU Library General Public License v2 or later"
-    },
-    {
-        "free": false,
         "id": "LGPL-2.0-only",
         "name": "GNU Library General Public License v2 only"
     },
@@ -996,16 +921,6 @@
     },
     {
         "free": true,
-        "id": "LGPL-2.1",
-        "name": "GNU Lesser General Public License v2.1 only"
-    },
-    {
-        "free": true,
-        "id": "LGPL-2.1+",
-        "name": "GNU Library General Public License v2.1 or later"
-    },
-    {
-        "free": true,
         "id": "LGPL-2.1-only",
         "name": "GNU Lesser General Public License v2.1 only"
     },
@@ -1013,16 +928,6 @@
         "free": true,
         "id": "LGPL-2.1-or-later",
         "name": "GNU Lesser General Public License v2.1 or later"
-    },
-    {
-        "free": true,
-        "id": "LGPL-3.0",
-        "name": "GNU Lesser General Public License v3.0 only"
-    },
-    {
-        "free": true,
-        "id": "LGPL-3.0+",
-        "name": "GNU Lesser General Public License v3.0 or later"
     },
     {
         "free": true,
@@ -1201,6 +1106,11 @@
     },
     {
         "free": false,
+        "id": "MulanPSL-2.0",
+        "name": "Mulan Permissive Software License, Version 2"
+    },
+    {
+        "free": false,
         "id": "Multics",
         "name": "Multics License"
     },
@@ -1306,8 +1216,8 @@
     },
     {
         "free": false,
-        "id": "Nunit",
-        "name": "Nunit License"
+        "id": "O-UDA-1.0",
+        "name": "Open Use of Data Agreement v1.0"
     },
     {
         "free": false,
@@ -1358,6 +1268,11 @@
         "free": false,
         "id": "OFL-1.1-no-RFN",
         "name": "SIL Open Font License 1.1 with no Reserved Font Name"
+    },
+    {
+        "free": false,
+        "id": "OGC-1.0",
+        "name": "OGC Software License, Version 1.0"
     },
     {
         "free": false,
@@ -1536,8 +1451,23 @@
     },
     {
         "free": false,
+        "id": "Parity-7.0.0",
+        "name": "The Parity Public License 7.0.0"
+    },
+    {
+        "free": false,
         "id": "Plexus",
         "name": "Plexus Classworlds License"
+    },
+    {
+        "free": false,
+        "id": "PolyForm-Noncommercial-1.0.0",
+        "name": "PolyForm Noncommercial License 1.0.0"
+    },
+    {
+        "free": false,
+        "id": "PolyForm-Small-Business-1.0.0",
+        "name": "PolyForm Small Business License 1.0.0"
     },
     {
         "free": false,
@@ -1723,11 +1653,6 @@
         "free": false,
         "id": "Spencer-99",
         "name": "Spencer License 99"
-    },
-    {
-        "free": false,
-        "id": "StandardML-NJ",
-        "name": "Standard ML of New Jersey License"
     },
     {
         "free": false,
@@ -1966,11 +1891,6 @@
     },
     {
         "free": false,
-        "id": "eCos-2.0",
-        "name": "eCos license version 2.0"
-    },
-    {
-        "free": false,
         "id": "eGenix",
         "name": "eGenix.com Public License 1.1.0"
     },
@@ -2023,11 +1943,6 @@
         "free": false,
         "id": "psutils",
         "name": "psutils License"
-    },
-    {
-        "free": false,
-        "id": "wxWindows",
-        "name": "wxWindows Library License"
     },
     {
         "free": false,

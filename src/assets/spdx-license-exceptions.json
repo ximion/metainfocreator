@@ -64,6 +64,10 @@
         "name": "GPL Cooperation Commitment 1.0"
     },
     {
+        "id": "LGPL-3.0-linking-exception",
+        "name": "LGPL-3.0 Linking Exception"
+    },
+    {
         "id": "LLVM-exception",
         "name": "LLVM Exception"
     },

@@ -16,7 +16,7 @@ to generate their metadata. All metadata generation happens locally in the brows
 
 ## Developers
 
-[![Build Status](https://travis-ci.org/ximion/metainfocreator.svg?branch=master)](https://travis-ci.org/ximion/metainfocreator)
+![Build & Test](https://github.com/ximion/metainfocreator/workflows/Build%20&%20Test/badge.svg)
 
 The MetaInfo Creator is an Angular (9+) web application intended to make it very easy for users to generate MetaInfo files
 to ship with their software.

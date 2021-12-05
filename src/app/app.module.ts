@@ -41,8 +41,8 @@ const routes: Routes = [
       ReactiveFormsModule,
       RouterModule.forRoot(routes,
                            { enableTracing: false,
-                             scrollPositionRestoration: 'enabled',
-                             useHash: environment.routerHashLocations }),
+    scrollPositionRestoration: 'enabled',
+    useHash: environment.routerHashLocations, relativeLinkResolution: 'legacy' }),
   ],
   bootstrap: [
       AppComponent

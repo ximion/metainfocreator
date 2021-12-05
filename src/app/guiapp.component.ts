@@ -99,7 +99,10 @@ export class GUIAppComponent implements OnInit {
             cbInputGamepad: [''],
             cbInputTablet: [''],
 
-            cbMesonSnippets: ['']
+            cbMinSurfaceSize: [''],
+            minSurfaceSize: ['', [ Validators.min(10), Validators.max(8192), Validators.pattern('^[0-9]*$') ] ],
+
+            cbMesonSnippets: [''],
         });
 
         // some defaults
@@ -183,6 +186,9 @@ export class GUIAppComponent implements OnInit {
     get cbInputGamepad() { return this.cptForm.get('cbInputGamepad'); }
     get cbInputTablet() { return this.cptForm.get('cbInputTablet'); }
 
+    get cbMinSurfaceSize() { return this.cptForm.get('cbMinSurfaceSize'); }
+    get minSurfaceSize() { return this.cptForm.get('minSurfaceSize'); }
+
     validationError(message: string) {
         this.dataError = true;
         this.dataErrorMessage = message;
@@ -192,7 +198,7 @@ export class GUIAppComponent implements OnInit {
         field.markAsTouched();
 
         if (!emptyOkay) {
-            if (!field.value.trim()) {
+            if (!field.value || (typeof field.value === 'string' && !field.value.trim())) {
                 this.validationError(`No value set for ${name}!`);
                 return false;
             }
@@ -279,6 +285,13 @@ export class GUIAppComponent implements OnInit {
         appInfo.inputTouch = this.cbInputTouch.value;
         appInfo.inputGamepad = this.cbInputGamepad.value;
         appInfo.inputTablet = this.cbInputTablet.value;
+
+        // surface size
+        if (this.cbMinSurfaceSize.value) {
+            if (!this.validateField(this.minSurfaceSize, 'minimum surface size'))
+                return;
+            appInfo.minDisplaySize = this.minSurfaceSize.value;
+        }
 
         // all validity checks have passed at this point
         this.dataError = false;

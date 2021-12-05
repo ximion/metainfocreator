@@ -132,6 +132,8 @@ export class GUIAppInfo {
     categories: Array<string> = [];
     iconName: string = null;
     binary: string = null;
+
+    minDisplaySize: number = 0;
 }
 
 export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcontained: boolean): string {
@@ -155,6 +157,10 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
         if (info.inputTablet)
             relXmlData.supports.push('<control>tablet</control>');
     }
+
+    // minimum surface size
+    if (info.minDisplaySize >= 10)
+        relXmlData.recommends.push(`<display_length compare="ge">${info.minDisplaySize}</display_length>`);
 
     // create generic preamble
     let miXml = createMetainfoPreamble(binfo, relXmlData);

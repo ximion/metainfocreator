@@ -144,7 +144,7 @@
 
             <div *ngIf="complexProjectLicense.enabled" class="control is-expanded">
                 <input class="input" formControlName="complexProjectLicense" type="text" placeholder="A SPDX license expression, e.g. GPL-3.0-or-later and MPL-2.0">
-                <p class="help">A <a href="https://spdx.org/licenses/">SPDX</a> license expression string.</p>
+                <p class="help">A <a href="https://spdx.org/licenses/" target="_blank">SPDX</a> license expression string.</p>
                 <p *ngIf="complexProjectLicense.invalid && (complexProjectLicense.dirty || complexProjectLicense.touched)" class="help is-danger">You need to enter a SPDX expression</p>
             </div>
         </div>
@@ -166,7 +166,7 @@
           but you can link to up to three of them here (and add more to the generated metadata if you want to).
           Please paste URLs to screenshots in the format of PNG, JPEG or WebP. You can find more information on how to create good screenshots
           for your application in
-          <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#qsr-app-screenshots-info">the AppStream quickstart manual</a>.
+          <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#qsr-app-screenshots-info" target="_blank">the AppStream quickstart manual</a>.
         </p>
         <div class="field">
             <label class="label">Primary Screenshot Image</label>
@@ -223,7 +223,7 @@
 
         <p>
           In order to launch your application from a menu or a software center, you will need a
-          <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/">desktop-entry</a> file. You can either
+          <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/" target="_blank">desktop-entry</a> file. You can either
           set the name of a file you already have, have this tool generate one for you, or generate the file from your metainfo file
           when your application is compiled. For the latter case, this tool can also produce instructions.
         </p>
@@ -360,44 +360,89 @@
         User Input
       </p>
     </header>
-    <div class="card-content content">
+    <div class="card-content">
 
-        <p>Select how users can interact with your application.</p>
+        <div class="content">
+            <label class="label">Input Control Methods</label>
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox" formControlName="cbInputMouseKeys" (change)="inputControlChange($event)">
-              Users use this application via mouse &amp; keyboard
-            </label>
-        </div>
+            <p>Select how users can interact with your application.</p>
+
+            <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                <input type="checkbox" formControlName="cbInputMouseKeys" (change)="inputControlChange($event)">
+                Users use this application via mouse &amp; keyboard
+                </label>
+            </div>
+            </div>
+
+            <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                <input type="checkbox" formControlName="cbInputTouch" (change)="inputControlChange($event)">
+                The application is usable on touch devices via touch input
+                </label>
+            </div>
+            </div>
+
+            <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                <input type="checkbox" formControlName="cbInputGamepad" (change)="inputControlChange($event)">
+                This application supports gamepads
+                </label>
+            </div>
+            </div>
+
+            <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                <input type="checkbox" formControlName="cbInputTablet" (change)="inputControlChange($event)">
+                This application supports graphics tablets
+                </label>
+            </div>
+            </div>
         </div>
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox" formControlName="cbInputTouch" (change)="inputControlChange($event)">
-              The application is usable on touch devices via touch input
-            </label>
-        </div>
-        </div>
+        <div class="content">
+            <label class="label">Minimum Surface Size</label>
+            <div class="field ">
+                <div class="control">
+                    <label class="checkbox">
+                    <input type="checkbox" formControlName="cbMinSurfaceSize">
+                    My application has a minimum recommended surface size
+                    </label>
+                </div>
+            </div>
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox" formControlName="cbInputGamepad" (change)="inputControlChange($event)">
-              This application supports gamepads
-            </label>
-        </div>
-        </div>
+            <div *ngIf="cbMinSurfaceSize.value == true" class="column is-two-fifths" style="padding: 0 !important;">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                    <input formControlName="minSurfaceSize" class="input" type="number" inputmode="numeric"
+                            placeholder="Minium surface length in logical pixels">
+                    </div>
+                    <p class="control">
+                    <a class="button is-static">
+                        dp | px
+                    </a>
+                    </p>
+                </div>
+                <div *ngIf="minSurfaceSize.invalid && (minSurfaceSize.dirty || minSurfaceSize.touched)" class="help">
+                    <p *ngIf="minSurfaceSize.errors.min" class="help is-danger">The pixel size is too small</p>
+                    <p *ngIf="minSurfaceSize.errors.max" class="help is-danger">The pixel size is unreasonably large</p>
+                    <p *ngIf="minSurfaceSize.errors.pattern" class="help is-danger">Only numbers are allowed</p>
+                </div>
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox" formControlName="cbInputTablet" (change)="inputControlChange($event)">
-              This application supports graphics tablets
-            </label>
-        </div>
+                <p>Set the minimum longest size of the display that can display your application correctly (as the screen
+                may be able to be rotated to fit your application). This value will be checked for compatibility with the
+                target system before the application is installed.</p>
+                <p>The minimum surface size needs to be in logical pixels (also called device-independent pixels). refer to your
+                GUI toolkit for more information on this topic, or take a look at the
+                <a href="https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-relations-display_length" target="_blank">
+                AppStream specification on display_length</a>.</p>
+            </div>
+
+
         </div>
 
     </div>
@@ -557,7 +602,7 @@
       </p>
       <p>On Debian, Ubuntu and their derivatives, AppStream is preinstalled. In case it is missing, it can be installed using <code>apt install appstream</code></p>
       <p>On Fedora and its derivatives, you can install AppStream via <code>dnf install appstream</code></p>
-      <p>You can also build AppStream from source code. See <a href="https://github.com/ximion/appstream">github.com/ximion/appstream</a> for details.</p>
+      <p>You can also build AppStream from source code. See <a href="https://github.com/ximion/appstream" target="_blank">github.com/ximion/appstream</a> for details.</p>
 
       <h4 class="title is-4">Desktop Entry Validation</h4>
       <p>

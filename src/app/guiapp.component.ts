@@ -97,6 +97,7 @@ export class GUIAppComponent implements OnInit {
             cbInputMouseKeys: [''],
             cbInputTouch: [''],
             cbInputGamepad: [''],
+            cbInputTablet: [''],
 
             cbMesonSnippets: ['']
         });
@@ -138,7 +139,7 @@ export class GUIAppComponent implements OnInit {
     }
 
     inputControlChange(evt) {
-        if (!this.cbInputTouch.value && !this.cbInputGamepad.value) {
+        if (!this.cbInputTouch.value && !this.cbInputGamepad.value && !this.cbInputTablet.value) {
             this.cbInputMouseKeys.disable();
             this.cbInputMouseKeys.setValue('true');
         } else {
@@ -180,6 +181,7 @@ export class GUIAppComponent implements OnInit {
     get cbInputMouseKeys() { return this.cptForm.get('cbInputMouseKeys'); }
     get cbInputTouch() { return this.cptForm.get('cbInputTouch'); }
     get cbInputGamepad() { return this.cptForm.get('cbInputGamepad'); }
+    get cbInputTablet() { return this.cptForm.get('cbInputTablet'); }
 
     validationError(message: string) {
         this.dataError = true;
@@ -276,6 +278,7 @@ export class GUIAppComponent implements OnInit {
         appInfo.inputPointKeyboard = this.cbInputMouseKeys.value;
         appInfo.inputTouch = this.cbInputTouch.value;
         appInfo.inputGamepad = this.cbInputGamepad.value;
+        appInfo.inputTablet = this.cbInputTablet.value;
 
         // all validity checks have passed at this point
         this.dataError = false;

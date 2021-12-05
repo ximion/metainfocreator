@@ -124,6 +124,7 @@ export class GUIAppInfo {
     inputPointKeyboard = true;
     inputTouch = false;
     inputGamepad = false;
+    inputTablet = false;
 
     scrImages: Array<string> = [];
     desktopEntryName: string = null;
@@ -142,7 +143,7 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
     const relXmlData: ASRelationXMLData = new ASRelationXMLData();
 
     // handle input controls, if they are not the default for desktop-apps
-    if (info.inputTouch || info.inputGamepad) {
+    if (info.inputTouch || info.inputGamepad || info.inputTablet) {
         if (info.inputPointKeyboard) {
             relXmlData.supports.push('<control>pointing</control>');
             relXmlData.supports.push('<control>keyboard</control>');
@@ -151,6 +152,8 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
             relXmlData.supports.push('<control>touch</control>');
         if (info.inputGamepad)
             relXmlData.supports.push('<control>gamepad</control>');
+        if (info.inputTablet)
+            relXmlData.supports.push('<control>tablet</control>');
     }
 
     // create generic preamble

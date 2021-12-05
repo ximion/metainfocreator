@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro.component';
 import { GUIAppComponent } from './guiapp.component';
@@ -41,8 +43,21 @@ const routes: Routes = [
       ReactiveFormsModule,
       RouterModule.forRoot(routes,
                            { enableTracing: false,
-    scrollPositionRestoration: 'enabled',
-    useHash: environment.routerHashLocations, relativeLinkResolution: 'legacy' }),
+                             scrollPositionRestoration: 'enabled',
+                             useHash: environment.routerHashLocations, relativeLinkResolution: 'legacy' }),
+      HighlightModule,
+  ],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          python: () => import('highlight.js/lib/languages/python'),
+          xml: () => import('highlight.js/lib/languages/xml')
+        }
+      }
+    }
   ],
   bootstrap: [
       AppComponent

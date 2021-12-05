@@ -69,6 +69,7 @@ class ASRelationXMLData {
     extends: Array<string> = [];
     requires: Array<string> = [];
     recommends: Array<string> = [];
+    supports: Array<string> = [];
 }
 
 function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLData = null): string {
@@ -81,7 +82,8 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
     if (relXMLData) {
         if ((relXMLData.extends.length !== 0) ||
             (relXMLData.requires.length !== 0) ||
-            (relXMLData.recommends.length !== 0))
+            (relXMLData.recommends.length !== 0) ||
+            (relXMLData.supports.length !== 0))
             miXml = miXml + '\n';
 
         const addRelationXml = (items: Array<string>, relName: string) => {
@@ -96,6 +98,7 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
         addRelationXml(relXMLData.extends, 'extends');
         addRelationXml(relXMLData.requires, 'requires');
         addRelationXml(relXMLData.recommends, 'recommends');
+        addRelationXml(relXMLData.supports, 'supports');
     }
 
     // add long description block
@@ -141,13 +144,13 @@ export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcon
     // handle input controls, if they are not the default for desktop-apps
     if (info.inputTouch || info.inputGamepad) {
         if (info.inputPointKeyboard) {
-            relXmlData.recommends.push('<control>pointing</control>');
-            relXmlData.recommends.push('<control>keyboard</control>');
+            relXmlData.supports.push('<control>pointing</control>');
+            relXmlData.supports.push('<control>keyboard</control>');
         }
         if (info.inputTouch)
-            relXmlData.recommends.push('<control>touch</control>');
+            relXmlData.supports.push('<control>touch</control>');
         if (info.inputGamepad)
-            relXmlData.recommends.push('<control>gamepad</control>');
+            relXmlData.supports.push('<control>gamepad</control>');
     }
 
     // create generic preamble

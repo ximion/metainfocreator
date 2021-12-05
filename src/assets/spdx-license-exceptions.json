@@ -116,6 +116,14 @@
         "name": "Qwt exception 1.0"
     },
     {
+        "id": "SHL-2.0",
+        "name": "Solderpad Hardware License v2.0"
+    },
+    {
+        "id": "SHL-2.1",
+        "name": "Solderpad Hardware License v2.1"
+    },
+    {
         "id": "Swift-exception",
         "name": "Swift Exception"
     },

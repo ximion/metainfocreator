@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2020-2021 Matthias Klumpp <matthias@tenstral.net>
  *
  * SPDX-License-Identifier: LGPL-3.0+
  */
@@ -19,6 +19,8 @@ import { GUIAppComponent } from './guiapp.component';
 import { ConsoleAppComponent } from './consoleapp.component';
 import { AddonComponent } from './addon.component';
 import { ServiceComponent } from './service.component';
+
+import { ClipboardService } from './clipboard.service';
 
 const routes: Routes = [
       { path: '', component: IntroComponent },
@@ -48,13 +50,15 @@ const routes: Routes = [
       HighlightModule,
   ],
   providers: [
+    ClipboardService,
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
         coreLibraryLoader: () => import('highlight.js/lib/core'),
         languages: {
-          python: () => import('highlight.js/lib/languages/python'),
-          xml: () => import('highlight.js/lib/languages/xml')
+            xml: () => import('highlight.js/lib/languages/xml'),
+            meson: () => import('highlight.js/lib/languages/python'),
+            toml: () => import('highlight.js/lib/languages/ini')
         }
       }
     }

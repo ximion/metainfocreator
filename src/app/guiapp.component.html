@@ -510,7 +510,8 @@
       <p>Install this file as as <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code></p>
       <p>You can validate this metadata locally by running: <code>appstreamcli validate {{finalCptId}}.metainfo.xml</code></p>
       <div class="box pl-1 pb-1">
-          <button class="button is-info is-light">Copy</button>
+          <button style="float: right;" class="button is-info is-light is-rounded"
+                  (click)="clipboard.copyText(dataMetainfo)">Copy</button>
           <pre style="padding: 0 !important;"><code [highlight]="dataMetainfo" [languages]="['xml']"></code></pre>
       </div>
 
@@ -521,8 +522,9 @@
           validate the MetaInfo file as part of the project's tests.
         </p>
         <div class="box pl-1 pb-1">
-            <button class="button is-info is-light">Copy</button>
-            <pre style="padding: 0 !important;"><code [highlight]="dataMesonValidate" [languages]="['python']"></code></pre>
+            <button style="float: right;" class="button is-info is-light is-rounded"
+                    (click)="clipboard.copyText(dataMesonValidate)">Copy</button>
+            <pre style="padding: 0 !important;"><code [highlight]="dataMesonValidate" [languages]="['meson']"></code></pre>
         </div>
       </div>
   </div>
@@ -545,8 +547,10 @@
           This code fragment for the Meson build system can be used to perform the desktop-entry conversion automatically
           when the software is installed:
         </p>
-        <div class="control">
-            <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonMItoDE}}</textarea>
+        <div class="box pl-1 pb-1">
+            <button style="float: right;" class="button is-info is-light is-rounded"
+                    (click)="clipboard.copyText(dataMesonMItoDE)">Copy</button>
+            <pre style="padding: 0 !important;"><code [highlight]="dataMesonMItoDE" [languages]="['meson']"></code></pre>
         </div>
       </div>
   </div>
@@ -558,9 +562,11 @@
       <h2 class="title is-2">Desktop Entry File</h2>
       <p>Install this file as as <code>/usr/share/applications/{{finalCptId}}.desktop</code></p>
       <p>You can validate this metadata locally by running: <code>desktop-file-validate {{finalCptId}}.desktop</code></p>
-      <div class="control">
-          <textarea class="textarea is-info" rows="10" readonly>{{dataDesktopEntry}}</textarea>
-      </div>
+      <div class="box pl-1 pb-1">
+            <button style="float: right;" class="button is-info is-light is-rounded"
+                    (click)="clipboard.copyText(dataDesktopEntry)">Copy</button>
+            <pre style="padding: 0 !important;"><code [highlight]="dataDesktopEntry" [languages]="['toml']"></code></pre>
+        </div>
   </div>
   </div>
 
@@ -581,8 +587,10 @@
           This code fragment for the Meson build system can be used to perform the merge-and-install step, when templates
           were already generated in a previous step.
         </p>
-        <div class="control">
-            <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonL10N}}</textarea>
+        <div class="box pl-1 pb-1">
+            <button style="float: right;" class="button is-info is-light is-rounded"
+                    (click)="clipboard.copyText(dataMesonL10N)">Copy</button>
+            <pre style="padding: 0 !important;"><code [highlight]="dataMesonL10N" [languages]="['meson']"></code></pre>
         </div>
       </div>
   </div>

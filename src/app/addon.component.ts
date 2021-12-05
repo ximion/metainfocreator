@@ -1,14 +1,15 @@
 /*
- * Copyright (C) 2020 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2020-2021 Matthias Klumpp <matthias@tenstral.net>
  *
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms';
 
+import { ClipboardService } from './clipboard.service';
 import { componentIdValidator, urlValidator, noPathOrSpaceValidator } from './formvalidators';
 import { guessComponentId } from './utils';
 import { makeMetainfoAddon, ASBasicInfo, AddonInfo } from './makemetainfo';
@@ -20,6 +21,7 @@ import { makeDesktopEntryData } from './makeauxdata';
     templateUrl: './addon.component.html'
 })
 
+@Injectable()
 export class AddonComponent implements OnInit {
     cptForm: FormGroup;
     finalCptId: string;
@@ -35,7 +37,8 @@ export class AddonComponent implements OnInit {
     dataMesonValidate: string;
 
     constructor(private fb: FormBuilder,
-                private http: HttpClient) {
+                private http: HttpClient,
+                public clipboard: ClipboardService) {
         this.dataGenerated = false;
         this.dataError = false;
     }

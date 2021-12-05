@@ -1,14 +1,15 @@
 /*
- * Copyright (C) 2020 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2020-2021 Matthias Klumpp <matthias@tenstral.net>
  *
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms';
 
+import { ClipboardService } from './clipboard.service';
 import { componentIdValidator, urlValidator, desktopEntryValidator,
          noPathOrSpaceValidator } from './formvalidators';
 import { guessComponentId, arrayAddIfNotEmpty, filterCategoriesByPrimary } from './utils';
@@ -22,6 +23,7 @@ import { makeDesktopEntryData } from './makeauxdata';
     templateUrl: './guiapp.component.html'
 })
 
+@Injectable()
 export class GUIAppComponent implements OnInit {
     cptForm: FormGroup;
     finalCptId: string;
@@ -47,7 +49,8 @@ export class GUIAppComponent implements OnInit {
     dataMesonMItoDE: string;
 
     constructor(private fb: FormBuilder,
-                private http: HttpClient) {
+                private http: HttpClient,
+                public clipboard: ClipboardService) {
         this.dataGenerated = false;
         this.dataError = false;
         this.createDesktopData = false;

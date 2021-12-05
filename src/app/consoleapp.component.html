@@ -309,8 +309,10 @@
       <h2 class="title is-2">MetaInfo File</h2>
       <p>Install this file as as <code>/usr/share/metainfo/{{finalCptId}}.metainfo.xml</code></p>
       <p>You can validate this metadata locally by running: <code>appstreamcli validate {{finalCptId}}.metainfo.xml</code></p>
-      <div class="control">
-          <textarea class="textarea is-primary" rows="24" readonly>{{dataMetainfo}}</textarea>
+      <div class="box pl-1 pb-1">
+        <button style="float: right;" class="button is-info is-light is-rounded"
+                (click)="clipboard.copyText(dataMetainfo)">Copy</button>
+        <pre style="padding: 0 !important;"><code [highlight]="dataMetainfo" [languages]="['xml']"></code></pre>
       </div>
 
       <div *ngIf="dataMesonValidate" style="margin-top: 1em;">
@@ -319,8 +321,10 @@
           Adjust the data location in <code>metainfo_file</code> and add this snippet to your Meson build definition in order to
           validate the MetaInfo file as part of the project's tests.
         </p>
-        <div class="control">
-            <textarea class="textarea is-warning" rows="8" readonly>{{dataMesonValidate}}</textarea>
+        <div class="box pl-1 pb-1">
+            <button style="float: right;" class="button is-info is-light is-rounded"
+                    (click)="clipboard.copyText(dataMesonValidate)">Copy</button>
+            <pre style="padding: 0 !important;"><code [highlight]="dataMesonValidate" [languages]="['meson']"></code></pre>
         </div>
       </div>
   </div>

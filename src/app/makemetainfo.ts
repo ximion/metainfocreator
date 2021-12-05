@@ -133,7 +133,7 @@ export class GUIAppInfo {
     iconName: string = null;
     binary: string = null;
 
-    minDisplaySize: number = 0;
+    minDisplaySize = 0;
 }
 
 export function makeMetainfoGuiApp(binfo: ASBasicInfo, info: GUIAppInfo, selfcontained: boolean): string {

@@ -430,7 +430,7 @@
                 <div *ngIf="minSurfaceSize.invalid && (minSurfaceSize.dirty || minSurfaceSize.touched)" class="help">
                     <p *ngIf="minSurfaceSize.errors.min" class="help is-danger">The pixel size is too small</p>
                     <p *ngIf="minSurfaceSize.errors.max" class="help is-danger">The pixel size is unreasonably large</p>
-                    <p *ngIf="minSurfaceSize.errors.pattern" class="help is-danger">Only numbers are allowed</p>
+                    <p *ngIf="minSurfaceSize.errors.pattern" class="help is-danger">Only positive numbers are allowed</p>
                 </div>
 
                 <p>Set the minimum longest size of the display that can display your application correctly (as the screen

@@ -119,7 +119,7 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
         miXml = miXml + '\n<project_group>' + projectGroup + '</project_group>';
 
     if (binfo.homepage)
-        miXml = miXml + '\n<url type="homepage">' + xmlEscape(binfo.homepage) + '</url>';
+        miXml = miXml + '\n\n<url type="homepage">' + xmlEscape(binfo.homepage) + '</url>';
 
 
     return miXml;

@@ -218,7 +218,8 @@ export class ServiceComponent implements OnInit {
             summary: this.cptSummary.value,
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
-            description: this.cptDescription.value
+            description: this.cptDescription.value,
+            homepage: this.cptHomepage.value
         };
 
         this.dataGenerated = true;

@@ -26,7 +26,7 @@
               "src/style.css",
               "node_modules/bulma/css/bulma.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/highlight.js/styles/github.css",
+              "node_modules/highlight.js/styles/github.css"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -139,8 +139,22 @@
               "devServerTarget": "metainfocreator:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

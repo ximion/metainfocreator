@@ -46,7 +46,7 @@ def main():
     # construct the Angular build command
     ngbuild_cmd = ['ng', 'build']
     if not config_name:
-        ngbuild_cmd.append('--prod')
+        ngbuild_cmd.extend(['--configuration', 'production'])
     elif config_name == 'freedesktop':
         ngbuild_cmd.extend(['--configuration', 'freedesktop'])
         ngbuild_cmd.extend(['--base-href', FDO_BASE_HREF])

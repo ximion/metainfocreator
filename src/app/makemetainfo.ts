@@ -25,6 +25,7 @@ export interface ASBasicInfo {
     metadataLicense: string;
     projectLicense: string;
     description: string;
+    homepage: string;
     [key: string]: any;
 }
 
@@ -116,6 +117,10 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
         projectGroup = 'Xfce';
     if (projectGroup)
         miXml = miXml + '\n<project_group>' + projectGroup + '</project_group>';
+
+    if (binfo.homepage)
+        miXml = miXml + '\n<url type="homepage">' + xmlEscape(binfo.homepage) + '</url>';
+
 
     return miXml;
 }

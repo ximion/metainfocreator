@@ -216,7 +216,8 @@ export class ConsoleAppComponent implements OnInit {
             summary: this.appSummary.value,
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
-            description: this.appDescription.value
+            description: this.appDescription.value,
+            homepage: this.appHomepage.value
         };
 
         this.dataGenerated = true;

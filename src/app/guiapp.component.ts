@@ -306,7 +306,8 @@ export class GUIAppComponent implements OnInit {
             summary: this.appSummary.value,
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
-            description: this.appDescription.value
+            description: this.appDescription.value,
+            homepage: this.appHomepage.value
         };
 
         arrayAddIfNotEmpty(appInfo.scrImages, this.primaryScreenshot.value);

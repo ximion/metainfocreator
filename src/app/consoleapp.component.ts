@@ -7,7 +7,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup,  FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 
 import { ClipboardService } from './clipboard.service';
 import { componentIdValidator, urlValidator, noPathOrSpaceValidator } from './formvalidators';
@@ -23,7 +23,7 @@ import { makeDesktopEntryData } from './makeauxdata';
 
 @Injectable()
 export class ConsoleAppComponent implements OnInit {
-    cptForm: FormGroup;
+    cptForm: UntypedFormGroup;
     finalCptId: string;
 
     metadataLicenses: any;
@@ -40,7 +40,7 @@ export class ConsoleAppComponent implements OnInit {
     dataMetainfo: string;
     dataMesonValidate: string;
 
-    constructor(private fb: FormBuilder,
+    constructor(private fb: UntypedFormBuilder,
                 private http: HttpClient,
                 public clipboard: ClipboardService) {
         this.dataGenerated = false;
@@ -72,8 +72,8 @@ export class ConsoleAppComponent implements OnInit {
             cptId: ['', [ Validators.required, Validators.minLength(4), componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
             rbLicenseMode: [''],
-            simpleProjectLicense: new FormControl({value: '', disabled: false}),
-            complexProjectLicense: new FormControl({value: '', disabled: true}),
+            simpleProjectLicense: new UntypedFormControl({value: '', disabled: false}),
+            complexProjectLicense: new UntypedFormControl({value: '', disabled: true}),
 
             primaryCategory: ['', Validators.required ],
             secondaryCategory: ['', Validators.required ],

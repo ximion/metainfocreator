@@ -26,7 +26,7 @@ export interface ASBasicInfo {
     projectLicense: string;
     description: string;
     homepage: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 function xmlEscape(s: string) {
@@ -76,7 +76,7 @@ class ASRelationXMLData {
 function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLData = null): string {
     let miXml = miTemplateHead.replace(/<\?(\w+)\?>/g,
         (match, name) => {
-            return xmlEscape(binfo[name]);
+            return xmlEscape(binfo[name] as string);
         });
 
     // add (injected) relation XML, if there is any

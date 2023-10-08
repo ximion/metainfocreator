@@ -4,15 +4,17 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, AbstractControl, Validators } from '@angular/forms';
 
 import { ClipboardService } from './clipboard.service';
 import { componentIdValidator, urlValidator, desktopEntryValidator,
          noPathOrSpaceValidator } from './formvalidators';
-import { guessComponentId, arrayAddIfNotEmpty, filterCategoriesByPrimary } from './utils';
+import { guessComponentId, arrayAddIfNotEmpty, filterCategoriesByPrimary,
+         LicenseInfo, PrimaryCategory, SecondaryCategory } from './utils';
 import { makeMetainfoGuiApp, ASBasicInfo, GUIAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
          makeMesonL10NSnippet } from './makemeson';
@@ -23,17 +25,16 @@ import { makeDesktopEntryData } from './makeauxdata';
     templateUrl: './guiapp.component.html'
 })
 
-@Injectable()
 export class GUIAppComponent implements OnInit {
     cptForm: UntypedFormGroup;
     finalCptId: string;
 
-    metadataLicenses: any;
-    spdxLicenses: any;
+    metadataLicenses: Observable<LicenseInfo[]>;
+    spdxLicenses: Observable<LicenseInfo[]>;
 
-    categoriesPrimary: any;
-    categoriesSecondaryFiltered: any;
-    categoriesSecondaryAll: any;
+    categoriesPrimary: PrimaryCategory[];
+    categoriesSecondaryFiltered: SecondaryCategory[];
+    categoriesSecondaryAll: SecondaryCategory[];
 
     createDesktopData: boolean;
 
@@ -58,14 +59,14 @@ export class GUIAppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
-        this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
+        this.metadataLicenses = this.http.get<LicenseInfo[]>('assets/metadata-licenses.json');
+        this.spdxLicenses = this.http.get<LicenseInfo[]>('assets/spdx-licenses.json');
 
-        this.http.get('assets/categories-primary.json').subscribe((data) => {
+        this.http.get<PrimaryCategory[]>('assets/categories-primary.json').subscribe((data) => {
             this.categoriesPrimary = data;
         });
 
-        this.http.get('assets/categories-secondary.json').subscribe((data) => {
+        this.http.get<SecondaryCategory[]>('assets/categories-secondary.json').subscribe((data) => {
             this.categoriesSecondaryAll = data;
         });
 
@@ -197,7 +198,7 @@ export class GUIAppComponent implements OnInit {
         this.dataErrorMessage = message;
     }
 
-    validateField(field: any, name: string, emptyOkay: boolean = false): boolean {
+    validateField(field: AbstractControl, name: string, emptyOkay = false): boolean {
         field.markAsTouched();
 
         if (!emptyOkay) {

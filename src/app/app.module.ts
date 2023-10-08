@@ -68,6 +68,7 @@ const routes: Routes = [
   ]
 })
 export class AppModule {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(router: Router) {
       // Debugging aid for routing
       // const replacer = (key, value) => (typeof value === 'function') ? value.name : value;

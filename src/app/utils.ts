@@ -4,7 +4,24 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean {
+export interface LicenseInfo {
+  id: string;
+  name: string;
+  free: boolean;
+}
+
+export interface PrimaryCategory {
+  name: string;
+  desc: string;
+}
+
+export interface SecondaryCategory {
+  name: string;
+  desc: string;
+  parents: string[];
+}
+
+export function arrayAddIfNotEmpty(arr: Array<unknown>, element: unknown): boolean {
     let e = element;
     if (typeof e === 'string' || e instanceof String)
         e = e.trim();
@@ -15,7 +32,7 @@ export function arrayAddIfNotEmpty(arr: Array<any>, element: any): boolean {
     return true;
 }
 
-export function filterCategoriesByPrimary(secondaryCats: any, primaryCat: string): Array<any> {
+export function filterCategoriesByPrimary(secondaryCats: SecondaryCategory[], primaryCat: string): SecondaryCategory[] {
     const filtered = [];
     for (const scat of secondaryCats) {
         if ((!scat.parents) || (scat.parents.length === 0)) {
@@ -87,6 +104,7 @@ export function guessComponentId(homepage: string, appName: string): string {
     tmp = tmp.trim()
              .toLowerCase()
              .normalize()
+             // eslint-disable-next-line no-control-regex
              .replace(/[^\x00-\x7F]/g, '')
              .replace(/www/g, '')
              .replace(/ /g, '_')

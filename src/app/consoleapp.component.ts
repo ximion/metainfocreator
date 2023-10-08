@@ -4,34 +4,34 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { Component, OnInit, Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, AbstractControl, Validators } from '@angular/forms';
 
 import { ClipboardService } from './clipboard.service';
 import { componentIdValidator, urlValidator, noPathOrSpaceValidator } from './formvalidators';
-import { guessComponentId, filterCategoriesByPrimary } from './utils';
+import { guessComponentId, filterCategoriesByPrimary,
+         LicenseInfo, PrimaryCategory, SecondaryCategory } from './utils';
+
 import { makeMetainfoConsoleApp, ASBasicInfo, ConsoleAppInfo } from './makemetainfo';
 import { makeMesonValidateSnippet } from './makemeson';
-import { makeDesktopEntryData } from './makeauxdata';
 
 @Component({
     selector: 'app-consoleapp',
     templateUrl: './consoleapp.component.html'
 })
 
-@Injectable()
 export class ConsoleAppComponent implements OnInit {
     cptForm: UntypedFormGroup;
     finalCptId: string;
 
-    metadataLicenses: any;
-    spdxLicenses: any;
+    metadataLicenses: Observable<LicenseInfo[]>;
+    spdxLicenses: Observable<LicenseInfo[]>;
 
-    categoriesPrimary: any;
-    categoriesSecondaryFiltered: any;
-    categoriesSecondaryAll: any;
+    categoriesPrimary: PrimaryCategory[];
+    categoriesSecondaryFiltered: SecondaryCategory[];
+    categoriesSecondaryAll: SecondaryCategory[];
 
     dataGenerated: boolean;
     dataError: boolean;
@@ -49,14 +49,14 @@ export class ConsoleAppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
-        this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
+        this.metadataLicenses = this.http.get<LicenseInfo[]>('assets/metadata-licenses.json');
+        this.spdxLicenses = this.http.get<LicenseInfo[]>('assets/spdx-licenses.json');
 
-        this.http.get('assets/categories-primary.json').subscribe((data) => {
+        this.http.get<PrimaryCategory[]>('assets/categories-primary.json').subscribe((data) => {
             this.categoriesPrimary = data;
         });
 
-        this.http.get('assets/categories-secondary.json').subscribe((data) => {
+        this.http.get<SecondaryCategory[]>('assets/categories-secondary.json').subscribe((data) => {
             this.categoriesSecondaryAll = data;
         });
 
@@ -94,7 +94,7 @@ export class ConsoleAppComponent implements OnInit {
                 this.appIcon.setValue(value.replace(/ /g, '').trim().toLowerCase());
         });
 
-        this.appHomepage.valueChanges.subscribe(value => {
+        this.appHomepage.valueChanges.subscribe(() => {
             if (!this.cptId.dirty)
                 this.cptId.setValue(guessComponentId(this.appHomepage.value, this.appName.value));
         });
@@ -142,7 +142,7 @@ export class ConsoleAppComponent implements OnInit {
         this.dataErrorMessage = message;
     }
 
-    validateField(field: any, name: string, emptyOkay: boolean = false): boolean {
+    validateField(field: AbstractControl, name: string, emptyOkay = false): boolean {
         field.markAsTouched();
 
         if (!emptyOkay) {

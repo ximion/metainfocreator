@@ -8,32 +8,32 @@ import { ValidatorFn, AbstractControl } from '@angular/forms';
 import { componentIdValid, isAcceptableUrl, isDesktopFilename, isNoPath } from './utils';
 
 export function componentIdValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): {[key: string]: unknown} | null => {
         const res = componentIdValid(control.value);
         return res.valid ? null : {forbiddenId: {value: res.message}};
     };
 }
 
 export function urlValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): {[key: string]: unknown} | null => {
         return isAcceptableUrl(control.value) ? null : {invalidUrl: {value: control.value}};
     };
 }
 
 export function desktopEntryValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): {[key: string]: unknown} | null => {
         return isDesktopFilename(control.value) ? null : {invalidName: {value: control.value}};
     };
 }
 
 export function noPathValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): {[key: string]: unknown} | null => {
         return isNoPath(control.value) ? null : {invalidName: {value: control.value}};
     };
 }
 
 export function noSpaceValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): {[key: string]: unknown} | null => {
         if (!control.value)
             return null;
         return control.value.includes(' ') ? {invalidName: {value: control.value}} : null;
@@ -41,7 +41,7 @@ export function noSpaceValidator(): ValidatorFn {
 }
 
 export function noPathOrSpaceValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): {[key: string]: unknown} | null => {
         if (!control.value)
             return null;
         return (isNoPath(control.value) && !control.value.includes(' ')) ? null : {invalidName: {value: control.value}};

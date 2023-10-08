@@ -9,7 +9,7 @@
 
 const stringTimesN = (n, char) => Array(n + 1).join(char);
 
-export function prettyXml(xmlInput: string, indentation: number = 2): string {
+export function prettyXml(xmlInput: string, indentation = 2): string {
     if (!indentation)
         indentation = 2;
     else if (indentation <= 0)
@@ -33,7 +33,7 @@ export function prettyXml(xmlInput: string, indentation: number = 2): string {
         if (pad !== 0) {
             pad -= 1;
         }
-        } else if (line.match(/^<\w([^>]*[^\/])?>.*$/)) {
+        } else if (line.match(/^<\w([^>]*[^/])?>.*$/)) {
             indent = 1;
         } else {
             indent = 0;

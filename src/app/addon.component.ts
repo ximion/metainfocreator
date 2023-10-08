@@ -4,30 +4,28 @@
  * SPDX-License-Identifier: LGPL-3.0+
  */
 
-import { Component, OnInit, Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { UntypedFormGroup,  UntypedFormBuilder, UntypedFormControl, AbstractControl, Validators } from '@angular/forms';
 
 import { ClipboardService } from './clipboard.service';
 import { componentIdValidator, urlValidator, noPathOrSpaceValidator } from './formvalidators';
-import { guessComponentId } from './utils';
+import { guessComponentId, LicenseInfo } from './utils';
 import { makeMetainfoAddon, ASBasicInfo, AddonInfo } from './makemetainfo';
 import { makeMesonValidateSnippet } from './makemeson';
-import { makeDesktopEntryData } from './makeauxdata';
 
 @Component({
     selector: 'app-addon',
     templateUrl: './addon.component.html'
 })
 
-@Injectable()
 export class AddonComponent implements OnInit {
     cptForm: UntypedFormGroup;
     finalCptId: string;
 
-    metadataLicenses: any;
-    spdxLicenses: any;
+    metadataLicenses: Observable<LicenseInfo[]>;
+    spdxLicenses: Observable<LicenseInfo[]>;
 
     dataGenerated: boolean;
     dataError: boolean;
@@ -44,8 +42,8 @@ export class AddonComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.metadataLicenses = this.http.get('assets/metadata-licenses.json');
-        this.spdxLicenses = this.http.get('assets/spdx-licenses.json');
+        this.metadataLicenses = this.http.get<LicenseInfo[]>('assets/metadata-licenses.json');
+        this.spdxLicenses = this.http.get<LicenseInfo[]>('assets/spdx-licenses.json');
 
         this.createForm();
     }
@@ -72,12 +70,12 @@ export class AddonComponent implements OnInit {
         // some defaults
         this.rbLicenseMode.setValue('simple');
 
-        this.cptName.valueChanges.subscribe(value => {
+        this.cptName.valueChanges.subscribe(() => {
             if (!this.cptId.dirty)
                 this.cptId.setValue(guessComponentId(this.cptHomepage.value, this.cptName.value));
         });
 
-        this.cptHomepage.valueChanges.subscribe(value => {
+        this.cptHomepage.valueChanges.subscribe(() => {
             if (!this.cptId.dirty)
                 this.cptId.setValue(guessComponentId(this.cptHomepage.value, this.cptName.value));
         });
@@ -115,7 +113,7 @@ export class AddonComponent implements OnInit {
         this.dataErrorMessage = message;
     }
 
-    validateField(field: any, name: string, emptyOkay: boolean = false): boolean {
+    validateField(field: AbstractControl, name: string, emptyOkay = false): boolean {
         field.markAsTouched();
 
         if (!emptyOkay) {

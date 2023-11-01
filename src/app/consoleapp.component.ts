@@ -68,6 +68,9 @@ export class ConsoleAppComponent implements OnInit {
             appName: ['', Validators.required ],
             appSummary: ['', Validators.required ],
             appHomepage: ['', [ Validators.required, urlValidator() ] ],
+            cptBugtracker: ['', urlValidator()],
+            cptDonation: ['', urlValidator()],
+            cptCode: ['', urlValidator()],
             appDescription: ['', Validators.required ],
             cptId: ['', [ Validators.required, Validators.minLength(4), componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
@@ -120,6 +123,9 @@ export class ConsoleAppComponent implements OnInit {
     get appSummary() { return this.cptForm.get('appSummary'); }
 
     get appHomepage() { return this.cptForm.get('appHomepage'); }
+    get cptBugtracker() { return this.cptForm.get('cptBugtracker'); }
+    get cptDonation() { return this.cptForm.get('cptDonation'); }
+    get cptCode() { return this.cptForm.get('cptCode'); }
 
     get appDescription() { return this.cptForm.get('appDescription'); }
 
@@ -174,6 +180,12 @@ export class ConsoleAppComponent implements OnInit {
             return;
         if (!this.validateField(this.appHomepage, 'homepage'))
             return;
+        if (!this.validateField(this.cptBugtracker, 'bugtracker', true))
+            return;
+        if (!this.validateField(this.cptDonation, 'donation', true))
+            return;
+        if (!this.validateField(this.cptCode, 'code', true))
+            return;
         if (!this.validateField(this.appDescription, 'long description'))
             return;
         if (!this.validateField(this.cptId, 'component ID'))
@@ -217,7 +229,10 @@ export class ConsoleAppComponent implements OnInit {
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
             description: this.appDescription.value,
-            homepage: this.appHomepage.value
+            homepage: this.appHomepage.value,
+            bugtracker: this.cptBugtracker.value,
+            donation: this.cptDonation.value,
+            code: this.cptCode.value,
         };
 
         this.dataGenerated = true;

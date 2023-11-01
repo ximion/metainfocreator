@@ -66,6 +66,48 @@
         </div>
 
         <div class="field">
+            <label class="label">Bugtracker of the addon</label>
+            <div class="control has-icons-left">
+                <input class="input" formControlName="cptBugtracker" type="text" placeholder="The bugtracker where to file bugs for this addon.">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-link"></i>
+                </span>
+            </div>
+
+            <div *ngIf="cptBugtracker.invalid && (cptBugtracker.dirty || cptBugtracker.touched)">
+                <p *ngIf="cptBugtracker.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Donation for the addon</label>
+            <div class="control has-icons-left">
+              <input class="input" formControlName="cptDonation" type="text" placeholder="The website where one can perform a donation for this addon.">
+              <span class="icon is-small is-left">
+                  <i class="fas fa-link"></i>
+              </span>
+            </div>
+
+            <div *ngIf="cptDonation.invalid && (cptDonation.dirty || cptDonation.touched)">
+                <p *ngIf="cptDonation.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Code browser of the addon</label>
+            <div class="control has-icons-left">
+              <input class="input" formControlName="cptCode" type="text" placeholder="The website where one can browse source code for this addon.">
+              <span class="icon is-small is-left">
+                  <i class="fas fa-link"></i>
+              </span>
+            </div>
+
+            <div *ngIf="cptCode.invalid && (cptCode.dirty || cptCode.touched)">
+                <p *ngIf="cptCode.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
+            </div>
+        </div>
+
+        <div class="field">
             <label class="label">Description</label>
             <div class="control">
                 <textarea class="textarea" formControlName="appDescription" placeholder="Long description of this software. You can use Mardown in-line `code`, paragraph and *emphasis* markup."></textarea>

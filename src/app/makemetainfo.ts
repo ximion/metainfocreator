@@ -26,6 +26,9 @@ export interface ASBasicInfo {
     projectLicense: string;
     description: string;
     homepage: string;
+    bugtracker: string;
+    donation: string;
+    code: string;
     [key: string]: unknown;
 }
 
@@ -121,6 +124,14 @@ function createMetainfoPreamble(binfo: ASBasicInfo, relXMLData: ASRelationXMLDat
     if (binfo.homepage)
         miXml = miXml + '\n\n<url type="homepage">' + xmlEscape(binfo.homepage) + '</url>';
 
+    if (binfo.bugtracker)
+        miXml = miXml + '\n\n<url type="bugtracker">' + xmlEscape(binfo.bugtracker) + '</url>';
+
+    if (binfo.donation)
+        miXml = miXml + '\n\n<url type="donation">' + xmlEscape(binfo.donation) + '</url>';
+
+    if (binfo.code)
+        miXml = miXml + '\n\n<url type="vcs-browser">' + xmlEscape(binfo.code) + '</url>';
 
     return miXml;
 }

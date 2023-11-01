@@ -69,6 +69,9 @@ export class ServiceComponent implements OnInit {
             cptName: ['', Validators.required ],
             cptSummary: ['', Validators.required ],
             cptHomepage: ['', [ Validators.required, urlValidator() ] ],
+            cptBugtracker: ['', urlValidator()],
+            cptDonation: ['', urlValidator()],
+            cptCode: ['', urlValidator()],
             cptDescription: ['', Validators.required ],
             cptId: ['', [ Validators.required, Validators.minLength(4), componentIdValidator() ]],
             metadataLicense: ['', Validators.required ],
@@ -121,6 +124,9 @@ export class ServiceComponent implements OnInit {
     get cptSummary() { return this.cptForm.get('cptSummary'); }
 
     get cptHomepage() { return this.cptForm.get('cptHomepage'); }
+    get cptBugtracker() { return this.cptForm.get('cptBugtracker'); }
+    get cptDonation() { return this.cptForm.get('cptDonation'); }
+    get cptCode() { return this.cptForm.get('cptCode'); }
 
     get cptDescription() { return this.cptForm.get('cptDescription'); }
 
@@ -175,6 +181,12 @@ export class ServiceComponent implements OnInit {
             return;
         if (!this.validateField(this.cptHomepage, 'homepage'))
             return;
+        if (!this.validateField(this.cptBugtracker, 'bugtracker', true))
+            return;
+        if (!this.validateField(this.cptDonation, 'donation', true))
+            return;
+        if (!this.validateField(this.cptCode, 'code', true))
+            return;
         if (!this.validateField(this.cptDescription, 'long description'))
             return;
         if (!this.validateField(this.cptId, 'component ID'))
@@ -220,7 +232,10 @@ export class ServiceComponent implements OnInit {
             metadataLicense: this.metadataLicense.value,
             projectLicense: pLicense,
             description: this.cptDescription.value,
-            homepage: this.cptHomepage.value
+            homepage: this.cptHomepage.value,
+            bugtracker: this.cptBugtracker.value,
+            donation: this.cptDonation.value,
+            code: this.cptCode.value,
         };
 
         this.dataGenerated = true;

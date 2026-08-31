@@ -1,12 +1,21 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+/*
+ * Copyright (C) 2020-2021 Matthias Klumpp <matthias@tenstral.net>
+ *
+ * SPDX-License-Identifier: LGPL-3.0+
+ */
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { createApp } from 'vue';
 
-if (environment.production) {
-  enableProdMode();
-}
+import 'bulma/css/bulma.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'highlight.js/styles/github.css';
+import './style.css';
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+import App from './App.vue';
+import { router } from './router';
+import { highlight } from './directives/highlight';
+
+createApp(App)
+    .use(router)
+    .directive('highlight', highlight)
+    .mount('#app');

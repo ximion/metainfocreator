@@ -1,0 +1,173 @@
+<template>
+
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li class="is-active"><a href="#">Home</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+
+    <h1 class="title">
+      Welcome to the AppStream MetaInfo Creator!
+    </h1>
+
+    <p>
+      <a href="https://www.freedesktop.org/software/appstream/docs/">AppStream</a> is a collaborative effort for providing metadata for software in the Freedesktop ecosystem.
+      It provides a convenient way to get information about not installed software, and is one of the building blocks for modern software centers.
+    </p>
+    <p>
+      In order to provide good metadata to users and to provide additional information the operating system needs to retrieve missing components, software needs to ship
+      <em>MetaInfo files</em>, small XML files installed to <code>/usr/share/metainfo/</code> describing the software in question and (optionally) the interfaces
+      (D-Bus, media types, binaries, ...) it provides.
+    </p>
+    <p>
+      A MetaInfo file defines how users first experience your software in a catalog of many applications, so it is useful to invest a bit of time to make the best
+      possible impression.
+      This simple web application lets you create initial MetaInfo files as well as some accompanying metadata by answering a simple set of questions.
+      You can later expand the metadata if you so choose.
+    </p>
+    <p>
+      No data entered on these pages is transferred to Freedesktop.org. All processing happens directly in your web browser.
+    </p>
+
+    <hr/>
+    <p class="subtitle is-5">Please select the type of software that you want to create metadata for:</p>
+
+    <div class="columns">
+
+      <div class="column">
+        <div class="columns is-centered">
+
+          <div class="column is-two-fifths">
+            <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                GUI Application
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                <p>GUI applications are applications which have a graphical user interface and are commonly
+                used with mouse and keyboard.
+                They also ship a Freedesktop desktop-entry file to be visible in application menus of the desktop environment.</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <RouterLink to="/guiapp" class="card-footer-item button is-primary is-light">Create GUI Application Metadata</RouterLink>
+            </footer>
+            </div>
+          </div>
+
+          <div class="column is-two-fifths">
+            <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                Console Application
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                <p>Console applications are programs that have a command-line or text-based interface and are designed
+                to be used by a human user in a console.
+                Their binaries need to be present in the default shell's <code>PATH</code>, so they are immediately executable by the user.</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <RouterLink to="/consoleapp" class="card-footer-item button is-link is-light">Create Console Application Metadata</RouterLink>
+            </footer>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="columns">
+
+      <div class="column">
+        <div class="columns is-centered">
+
+          <div class="column is-two-fifths">
+            <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                Addon
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                <p>Addons are software components that are not standalone applications but intended to extend the functionality
+                or visual style of a different application that they depend on. They are also known as "plugins".</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <RouterLink to="/addon" class="card-footer-item button is-link is-light">Create Addon Metadata</RouterLink>
+            </footer>
+            </div>
+          </div>
+
+          <div class="column is-two-fifths">
+            <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                Service
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                <p>Services are background processes ("daemons") providing a general system ability.
+                They can for example be webservers, mailservers, webapps (basically anything that is started by the init system, usually systemd).</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <RouterLink to="/service" class="card-footer-item button is-link is-light">Create Service Metadata</RouterLink>
+            </footer>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="columns">
+
+      <div class="column">
+        <div class="columns is-centered">
+
+          <div class="column is-two-fifths">
+            <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                More Software Types
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                <p>AppStream provides support for describing a lot more software components than just the ones listed here,
+                such as fonts, firmware, icon-themes, localization or whole operating systems.</p>
+                <p>Check out the specification to learn how to write metadata for these types of software and data!</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="https://www.freedesktop.org/software/appstream/docs/" class="card-footer-item button is-info is-light">To The Specification</a>
+            </footer>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+    </div> <!-- end of content div -->
+</template>
+
+<script setup lang="ts">
+import { RouterLink } from 'vue-router';
+</script>

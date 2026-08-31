@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`makeDesktopEntryData > builds a desktop entry 1`] = `
+"[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Test App
+Comment=A test application for checking things
+Categories=Utility;Building;
+
+Icon=testapp
+Exec=testapp
+Terminal=false"
+`;
+
+exports[`makeDesktopEntryData > passes metacharacters through unescaped, as desktop entries are not XML 1`] = `
+"[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Ampersand & <Angle> "Quote" 'Apos'
+Comment=a < b && c > d
+Categories=Utility;Building;
+
+Icon=testapp
+Exec=testapp
+Terminal=false"
+`;

@@ -210,7 +210,7 @@ def update_categories_list(spec_url, primary_fname, secondary_fname):
 
 def main():
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    assets_dir = os.path.join(root_dir, 'src', 'assets')
+    assets_dir = os.path.join(root_dir, 'public', 'assets')
     print('Asset directory is: {}'.format(assets_dir))
     os.chdir(assets_dir)
 

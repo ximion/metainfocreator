@@ -1,0 +1,360 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`makeMetainfoAddon > emits the extends relation and an icon 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <extends>
+    <id>com.example.parent_app</id>
+  </extends>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <icon type="stock">plugin</icon>
+</component>"
+`;
+
+exports[`makeMetainfoAddon > works without an icon 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <extends>
+    <id>com.example.parent_app</id>
+  </extends>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+</component>"
+`;
+
+exports[`makeMetainfoConsoleApp > emits categories, icon and binary 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="console-application">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <icon type="stock">tool</icon>
+  
+  <categories>
+    <category>Development</category>
+    <category>Building</category>
+  </categories>
+  
+  <provides>
+    <binary>tool</binary>
+  </provides>
+</component>"
+`;
+
+exports[`makeMetainfoConsoleApp > works without an icon or categories 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="console-application">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <icon type="stock">null</icon>
+  
+  
+  <provides>
+    <binary>tool</binary>
+  </provides>
+</component>"
+`;
+
+exports[`makeMetainfoGuiApp > emits input methods and a minimum display size 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <recommends>
+    <display_length compare="ge">640</display_length>
+  </recommends>
+  <supports>
+    <control>touch</control>
+    <control>gamepad</control>
+    <control>tablet</control>
+  </supports>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="desktop-id">com.example.test_app.desktop</launchable>
+  
+  <icon type="stock">game</icon>
+  
+  <categories>
+    <category>Game</category>
+  </categories>
+  
+  <provides>
+    <binary>game</binary>
+  </provides>
+</component>"
+`;
+
+exports[`makeMetainfoGuiApp > escapes XML metacharacters 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.example.test_app</id>
+  
+  <name>Ampersand &amp; &lt;Angle&gt; &quot;Quote&quot; &apos;Apos&apos;</name>
+  <summary>a &lt; b &amp;&amp; c &gt; d</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      Escape &amp; this &lt;tag&gt; too.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="desktop-id">x.desktop</launchable>
+</component>"
+`;
+
+exports[`makeMetainfoGuiApp > generates a self-contained component 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="desktop-id">com.example.test_app.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://example.com/a.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <icon type="stock">testapp</icon>
+  
+  <categories>
+    <category>Utility</category>
+    <category>Building</category>
+  </categories>
+  
+  <provides>
+    <binary>testapp</binary>
+  </provides>
+</component>"
+`;
+
+exports[`makeMetainfoGuiApp > omits the screenshots block when there are none 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="desktop-id">x.desktop</launchable>
+</component>"
+`;
+
+exports[`makeMetainfoGuiApp > uses a provided desktop-entry name 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="desktop-id">com.example.test_app.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://example.com/a.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://example.com/b.png</image>
+    </screenshot>
+  </screenshots>
+</component>"
+`;
+
+exports[`makeMetainfoService > emits both categories 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="service">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="service">testd</launchable>
+  
+  <icon type="stock">daemon</icon>
+  
+  <categories>
+    <category>Network</category>
+    <category>WebDevelopment</category>
+  </categories>
+</component>"
+`;
+
+exports[`makeMetainfoService > works with only a primary category 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<component type="service">
+  <id>com.example.test_app</id>
+  
+  <name>Test App</name>
+  <summary>A test application for checking things</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      First paragraph with <code>code</code> and <em>emphasis</em>.
+    </p>
+    <p>
+      Second paragraph. Same para, newline folded.
+    </p>
+  </description>
+  
+  <url type="homepage">https://example.com/testapp</url>
+  
+  <launchable type="service">testd</launchable>
+  
+  <icon type="stock">daemon</icon>
+  
+  <categories>
+    <category>Network</category>
+  </categories>
+</component>"
+`;

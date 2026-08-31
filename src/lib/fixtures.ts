@@ -1,7 +1,7 @@
 /*
  * Shared fixture data for the generator tests.
- * These values mirror the baseline capture used to verify the Angular -> Vue
- * port, so the snapshots encode the behaviour the Angular app had.
+ * The values are chosen to exercise the awkward parts of the generators:
+ * multi-paragraph descriptions, inline markup and characters needing escaping.
  */
 
 import type { ASBasicInfo } from './makemetainfo';

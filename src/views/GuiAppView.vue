@@ -33,128 +33,40 @@
     </header>
     <div class="card-content content">
 
-        <div class="field">
-            <label class="label">Name of the application</label>
-            <div class="control">
-                <input class="input" v-model="f.appName.value" @blur="f.appName.touch" type="text" placeholder="The human-readable name of your application">
-            </div>
+        <TextField :field="f.appName" label="Name of the application"
+                   placeholder="The human-readable name of your application"
+                   message="A name is required" />
 
-            <p v-if="f.appName.showErrors" class="help is-danger">A name is required</p>
-        </div>
+        <TextField :field="f.appSummary" label="Summary of the application"
+                   placeholder="A short text summarizing what the application does"
+                   message="A summary is required" />
 
-        <div class="field">
-            <label class="label">Summary of the application</label>
-            <div class="control">
-                <input class="input" v-model="f.appSummary.value" @blur="f.appSummary.touch" type="text" placeholder="A short text summarizing what the application does">
-            </div>
+        <TextField :field="f.appHomepage" label="Homepage of the application"
+                   placeholder="The website where this application is hosted."
+                   icon="fas fa-link"
+                   :messages="{ required: 'A project homepage is required', invalidUrl: 'This URL is not accepted' }" />
 
-            <p v-if="f.appSummary.showErrors" class="help is-danger">A summary is required</p>
-        </div>
+        <TextField :field="f.appDescription" label="Description" multiline
+                   placeholder="Long description of this software. You can use Mardown in-line `code`, paragraph and *emphasis* markup."
+                   message="A long description is required" />
 
-        <div class="field">
-            <label class="label">Homepage of the application</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.appHomepage.value" @blur="f.appHomepage.touch" type="text" placeholder="The website where this application is hosted.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
-
-            <div v-if="f.appHomepage.showErrors">
-                <p v-if="f.appHomepage.errors.required" class="help is-danger">A project homepage is required</p>
-                <p v-if="f.appHomepage.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Description</label>
-            <div class="control">
-                <textarea class="textarea" v-model="f.appDescription.value" @blur="f.appDescription.touch" placeholder="Long description of this software. You can use Mardown in-line `code`, paragraph and *emphasis* markup."></textarea>
-            </div>
-
-            <p v-if="f.appDescription.showErrors" class="help is-danger">A long description is required</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Unique Software Identifier</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.cptId.value" @blur="f.cptId.touch" type="text" placeholder="Reverse-DNS string uniquely identifying your application.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-fingerprint"></i>
-                </span>
-            </div>
-            <p class="help">A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</p>
-
-            <div v-if="f.cptId.showErrors">
-                <p v-if="f.cptId.errors.required" class="help is-danger">A component-ID is required</p>
-                <p v-if="f.cptId.errors.minlength" class="help is-danger">A component-ID is too short</p>
-                <p v-if="f.cptId.errors.forbiddenId" class="help is-danger">This ID is not valid: {{ f.cptId.errors.forbiddenId.value }}</p>
-            </div>
-        </div>
+        <TextField :field="f.cptId" label="Unique Software Identifier"
+                   placeholder="Reverse-DNS string uniquely identifying your application."
+                   icon="fas fa-fingerprint"
+                   :messages="{
+                       required: 'A component-ID is required',
+                       minlength: 'A component-ID is too short',
+                       forbiddenId: `This ID is not valid: ${f.cptId.errors.forbiddenId?.value ?? ''}`,
+                   }">
+            <template #help>A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</template>
+        </TextField>
 
     </div>
 </div>
 
 
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Licensing
-      </p>
-    </header>
-    <div class="card-content content">
-
-        <div class="field">
-        <label class="label">Metadata License</label>
-        <div class="control">
-            <div class="select">
-                <select v-model="f.metadataLicense.value" @blur="f.metadataLicense.touch">
-                    <option value="">Choose a metadata license</option>
-                    <option v-for="license of metadataLicenses" :key="license.id" :value="license.id">{{ license.name }}</option>
-                </select>
-            </div>
-            <p class="help">The license that applies to this particular metadata and linked assets (like screenshots and videos).</p>
-
-            <p v-if="f.metadataLicense.showErrors" class="help is-danger">A metadata license must be selected</p>
-        </div>
-        </div>
-
-        <div class="field">
-        <label class="label">Software License</label>
-
-        <div class="control">
-            <label class="radio">
-            <input type="radio" value="simple" v-model="f.rbLicenseMode.value">
-            Simple Single License
-            </label>
-            <label class="radio">
-            <input type="radio" value="spdx" v-model="f.rbLicenseMode.value">
-            Custom SPDX Expression
-            </label>
-        </div>
-        </div>
-        <div class="field is-grouped">
-            <div class="control">
-            <div class="select">
-                <!-- Angular disabled this control rather than removing it, so it stays
-                     visible (greyed out) when the SPDX expression mode is selected. -->
-                <select v-model="f.simpleProjectLicense.value" :disabled="spdxMode">
-                    <option value="">Choose a project license</option>
-                    <option v-for="license of spdxLicenses" :key="license.id" :value="license.id">{{ license.name }}</option>
-                </select>
-                </div>
-            </div>
-
-            <div v-if="spdxMode" class="control is-expanded">
-                <input class="input" v-model="f.complexProjectLicense.value" @blur="f.complexProjectLicense.touch" type="text" placeholder="A SPDX license expression, e.g. GPL-3.0-or-later and MPL-2.0">
-                <p class="help">A <a href="https://spdx.org/licenses/" target="_blank">SPDX</a> license expression string.</p>
-                <p v-if="f.complexProjectLicense.showErrors" class="help is-danger">You need to enter a SPDX expression</p>
-            </div>
-        </div>
-        <p class="help">The license that applies to the described software.</p>
-
-    </div>
-</div>
+<LicensingCard :metadata-license="f.metadataLicense" :mode="f.rbLicenseMode"
+               :simple="f.simpleProjectLicense" :complex="f.complexProjectLicense" linked-assets />
 
 
 <div class="card">
@@ -171,46 +83,21 @@
           for your application in
           <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#qsr-app-screenshots-info" target="_blank">the AppStream quickstart manual</a>.
         </p>
-        <div class="field">
-            <label class="label">Primary Screenshot Image</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.primaryScreenshot.value" @blur="f.primaryScreenshot.touch" type="text" placeholder="URL of the primary screenshot image.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
 
-            <div v-if="f.primaryScreenshot.showErrors">
-                <p v-if="f.primaryScreenshot.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
+        <TextField :field="f.primaryScreenshot" label="Primary Screenshot Image"
+                   placeholder="URL of the primary screenshot image."
+                   icon="fas fa-link"
+                   :messages="{ invalidUrl: 'This URL is not accepted' }" />
 
-        <div class="field">
-            <label class="label">Additional Screenshot Image 1</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.extraScreenshot1.value" @blur="f.extraScreenshot1.touch" type="text" placeholder="URL of an additional screenshot image.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
+        <TextField :field="f.extraScreenshot1" label="Additional Screenshot Image 1"
+                   placeholder="URL of an additional screenshot image."
+                   icon="fas fa-link"
+                   :messages="{ invalidUrl: 'This URL is not accepted' }" />
 
-            <div v-if="f.extraScreenshot1.showErrors">
-                <p v-if="f.extraScreenshot1.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
-        <div class="field">
-            <label class="label">Additional Screenshot Image 2</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.extraScreenshot2.value" @blur="f.extraScreenshot2.touch" type="text" placeholder="URL of an additional screenshot image.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
-
-            <div v-if="f.extraScreenshot2.showErrors">
-                <p v-if="f.extraScreenshot2.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
+        <TextField :field="f.extraScreenshot2" label="Additional Screenshot Image 2"
+                   placeholder="URL of an additional screenshot image."
+                   icon="fas fa-link"
+                   :messages="{ invalidUrl: 'This URL is not accepted' }" />
 
     </div>
 </div>
@@ -248,64 +135,24 @@
             </div>
         </div>
 
-        <div v-if="values.rbLaunchableMode === 'provided'" class="field">
-            <label class="label">Name of your .desktop file</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.desktopEntryName.value" @blur="f.desktopEntryName.touch" type="text" placeholder="myapplication.desktop">
-                <span class="icon is-small is-left">
-                    <i class="far fa-file"></i>
-                </span>
-            </div>
-
-            <div v-if="f.desktopEntryName.showErrors">
-                <p v-if="f.desktopEntryName.errors.required" class="help is-danger">A desktop-entry filename is required</p>
-                <p v-if="f.desktopEntryName.errors.invalidName" class="help is-danger">This is not a valid .desktop filename</p>
-            </div>
-        </div>
+        <TextField v-if="!createDesktopData" :field="f.desktopEntryName"
+                   label="Name of your .desktop file"
+                   placeholder="myapplication.desktop"
+                   icon="far fa-file"
+                   :messages="{
+                       required: 'A desktop-entry filename is required',
+                       invalidName: 'This is not a valid .desktop filename',
+                   }" />
 
     </div>
 </div>
 
 
-<div class="card" v-if="createDesktopData">
-    <header class="card-header">
-      <p class="card-header-title">
-        Categorization
-      </p>
-    </header>
-    <div class="card-content content">
-        <p>
-          Your software will appear in at least two categories in software center searches and menus of some desktop environments, one
-          primary broad category, and one secondary more specific category.
-          You can add more secondary categories to your metadata later, if you like to and think your application fits into more categories.
-        </p>
-        <div class="field is-grouped">
-
-            <div class="control">
-              <label class="label">Primary Category</label>
-              <div class="select">
-                <select v-model="f.primaryCategory.value" @blur="f.primaryCategory.touch">
-                    <option value="">Choose a category</option>
-                    <option v-for="cat of categoriesPrimary" :key="cat.name" :value="cat.name">{{ cat.desc }} [{{ cat.name }}]</option>
-                </select>
-              </div>
-              <p v-if="f.primaryCategory.showErrors" class="help is-danger">A primary category must be selected</p>
-            </div>
-
-            <div class="control">
-              <label class="label">Secondary Category</label>
-              <div class="select">
-                <select v-model="f.secondaryCategory.value" @blur="f.secondaryCategory.touch">
-                    <option value="">Choose an additional category</option>
-                    <option v-for="cat of categoriesSecondaryFiltered" :key="cat.name" :value="cat.name">{{ cat.desc }} [{{ cat.name }}]</option>
-                </select>
-              </div>
-              <p v-if="f.secondaryCategory.showErrors" class="help is-danger">A secondary category must be selected</p>
-            </div>
-
-        </div>
-    </div>
-</div>
+<CategoryCard v-if="createDesktopData" :primary="f.primaryCategory" :secondary="f.secondaryCategory" secondary-required>
+    Your software will appear in at least two categories in software center searches and menus of some desktop environments, one
+    primary broad category, and one secondary more specific category.
+    You can add more secondary categories to your metadata later, if you like to and think your application fits into more categories.
+</CategoryCard>
 
 
 <div class="card" v-if="createDesktopData">
@@ -316,42 +163,24 @@
     </header>
     <div class="card-content content">
 
-        <div class="field">
-            <label class="label">Icon Name</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.appIcon.value" @blur="f.appIcon.touch" type="text" placeholder="Stock icon name without file extension">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-icons"></i>
-                </span>
-            </div>
-            <p class="help">
+        <TextField :field="f.appIcon" label="Icon Name"
+                   placeholder="Stock icon name without file extension"
+                   icon="fas fa-icons"
+                   :messages="{ required: 'An icon name is required', invalidName: 'This is not a valid icon name' }">
+            <template #help>
               Please enter the name of your icon (usually installed into <code>/usr/share/icons/hicolor/&lt;size&gt;/apps/</code>) without its
               .png or .svg(z) file extension.
-            </p>
+            </template>
+        </TextField>
 
-            <div v-if="f.appIcon.showErrors">
-                <p v-if="f.appIcon.errors.required" class="help is-danger">An icon name is required</p>
-                <p v-if="f.appIcon.errors.invalidName" class="help is-danger">This is not a valid icon name</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Executable Name</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.exeName.value" @blur="f.exeName.touch" type="text" placeholder="Executable (command) binary name">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-terminal"></i>
-                </span>
-            </div>
-            <p class="help">
+        <TextField :field="f.exeName" label="Executable Name"
+                   placeholder="Executable (command) binary name"
+                   icon="fas fa-terminal"
+                   :messages="{ required: 'An executable name is required', invalidName: 'This is not a valid executable name' }">
+            <template #help>
               Please enter the name of the binary to run your application (as installed in <code>$PATH</code>). Do not use absolute paths!
-            </p>
-
-            <div v-if="f.exeName.showErrors">
-                <p v-if="f.exeName.errors.required" class="help is-danger">An executable name is required</p>
-                <p v-if="f.exeName.errors.invalidName" class="help is-danger">This is not a valid executable name</p>
-            </div>
-        </div>
+            </template>
+        </TextField>
 
     </div>
 </div>
@@ -373,8 +202,8 @@
             <div class="field">
             <div class="control">
                 <label class="checkbox">
-                <!-- Mouse & keyboard is implied unless another input method is selected,
-                     in which case Angular force-checked and disabled this box. -->
+                <!-- Mouse and keyboard is implied while nothing else is selected,
+                     so the box is held checked until another method is ticked. -->
                 <input type="checkbox" v-model="f.cbInputMouseKeys.value" :disabled="mouseKeysLocked">
                 Users use this application via mouse &amp; keyboard
                 </label>
@@ -423,8 +252,7 @@
             <div v-if="values.cbMinSurfaceSize === true" class="column is-two-fifths" style="padding: 0 !important;">
                 <div class="field has-addons">
                     <div class="control is-expanded">
-                    <!-- .number matches Angular's number value accessor, which handed
-                         makeMetainfoGuiApp a number rather than a string. -->
+                    <!-- .number so the generator receives a number rather than a string -->
                     <input v-model.number="f.minSurfaceSize.value" @blur="f.minSurfaceSize.touch" class="input" type="number" inputmode="numeric"
                             placeholder="Minium surface length in logical pixels">
                     </div>
@@ -456,54 +284,16 @@
 </div>
 
 
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Additional Options
-      </p>
-    </header>
-    <div class="card-content content">
+<MesonOptionCard :field="f.cbMesonSnippets" plural />
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox" v-model="f.cbMesonSnippets.value">
-              Generate <a href="https://mesonbuild.com/">Meson</a> sample snippets for metadata maintenance
-            </label>
-        </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Finish
-      </p>
-    </header>
-    <div class="card-content content">
-
-        <div class="field is-grouped">
-            <div class="control">
-                <a class="button is-link" tabindex="0" @click="generate()">Generate Metadata</a>
-            </div>
-        </div>
-
-    </div>
-</div>
+<GenerateCard @generate="generate" />
 
 </form>
 
 <br/>
 <!-- Output area -->
 
-
-<div v-if="form.error.value" class="notification is-danger">
-  <p><strong>Unable to generate metadata:</strong></p>
-  <p>{{ form.error.value }}</p>
-</div>
-
+<ErrorNotice :message="form.error.value" />
 
 <article class="panel is-success" v-if="dataGenerated">
   <p class="panel-heading">
@@ -516,11 +306,7 @@
       <h2 class="title is-2">MetaInfo File</h2>
       <p>Install this file as as <code>/usr/share/metainfo/{{ finalCptId }}.metainfo.xml</code></p>
       <p>You can validate this metadata locally by running: <code>appstreamcli validate {{ finalCptId }}.metainfo.xml</code></p>
-      <div class="box pl-1 pb-1">
-          <button style="float: right;" class="button is-info is-light is-rounded"
-                  @click="copyText(dataMetainfo)">Copy</button>
-          <pre style="padding: 0 !important;"><code v-highlight="{ code: dataMetainfo, lang: 'xml' }"></code></pre>
-      </div>
+      <CodeBlock :code="dataMetainfo" lang="xml" />
 
       <div v-if="dataMesonValidate" style="margin-top: 1em;">
         <h3 class="subtitle is-3">Meson Validation Testcase</h3>
@@ -528,11 +314,7 @@
           Adjust the data location in <code>metainfo_file</code> and add this snippet to your Meson build definition in order to
           validate the MetaInfo file as part of the project's tests.
         </p>
-        <div class="box pl-1 pb-1">
-            <button style="float: right;" class="button is-info is-light is-rounded"
-                    @click="copyText(dataMesonValidate)">Copy</button>
-            <pre style="padding: 0 !important;"><code v-highlight="{ code: dataMesonValidate, lang: 'meson' }"></code></pre>
-        </div>
+        <CodeBlock :code="dataMesonValidate" lang="meson" />
       </div>
   </div>
   </div>
@@ -554,11 +336,7 @@
           This code fragment for the Meson build system can be used to perform the desktop-entry conversion automatically
           when the software is installed:
         </p>
-        <div class="box pl-1 pb-1">
-            <button style="float: right;" class="button is-info is-light is-rounded"
-                    @click="copyText(dataMesonMItoDE)">Copy</button>
-            <pre style="padding: 0 !important;"><code v-highlight="{ code: dataMesonMItoDE, lang: 'meson' }"></code></pre>
-        </div>
+        <CodeBlock :code="dataMesonMItoDE" lang="meson" />
       </div>
   </div>
   </div>
@@ -569,11 +347,7 @@
       <h2 class="title is-2">Desktop Entry File</h2>
       <p>Install this file as as <code>/usr/share/applications/{{ finalCptId }}.desktop</code></p>
       <p>You can validate this metadata locally by running: <code>desktop-file-validate {{ finalCptId }}.desktop</code></p>
-      <div class="box pl-1 pb-1">
-            <button style="float: right;" class="button is-info is-light is-rounded"
-                    @click="copyText(dataDesktopEntry)">Copy</button>
-            <pre style="padding: 0 !important;"><code v-highlight="{ code: dataDesktopEntry, lang: 'toml' }"></code></pre>
-        </div>
+      <CodeBlock :code="dataDesktopEntry" lang="toml" />
   </div>
   </div>
 
@@ -594,11 +368,7 @@
           This code fragment for the Meson build system can be used to perform the merge-and-install step, when templates
           were already generated in a previous step.
         </p>
-        <div class="box pl-1 pb-1">
-            <button style="float: right;" class="button is-info is-light is-rounded"
-                    @click="copyText(dataMesonL10N)">Copy</button>
-            <pre style="padding: 0 !important;"><code v-highlight="{ code: dataMesonL10N, lang: 'meson' }"></code></pre>
-        </div>
+        <CodeBlock :code="dataMesonL10N" lang="meson" />
       </div>
   </div>
   </div>
@@ -610,26 +380,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { RouterLink } from 'vue-router';
+
+import TextField from '../components/TextField.vue';
+import LicensingCard from '../components/LicensingCard.vue';
+import CategoryCard from '../components/CategoryCard.vue';
+import MesonOptionCard from '../components/MesonOptionCard.vue';
+import GenerateCard from '../components/GenerateCard.vue';
+import ErrorNotice from '../components/ErrorNotice.vue';
+import CodeBlock from '../components/CodeBlock.vue';
 
 import { useForm } from '../forms/useForm';
 import { required, minLength, min, max, pattern, componentId, url,
          desktopEntry, noPathOrSpace } from '../forms/validators';
-import { guessComponentId, arrayAddIfNotEmpty, filterCategoriesByPrimary,
-         type LicenseInfo, type PrimaryCategory, type SecondaryCategory } from '../lib/utils';
-import { loadAsset } from '../lib/loadasset';
-import { copyText } from '../lib/clipboard';
+import { guessComponentId, arrayAddIfNotEmpty } from '../lib/utils';
 import { makeMetainfoGuiApp, type ASBasicInfo, GUIAppInfo } from '../lib/makemetainfo';
 import { makeMesonValidateSnippet, makeMesonMItoDESnippet,
          makeMesonL10NSnippet } from '../lib/makemeson';
 import { makeDesktopEntryData } from '../lib/makeauxdata';
-
-const metadataLicenses = ref<LicenseInfo[]>([]);
-const spdxLicenses = ref<LicenseInfo[]>([]);
-const categoriesPrimary = ref<PrimaryCategory[]>([]);
-const categoriesSecondaryAll = ref<SecondaryCategory[]>([]);
-const categoriesSecondaryFiltered = ref<SecondaryCategory[]>([]);
 
 const finalCptId = ref('');
 const dataGenerated = ref(false);
@@ -657,8 +426,8 @@ const form = useForm({
     extraScreenshot2:  { initial: '', label: 'additional screenshot 2', validators: [url()], allowEmpty: true },
 
     rbLaunchableMode: { initial: 'provided' },
-    // Either a desktop-entry filename is supplied, or the data needed to build
-    // one is - the two sets are never required at the same time.
+    // Either the user names an existing desktop-entry file, or they supply the
+    // pieces needed to build one - never both.
     desktopEntryName: { initial: '', label: 'desktop-entry filename',
                         validators: [required(), desktopEntry()],
                         active: () => !createDesktopData.value },
@@ -689,41 +458,33 @@ const { f, values, validateField } = form;
 
 const spdxMode = computed(() => values.rbLicenseMode === 'spdx');
 
-// If no desktop-entry filename is provided we have to collect enough data to
-// build one ourselves.
+// Without an existing desktop-entry file we have to collect enough information
+// to build one.
 const createDesktopData = computed(() => values.rbLaunchableMode !== 'provided');
 
-// Mouse & keyboard is the implied default; it is only unlocked once some other
-// input method is selected.
+// Mouse and keyboard is the implied default; it only becomes a real choice once
+// some other input method is on offer.
 const mouseKeysLocked = computed(() =>
     !values.cbInputTouch && !values.cbInputGamepad && !values.cbInputTablet);
 
-onMounted(async () => {
-    metadataLicenses.value = await loadAsset<LicenseInfo[]>('metadata-licenses.json');
-    spdxLicenses.value = await loadAsset<LicenseInfo[]>('spdx-licenses.json');
-    categoriesPrimary.value = await loadAsset<PrimaryCategory[]>('categories-primary.json');
-    categoriesSecondaryAll.value = await loadAsset<SecondaryCategory[]>('categories-secondary.json');
-});
-
-/* Guess the component-ID and icon name until the user edits them by hand; see useForm. */
+/*
+ * Offer a component ID and an icon name derived from what has been entered so
+ * far. Both stop for good once the user edits that field themselves - see the
+ * two ways of writing a field value in useForm.
+ */
 watch(() => [values.appName, values.appHomepage], () => {
     if (!f.cptId.dirty)
-        form.setValue('cptId', guessComponentId(values.appHomepage, values.appName));
+        f.cptId.set(guessComponentId(values.appHomepage, values.appName));
 });
 
 watch(() => values.appName, (name) => {
     if (!f.appIcon.dirty)
-        form.setValue('appIcon', name.replace(/ /g, '').trim().toLowerCase());
-});
-
-watch(() => values.primaryCategory, (primary) => {
-    form.setValue('secondaryCategory', '');
-    categoriesSecondaryFiltered.value = filterCategoriesByPrimary(categoriesSecondaryAll.value, primary);
+        f.appIcon.set(name.replace(/ /g, '').trim().toLowerCase());
 });
 
 watch(mouseKeysLocked, (locked) => {
     if (locked)
-        form.setValue('cbInputMouseKeys', true);
+        f.cbInputMouseKeys.set(true);
 }, { immediate: true });
 
 function resetGeneratedData() {

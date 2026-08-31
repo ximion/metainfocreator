@@ -29,12 +29,6 @@ export default tseslint.config(
             parserOptions: { parser: tseslint.parser },
         },
         rules: {
-            /*
-             * The templates are a faithful port of the Angular ones and keep their
-             * original hand-written formatting, so the opinionated layout rules are
-             * off. Turning them on would reformat every template wholesale and make
-             * the port impossible to review against the Angular original.
-             */
             'vue/max-attributes-per-line': 'off',
             'vue/singleline-html-element-content-newline': 'off',
             'vue/html-indent': 'off',
@@ -44,16 +38,14 @@ export default tseslint.config(
             'vue/first-attribute-linebreak': 'off',
             'vue/multiline-html-element-content-newline': 'off',
             'vue/html-closing-bracket-spacing': 'off',
+
+            'vue/no-mutating-props': ['error', { shallowOnly: true }],
         },
     },
 
     {
         files: ['src/lib/**/*.ts'],
-        /*
-         * The generator library was carried over verbatim from the Angular app so
-         * its output stays byte-identical; it is not restyled here. That includes
-         * leaving its now-redundant eslint-disable comments in place.
-         */
+
         linterOptions: { reportUnusedDisableDirectives: 'off' },
         rules: {
             '@typescript-eslint/no-explicit-any': 'off',

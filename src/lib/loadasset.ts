@@ -9,7 +9,8 @@
  *
  * The path is resolved against the deployment base, which is how the
  * freedesktop.org install (served from a subdirectory) finds its data. This
- * replaces the Angular HttpClient calls to the relative 'assets/...' URLs.
+ * files are fetched at runtime rather than bundled, so they can be refreshed
+ * by update-assets.py without rebuilding the application.
  */
 export async function loadAsset<T>(name: string): Promise<T> {
     const response = await fetch(`${import.meta.env.BASE_URL}assets/${name}`);

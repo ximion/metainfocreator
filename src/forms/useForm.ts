@@ -7,19 +7,18 @@
 import { reactive, computed, ref, type ComputedRef, type Ref } from 'vue';
 
 /**
- * A minimal replacement for the Angular reactive-forms features this app used:
- * per-field validators, dirty/touched tracking and an ordered submit gate.
+ * A small form helper: per-field validators, dirty and touched tracking, and an
+ * ordered submit gate that reports one problem at a time.
  *
- * There are exactly two ways to write a value, and only one of them marks the
- * field dirty:
+ * A field has two ways to be written, and only one of them marks it dirty:
  *
- *   f.someField.value = x     via v-model, i.e. the user typed  -> dirty
- *   form.setValue('someField', x)   programmatic                -> NOT dirty
+ *   f.someField.value = x   bound with v-model, i.e. the user typed  -> dirty
+ *   f.someField.set(x)      filled in on the user's behalf           -> not dirty
  *
- * That mirrors Angular, where setValue() never dirties a control. It is what
- * makes the component-ID auto-guessing stop permanently once the user edits
- * the ID by hand. `values` is exposed read-only so that binding v-model to it
- * directly - which would bypass the dirty tracking - fails to type-check.
+ * The distinction is what lets guessed values keep updating until the user
+ * takes the field over, and stop for good afterwards. `values` is exposed
+ * read-only, so binding v-model straight to it - which would slip past the
+ * dirty tracking - does not type-check.
  */
 
 /** A validator returns null when the value is acceptable, otherwise a
@@ -36,12 +35,13 @@ export interface FieldSpec<T = unknown> {
     /** Human-readable name used by the submit gate's message. */
     label?: string;
     validators?: Validator[];
-    /** Submit gate: tolerate an empty value (Angular's `emptyOkay` argument). */
+    /** Submit gate: tolerate an empty value. */
     allowEmpty?: boolean;
     /**
-     * Whether the field currently participates at all. An inactive field has no
-     * errors and is skipped by the submit gate. Replaces Angular's
-     * .disable()/.enable() dance. Evaluated lazily, never during useForm().
+     * Whether the field currently takes part at all. An inactive field never
+     * reports errors and is skipped by the submit gate, which is how the forms
+     * switch between alternative sets of required fields. Evaluated lazily, so
+     * a spec may refer to the form it is building.
      */
     active?: () => boolean;
 }
@@ -50,6 +50,9 @@ export interface Field<T = unknown> {
     readonly name: string;
     /** v-model target. Assigning marks the field dirty. */
     value: T;
+    /** Write a value without marking the field dirty, for values the app
+     *  fills in on the user's behalf. */
+    set: (value: T) => void;
     readonly errors: FieldErrors;
     readonly invalid: boolean;
     readonly valid: boolean;
@@ -70,8 +73,6 @@ export interface Form<S extends Specs> {
     values: Readonly<ValuesOf<S>>;
     /** Field accessors - what templates bind to. */
     f: FieldsOf<S>;
-    /** Programmatic write; does not mark the field dirty or touched. */
-    setValue<K extends keyof S>(name: K, value: ValuesOf<S>[K]): void;
     /** The single submit-gate message, or null. */
     error: Ref<string | null>;
     /** Set the submit-gate message directly (for cross-field checks). */
@@ -115,6 +116,7 @@ export function useForm<S extends Specs>(specs: S): Form<S> {
                 (values as Record<string, unknown>)[name] = v;
                 dirty[name] = true;
             },
+            set: (v: unknown) => { (values as Record<string, unknown>)[name] = v; },
             get errors() { return errorsOf[name].value; },
             get invalid() { return Object.keys(errorsOf[name].value).length > 0; },
             get valid() { return Object.keys(errorsOf[name].value).length === 0; },
@@ -126,10 +128,6 @@ export function useForm<S extends Specs>(specs: S): Form<S> {
             },
             touch: () => { touched[name] = true; },
         };
-    }
-
-    function setValue<K extends keyof S>(name: K, value: ValuesOf<S>[K]) {
-        (values as Record<string, unknown>)[name as string] = value;
     }
 
     function fail(message: string) {
@@ -157,5 +155,5 @@ export function useForm<S extends Specs>(specs: S): Form<S> {
         return true;
     }
 
-    return { values: values as Readonly<ValuesOf<S>>, f, setValue, error, fail, validateField };
+    return { values: values as Readonly<ValuesOf<S>>, f, error, fail, validateField };
 }

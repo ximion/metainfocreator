@@ -35,169 +35,47 @@
     </header>
     <div class="card-content content">
 
-        <div class="field">
-            <label class="label">Name of the application</label>
-            <div class="control">
-                <input class="input" v-model="f.appName.value" @blur="f.appName.touch" type="text" placeholder="The human-readable name of your application">
-            </div>
+        <TextField :field="f.appName" label="Name of the application"
+                   placeholder="The human-readable name of your application"
+                   message="A name is required" />
 
-            <p v-if="f.appName.showErrors" class="help is-danger">A name is required</p>
-        </div>
+        <TextField :field="f.appSummary" label="Summary of the application"
+                   placeholder="A short text summarizing what the application does"
+                   message="A summary is required" />
 
-        <div class="field">
-            <label class="label">Summary of the application</label>
-            <div class="control">
-                <input class="input" v-model="f.appSummary.value" @blur="f.appSummary.touch" type="text" placeholder="A short text summarizing what the application does">
-            </div>
+        <TextField :field="f.appHomepage" label="Homepage of the application"
+                   placeholder="The website where this application is hosted."
+                   icon="fas fa-link"
+                   :messages="{ required: 'A project homepage is required', invalidUrl: 'This URL is not accepted' }" />
 
-            <p v-if="f.appSummary.showErrors" class="help is-danger">A summary is required</p>
-        </div>
+        <TextField :field="f.appDescription" label="Description" multiline
+                   placeholder="Long description of this software."
+                   message="A long description is required" />
 
-        <div class="field">
-            <label class="label">Homepage of the application</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.appHomepage.value" @blur="f.appHomepage.touch" type="text" placeholder="The website where this application is hosted.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-link"></i>
-                </span>
-            </div>
-
-            <div v-if="f.appHomepage.showErrors">
-                <p v-if="f.appHomepage.errors.required" class="help is-danger">A project homepage is required</p>
-                <p v-if="f.appHomepage.errors.invalidUrl" class="help is-danger">This URL is not accepted</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Description</label>
-            <div class="control">
-                <textarea class="textarea" v-model="f.appDescription.value" @blur="f.appDescription.touch" placeholder="Long description of this software."></textarea>
-            </div>
-
-            <p v-if="f.appDescription.showErrors" class="help is-danger">A long description is required</p>
-        </div>
-
-        <div class="field">
-            <label class="label">Unique Software Identifier</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.cptId.value" @blur="f.cptId.touch" type="text" placeholder="Reverse-DNS string uniquely identifying your application.">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-fingerprint"></i>
-                </span>
-            </div>
-            <p class="help">A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</p>
-
-            <div v-if="f.cptId.showErrors">
-                <p v-if="f.cptId.errors.required" class="help is-danger">A component-ID is required</p>
-                <p v-if="f.cptId.errors.minlength" class="help is-danger">A component-ID is too short</p>
-                <p v-if="f.cptId.errors.forbiddenId" class="help is-danger">This ID is not valid: {{ f.cptId.errors.forbiddenId.value }}</p>
-            </div>
-        </div>
+        <TextField :field="f.cptId" label="Unique Software Identifier"
+                   placeholder="Reverse-DNS string uniquely identifying your application."
+                   icon="fas fa-fingerprint"
+                   :messages="{
+                       required: 'A component-ID is required',
+                       minlength: 'A component-ID is too short',
+                       forbiddenId: `This ID is not valid: ${f.cptId.errors.forbiddenId?.value ?? ''}`,
+                   }">
+            <template #help>A rDNS-style string uniquely identifying your application. Must contain only ASCII characters, dots and numbers.</template>
+        </TextField>
 
     </div>
 </div>
 
 
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Licensing
-      </p>
-    </header>
-    <div class="card-content content">
-
-        <div class="field">
-        <label class="label">Metadata License</label>
-        <div class="control">
-            <div class="select">
-                <select v-model="f.metadataLicense.value" @blur="f.metadataLicense.touch">
-                    <option value="">Choose a metadata license</option>
-                    <option v-for="license of metadataLicenses" :key="license.id" :value="license.id">{{ license.name }}</option>
-                </select>
-            </div>
-            <p class="help">The license that applies to this particular metadata and linked assets.</p>
-
-            <p v-if="f.metadataLicense.showErrors" class="help is-danger">A metadata license must be selected</p>
-        </div>
-        </div>
-
-        <div class="field">
-        <label class="label">Software License</label>
-
-        <div class="control">
-            <label class="radio">
-            <input type="radio" value="simple" v-model="f.rbLicenseMode.value">
-            Simple Single License
-            </label>
-            <label class="radio">
-            <input type="radio" value="spdx" v-model="f.rbLicenseMode.value">
-            Custom SPDX Expression
-            </label>
-        </div>
-        </div>
-        <div class="field is-grouped">
-            <div class="control">
-            <div class="select">
-                <!-- Angular disabled this control rather than removing it, so it stays
-                     visible (greyed out) when the SPDX expression mode is selected. -->
-                <select v-model="f.simpleProjectLicense.value" :disabled="spdxMode">
-                    <option value="">Choose a project license</option>
-                    <option v-for="license of spdxLicenses" :key="license.id" :value="license.id">{{ license.name }}</option>
-                </select>
-                </div>
-            </div>
-
-            <div v-if="spdxMode" class="control is-expanded">
-                <input class="input" v-model="f.complexProjectLicense.value" @blur="f.complexProjectLicense.touch" type="text" placeholder="A SPDX license expression, e.g. GPL-3.0-or-later and MPL-2.0">
-                <p class="help">A <a href="https://spdx.org/licenses/">SPDX</a> license expression string.</p>
-                <p v-if="f.complexProjectLicense.showErrors" class="help is-danger">You need to enter a SPDX expression</p>
-            </div>
-        </div>
-        <p class="help">The license that applies to the described software.</p>
-
-    </div>
-</div>
+<LicensingCard :metadata-license="f.metadataLicense" :mode="f.rbLicenseMode"
+               :simple="f.simpleProjectLicense" :complex="f.complexProjectLicense" />
 
 
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Categorization
-      </p>
-    </header>
-    <div class="card-content content">
-        <p>
-          Your software will appear in at least two categories in software center searches, one primary broad category, and one secondary
-          more specific one.
-          You can add more secondary categories to your metadata later, if you think your console application fits into even more categories.
-        </p>
-        <div class="field is-grouped">
-
-            <div class="control">
-              <label class="label">Primary Category</label>
-              <div class="select">
-                <select v-model="f.primaryCategory.value" @blur="f.primaryCategory.touch">
-                    <option value="">Choose a category</option>
-                    <option v-for="cat of categoriesPrimary" :key="cat.name" :value="cat.name">{{ cat.desc }} [{{ cat.name }}]</option>
-                </select>
-              </div>
-              <p v-if="f.primaryCategory.showErrors" class="help is-danger">A primary category must be selected</p>
-            </div>
-
-            <div class="control">
-              <label class="label">Secondary Category</label>
-              <div class="select">
-                <select v-model="f.secondaryCategory.value" @blur="f.secondaryCategory.touch">
-                    <option value="">Choose an additional category</option>
-                    <option v-for="cat of categoriesSecondaryFiltered" :key="cat.name" :value="cat.name">{{ cat.desc }} [{{ cat.name }}]</option>
-                </select>
-              </div>
-              <p v-if="f.secondaryCategory.showErrors" class="help is-danger">A secondary category must be selected</p>
-            </div>
-
-        </div>
-    </div>
-</div>
+<CategoryCard :primary="f.primaryCategory" :secondary="f.secondaryCategory" secondary-required>
+    Your software will appear in at least two categories in software center searches, one primary broad category, and one secondary
+    more specific one.
+    You can add more secondary categories to your metadata later, if you think your console application fits into even more categories.
+</CategoryCard>
 
 
 <div class="card">
@@ -208,98 +86,42 @@
     </header>
     <div class="card-content content">
 
-        <div class="field">
-            <label class="label">Icon Name</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.appIcon.value" @blur="f.appIcon.touch" type="text" placeholder="Stock icon name without file extension">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-icons"></i>
-                </span>
-            </div>
-            <p class="help">
+        <TextField :field="f.appIcon" label="Icon Name"
+                   placeholder="Stock icon name without file extension"
+                   icon="fas fa-icons"
+                   :messages="{ required: 'An icon name is required', invalidName: 'This is not a valid icon name' }">
+            <template #help>
               Please enter the name of your icon (usually installed into <code>/usr/share/icons/hicolor/&lt;size&gt;/apps/</code>) without its
               .png or .svg(z) file extension.<br/>
               This is currently exclusively used to show your application in software centers, and may simply be the project's logo. You may enter
               <code>utilities-terminal</code> here if you have no icon on your own and want a generic placeholder.
-            </p>
+            </template>
+        </TextField>
 
-            <div v-if="f.appIcon.showErrors">
-                <p v-if="f.appIcon.errors.required" class="help is-danger">An icon name is required</p>
-                <p v-if="f.appIcon.errors.invalidName" class="help is-danger">This is not a valid icon name</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Executable Name</label>
-            <div class="control has-icons-left">
-                <input class="input" v-model="f.exeName.value" @blur="f.exeName.touch" type="text" placeholder="Executable (command) binary name">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-terminal"></i>
-                </span>
-            </div>
-            <p class="help">
+        <TextField :field="f.exeName" label="Executable Name"
+                   placeholder="Executable (command) binary name"
+                   icon="fas fa-terminal"
+                   :messages="{ required: 'An executable name is required', invalidName: 'This is not a valid executable name' }">
+            <template #help>
               Please enter the name of the binary to run your application (as installed in the systems's standard <code>$PATH</code>).
               Do not use an absolute path!
-            </p>
-
-            <div v-if="f.exeName.showErrors">
-                <p v-if="f.exeName.errors.required" class="help is-danger">An executable name is required</p>
-                <p v-if="f.exeName.errors.invalidName" class="help is-danger">This is not a valid executable name</p>
-            </div>
-        </div>
+            </template>
+        </TextField>
 
     </div>
 </div>
 
 
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Additional Options
-      </p>
-    </header>
-    <div class="card-content content">
+<MesonOptionCard :field="f.cbMesonSnippets" />
 
-        <div class="field">
-        <div class="control">
-            <label class="checkbox">
-            <input type="checkbox" v-model="f.cbMesonSnippets.value">
-              Generate <a href="https://mesonbuild.com/">Meson</a> sample snippet for metadata maintenance
-            </label>
-        </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        Finish
-      </p>
-    </header>
-    <div class="card-content content">
-
-        <div class="field is-grouped">
-            <div class="control">
-                <a class="button is-link" tabindex="0" @click="generate()">Generate Metadata</a>
-            </div>
-        </div>
-
-    </div>
-</div>
+<GenerateCard @generate="generate" />
 
 </form>
 
 <br/>
 <!-- Output area -->
 
-
-<div v-if="form.error.value" class="notification is-danger">
-  <p><strong>Unable to generate metadata:</strong></p>
-  <p>{{ form.error.value }}</p>
-</div>
-
+<ErrorNotice :message="form.error.value" />
 
 <article class="panel is-success" v-if="dataGenerated">
   <p class="panel-heading">
@@ -312,11 +134,7 @@
       <h2 class="title is-2">MetaInfo File</h2>
       <p>Install this file as as <code>/usr/share/metainfo/{{ finalCptId }}.metainfo.xml</code></p>
       <p>You can validate this metadata locally by running: <code>appstreamcli validate {{ finalCptId }}.metainfo.xml</code></p>
-      <div class="box pl-1 pb-1">
-        <button style="float: right;" class="button is-info is-light is-rounded"
-                @click="copyText(dataMetainfo)">Copy</button>
-        <pre style="padding: 0 !important;"><code v-highlight="{ code: dataMetainfo, lang: 'xml' }"></code></pre>
-      </div>
+      <CodeBlock :code="dataMetainfo" lang="xml" />
 
       <div v-if="dataMesonValidate" style="margin-top: 1em;">
         <h3 class="subtitle is-3">Meson Validation Testcase</h3>
@@ -324,57 +142,37 @@
           Adjust the data location in <code>metainfo_file</code> and add this snippet to your Meson build definition in order to
           validate the MetaInfo file as part of the project's tests.
         </p>
-        <div class="box pl-1 pb-1">
-            <button style="float: right;" class="button is-info is-light is-rounded"
-                    @click="copyText(dataMesonValidate)">Copy</button>
-            <pre style="padding: 0 !important;"><code v-highlight="{ code: dataMesonValidate, lang: 'meson' }"></code></pre>
-        </div>
+        <CodeBlock :code="dataMesonValidate" lang="meson" />
       </div>
   </div>
   </div>
 
 </article>
 
-<article class="panel is-info" v-if="dataGenerated">
-  <p class="panel-heading">
-    Missing tools to validate your data?
-  </p>
-
-  <div class="panel-block">
-  <div class="column is-full">
-      <h4 class="title is-4">MetaInfo Validation</h4>
-      <p>
-        For validation of <em>MetaInfo</em> files, you need <code>appstreamcli</code>, which is available in pretty much every Linux distribution.
-        For best results, you should validate with version <code>0.12.10</code> or later.
-      </p>
-      <p>On Debian, Ubuntu and their derivatives, AppStream is preinstalled. In case it is missing, it can be installed using <code>apt install appstream</code></p>
-      <p>On Fedora and its derivatives, you can install AppStream via <code>dnf install appstream</code></p>
-  </div>
-  </div>
-</article>
+<ValidationToolsPanel v-if="dataGenerated" />
 
 </div> <!-- End of content -->
 
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { RouterLink } from 'vue-router';
+
+import TextField from '../components/TextField.vue';
+import LicensingCard from '../components/LicensingCard.vue';
+import CategoryCard from '../components/CategoryCard.vue';
+import MesonOptionCard from '../components/MesonOptionCard.vue';
+import GenerateCard from '../components/GenerateCard.vue';
+import ErrorNotice from '../components/ErrorNotice.vue';
+import CodeBlock from '../components/CodeBlock.vue';
+import ValidationToolsPanel from '../components/ValidationToolsPanel.vue';
 
 import { useForm } from '../forms/useForm';
 import { required, minLength, componentId, url, noPathOrSpace } from '../forms/validators';
-import { guessComponentId, filterCategoriesByPrimary,
-         type LicenseInfo, type PrimaryCategory, type SecondaryCategory } from '../lib/utils';
-import { loadAsset } from '../lib/loadasset';
-import { copyText } from '../lib/clipboard';
+import { guessComponentId } from '../lib/utils';
 import { makeMetainfoConsoleApp, type ASBasicInfo, ConsoleAppInfo } from '../lib/makemetainfo';
 import { makeMesonValidateSnippet } from '../lib/makemeson';
-
-const metadataLicenses = ref<LicenseInfo[]>([]);
-const spdxLicenses = ref<LicenseInfo[]>([]);
-const categoriesPrimary = ref<PrimaryCategory[]>([]);
-const categoriesSecondaryAll = ref<SecondaryCategory[]>([]);
-const categoriesSecondaryFiltered = ref<SecondaryCategory[]>([]);
 
 const finalCptId = ref('');
 const dataGenerated = ref(false);
@@ -406,32 +204,19 @@ const { f, values, validateField } = form;
 
 const spdxMode = computed(() => values.rbLicenseMode === 'spdx');
 
-onMounted(async () => {
-    metadataLicenses.value = await loadAsset<LicenseInfo[]>('metadata-licenses.json');
-    spdxLicenses.value = await loadAsset<LicenseInfo[]>('spdx-licenses.json');
-    categoriesPrimary.value = await loadAsset<PrimaryCategory[]>('categories-primary.json');
-    categoriesSecondaryAll.value = await loadAsset<SecondaryCategory[]>('categories-secondary.json');
-});
-
 /*
- * Guess the component-ID and icon name from what the user has typed so far.
- * Both guesses stop for good once the user edits that particular field by hand:
- * setValue() does not mark a field dirty, so only real user input closes the
- * guard. This mirrors how Angular's setValue() behaved.
+ * Offer a component ID and an icon name derived from what has been entered so
+ * far. Both stop for good once the user edits that field themselves - see the
+ * two ways of writing a field value in useForm.
  */
 watch(() => [values.appName, values.appHomepage], () => {
     if (!f.cptId.dirty)
-        form.setValue('cptId', guessComponentId(values.appHomepage, values.appName));
+        f.cptId.set(guessComponentId(values.appHomepage, values.appName));
 });
 
 watch(() => values.appName, (name) => {
     if (!f.appIcon.dirty)
-        form.setValue('appIcon', name.replace(/ /g, '').trim().toLowerCase());
-});
-
-watch(() => values.primaryCategory, (primary) => {
-    form.setValue('secondaryCategory', '');
-    categoriesSecondaryFiltered.value = filterCategoriesByPrimary(categoriesSecondaryAll.value, primary);
+        f.appIcon.set(name.replace(/ /g, '').trim().toLowerCase());
 });
 
 function resetGeneratedData() {

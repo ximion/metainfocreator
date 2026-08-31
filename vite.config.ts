@@ -6,15 +6,15 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
 
     return {
-        // Replaces Angular's `ng build --base-href`. The freedesktop build sets
-        // this to the deployment URL via .env.fdo.
+        // Where the application will be served from; the freedesktop build sets
+        // this to its deployment URL via .env.fdo.
         base: env.VITE_BASE_HREF || '/',
         plugins: [vue()],
         resolve: {
             alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
         },
         build: {
-            // same output location the Angular build used
+            // kept out of the repository root, next to the other build artifacts
             outDir: 'dist/metainfocreator',
             emptyOutDir: true,
             /*

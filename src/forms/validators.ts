@@ -8,9 +8,9 @@ import { componentIdValid, isAcceptableUrl, isDesktopFilename, isNoPath } from '
 import type { Validator } from './useForm';
 
 /*
- * The error keys below (required, minlength, min, max, pattern, forbiddenId,
- * invalidUrl, invalidName) are the same ones Angular's Validators produced.
- * Templates branch on them by name, so they must not be renamed.
+ * Each validator names the problem it found, and templates pick the message to
+ * show by that name, so the keys below are part of the interface: renaming one
+ * silently hides its error message.
  */
 
 function isEmpty(v: unknown): boolean {
@@ -21,8 +21,8 @@ export function required(): Validator {
     return (v) => (isEmpty(v) ? { required: {} } : null);
 }
 
-/* The length/range/pattern validators all skip empty values, exactly as Angular
-   does - a field that is not `required` must show no hint while it is blank. */
+/* The length, range and pattern validators pass over empty values: a field that
+   is not required must stay quiet while it is still blank. */
 
 export function minLength(n: number): Validator {
     return (v) => (isEmpty(v) || String(v).length >= n ? null : { minlength: { value: String(n) } });

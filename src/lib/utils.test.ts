@@ -15,17 +15,29 @@ describe('guessComponentId', () => {
         expect(guessComponentId(homepage, name)).toBe(expected);
     });
 
-    /*
-     * Known pre-existing quirk, pinned here so it cannot change silently:
-     * a `www.` host reverses to `org.freedesktop.www`, and stripping "www"
-     * leaves its separating dot behind. The resulting ID has an empty segment,
-     * which componentIdValid() then rejects - so the guess offered to the user
-     * is immediately flagged invalid. Fixing it is a behaviour change and is
-     * deliberately out of scope for the port.
-     */
-    it('leaves an empty segment behind when stripping a www host', () => {
+    it('drops a leading www label from the host', () => {
         expect(guessComponentId('https://www.freedesktop.org/software/appstream/', 'MetaInfo Creator'))
-            .toBe('org.freedesktop..metainfo_creator');
+            .toBe('org.freedesktop.metainfo_creator');
+    });
+
+    it('drops a leading www label on GitHub URLs too', () => {
+        expect(guessComponentId('https://www.github.com/ximion/appstream', 'AppStream'))
+            .toBe('io.github.ximion.appstream');
+    });
+
+    it('keeps www when it is part of the application name', () => {
+        expect(guessComponentId('https://example.com/x', 'WWW Browser'))
+            .toBe('com.example.www_browser');
+    });
+
+    it('keeps host labels that merely start with www', () => {
+        expect(guessComponentId('https://wwwtest.example.com/', 'App'))
+            .toBe('com.example.wwwtest.app');
+    });
+
+    it('produces an ID that componentIdValid accepts for a www homepage', () => {
+        const cid = guessComponentId('https://www.freedesktop.org/software/appstream/', 'MetaInfo Creator');
+        expect(componentIdValid(cid)).toEqual({ valid: true, message: null });
     });
 
     it('returns an empty string without a homepage', () => {

@@ -85,8 +85,14 @@ export function guessComponentId(homepage: string, appName: string): string {
         url = new URL(urlStr);
     } catch { return ''; }
 
+    const hostParts = url.host.split('.');
+
+    // A leading "www" label is not part of the project's identity
+    if (hostParts.length > 2 && hostParts[0].toLowerCase() === 'www')
+        hostParts.shift();
+
     let userPart = ''; // Only used with GitHub URLs at the moment
-    const rDNSRootParts = url.host.split('.').reverse();
+    const rDNSRootParts = hostParts.reverse();
     if (rDNSRootParts.length >= 2) {
         // Usually projects hosted on GitHub are not from GitHub Inc. / Microsoft
         // themselves, so we use github.io for those apps (this seems to be the way
@@ -106,7 +112,6 @@ export function guessComponentId(homepage: string, appName: string): string {
              .normalize()
              // eslint-disable-next-line no-control-regex
              .replace(/[^\x00-\x7F]/g, '')
-             .replace(/www/g, '')
              .replace(/ /g, '_')
              .replace(/-/g, '_')
              .replace(/:/g, '_')

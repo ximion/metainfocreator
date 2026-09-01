@@ -8,7 +8,7 @@ import { createApp } from 'vue';
 
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'highlight.js/styles/github.css';
+import './highlight-theme.css';
 import './style.css';
 
 import App from './App.vue';

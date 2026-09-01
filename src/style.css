@@ -1,4 +1,22 @@
 
+.radio + .radio {
+  margin-left: 0.5em;
+}
+
+.breadcrumb {
+  --bulma-breadcrumb-item-active-color: var(--bulma-text-strong);
+}
+
+.field.is-grouped > .control {
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.field.is-grouped .select,
+.field.is-grouped .select select {
+  max-width: 100%;
+}
+
 .corner-ribbon{
   width: 200px;
   background: #e43;

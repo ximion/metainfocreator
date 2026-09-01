@@ -40,10 +40,14 @@ export interface FieldSpec<T = unknown> {
     /**
      * Whether the field currently takes part at all. An inactive field never
      * reports errors and is skipped by the submit gate, which is how the forms
-     * switch between alternative sets of required fields. Evaluated lazily, so
-     * a spec may refer to the form it is building.
+     * switch between alternative sets of required fields.
+     *
+     * The current values are handed in rather than read from the form: a spec
+     * that closed over the form being built would make its own type inference
+     * circular, and TypeScript resolves that by falling back to `any` - which
+     * quietly costs `values` both its element types and its readonly-ness.
      */
-    active?: () => boolean;
+    active?: (values: Record<string, unknown>) => boolean;
 }
 
 export interface Field<T = unknown> {
@@ -95,7 +99,7 @@ export function useForm<S extends Specs>(specs: S): Form<S> {
         dirty[name] = false;
         touched[name] = false;
 
-        const isActive = () => (spec.active ? spec.active() : true);
+        const isActive = () => (spec.active ? spec.active(values as Record<string, unknown>) : true);
 
         errorsOf[name] = computed<FieldErrors>(() => {
             if (!isActive())

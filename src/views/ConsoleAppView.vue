@@ -189,8 +189,8 @@ const form = useForm({
 
     metadataLicense:       { initial: '', label: 'metadata license', validators: [required()] },
     rbLicenseMode:         { initial: 'simple' },
-    simpleProjectLicense:  { initial: '', active: () => !spdxMode.value },
-    complexProjectLicense: { initial: '', active: () => spdxMode.value },
+    simpleProjectLicense:  { initial: '', active: (v) => v.rbLicenseMode !== 'spdx' },
+    complexProjectLicense: { initial: '', active: (v) => v.rbLicenseMode === 'spdx' },
 
     primaryCategory:   { initial: '', label: 'primary application category', validators: [required()] },
     secondaryCategory: { initial: '', label: 'secondary application category', validators: [required()] },

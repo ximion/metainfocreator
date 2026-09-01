@@ -418,8 +418,8 @@ const form = useForm({
 
     metadataLicense:       { initial: '', label: 'metadata license', validators: [required()] },
     rbLicenseMode:         { initial: 'simple' },
-    simpleProjectLicense:  { initial: '', active: () => !spdxMode.value },
-    complexProjectLicense: { initial: '', active: () => spdxMode.value },
+    simpleProjectLicense:  { initial: '', active: (v) => v.rbLicenseMode !== 'spdx' },
+    complexProjectLicense: { initial: '', active: (v) => v.rbLicenseMode === 'spdx' },
 
     primaryScreenshot: { initial: '', label: 'primary screenshot', validators: [url()], allowEmpty: true },
     extraScreenshot1:  { initial: '', label: 'additional screenshot 1', validators: [url()], allowEmpty: true },
@@ -430,17 +430,17 @@ const form = useForm({
     // pieces needed to build one - never both.
     desktopEntryName: { initial: '', label: 'desktop-entry filename',
                         validators: [required(), desktopEntry()],
-                        active: () => !createDesktopData.value },
+                        active: (v) => v.rbLaunchableMode === 'provided' },
 
     primaryCategory:   { initial: '', label: 'primary application category',
-                         validators: [required()], active: () => createDesktopData.value },
+                         validators: [required()], active: (v) => v.rbLaunchableMode !== 'provided' },
     secondaryCategory: { initial: '', label: 'secondary application category',
-                         validators: [required()], active: () => createDesktopData.value },
+                         validators: [required()], active: (v) => v.rbLaunchableMode !== 'provided' },
 
     appIcon: { initial: '', label: 'application icon',
-               validators: [required(), noPathOrSpace()], active: () => createDesktopData.value },
+               validators: [required(), noPathOrSpace()], active: (v) => v.rbLaunchableMode !== 'provided' },
     exeName: { initial: '', label: 'executable name',
-               validators: [required(), noPathOrSpace()], active: () => createDesktopData.value },
+               validators: [required(), noPathOrSpace()], active: (v) => v.rbLaunchableMode !== 'provided' },
 
     cbInputMouseKeys: { initial: true },
     cbInputTouch:     { initial: false },
@@ -448,9 +448,11 @@ const form = useForm({
     cbInputTablet:    { initial: false },
 
     cbMinSurfaceSize: { initial: false },
-    minSurfaceSize:   { initial: '', label: 'minimum surface size',
+    // v-model.number turns this into a number as soon as the box holds one,
+    // and leaves the empty string behind when it is cleared again.
+    minSurfaceSize:   { initial: '' as string | number, label: 'minimum surface size',
                         validators: [min(10), max(8192), pattern(/^[0-9]*$/)],
-                        active: () => values.cbMinSurfaceSize === true },
+                        active: (v) => v.cbMinSurfaceSize === true },
 
     cbMesonSnippets: { initial: false },
 });
@@ -561,7 +563,7 @@ function generate() {
     if (values.cbMinSurfaceSize) {
         if (!validateField(f.minSurfaceSize))
             return;
-        appInfo.minDisplaySize = values.minSurfaceSize;
+        appInfo.minDisplaySize = Number(values.minSurfaceSize);
     }
 
     // all validity checks have passed at this point

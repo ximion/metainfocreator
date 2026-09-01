@@ -184,8 +184,8 @@ const form = useForm({
 
     metadataLicense:       { initial: '', label: 'metadata license', validators: [required()] },
     rbLicenseMode:         { initial: 'simple' },
-    simpleProjectLicense:  { initial: '', active: () => !spdxMode.value },
-    complexProjectLicense: { initial: '', active: () => spdxMode.value },
+    simpleProjectLicense:  { initial: '', active: (v) => v.rbLicenseMode !== 'spdx' },
+    complexProjectLicense: { initial: '', active: (v) => v.rbLicenseMode === 'spdx' },
 
     // The icon is optional for addons, and unlike the other component types it
     // is not derived from the name either.
